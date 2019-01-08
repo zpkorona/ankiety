@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<SURVEYS>
+
+<SURVEY>
+  <ID>Example.scr</ID>
+  <STAGES>1</STAGES>
+  <CLIENT>Almares</CLIENT>
+  <SUBJECT>Przykładowa ankieta</SUBJECT>
+  <FIRST_NUMBER>1</FIRST_NUMBER>
+  <LAST_NUMBER>20000</LAST_NUMBER>
+  <INTV_NUMBER>GIVEN SHOW</INTV_NUMBER>
+  <USER_ID>Gość%guest</USER_ID>
+  <USER_ID>AlmWawa01%aW01</USER_ID>
+  <USER_ID>AlmWawa02%aW02</USER_ID>
+  <USER_ID>AlmWawa03%aW03</USER_ID>
+  <USER_ID>AlmWawa04%aW04</USER_ID>
+  <USER_ID>AlmWawa05%aW05</USER_ID>
+  <USER_ID>AlmWawa06%aW06</USER_ID>
+  <USER_ID>AlmWawa07%aW07</USER_ID>
+  <USER_ID>AlmWawa08%aW08</USER_ID>
+  <USER_ID>AlmWawa09%aW09</USER_ID>
+  <USER_ID>AlmWawa10%aW10</USER_ID>
+  <USER_ID>AlmWawa11%aW11</USER_ID>
+  <USER_ID>AlmWawa12%aW12</USER_ID>
+  <USER_ID>AlmKrak01%aK01</USER_ID>
+  <USER_ID>AlmKrak02%aK02</USER_ID>
+  <USER_ID>AlmKrak03%aK03</USER_ID>
+  <USER_ID>AlmKrak04%aK04</USER_ID>
+  <USER_ID>AlmKrak05%aK05</USER_ID>
+  <USER_ID>AlmKrak06%aK06</USER_ID>
+  <USER_ID>AlmKrak07%aK07</USER_ID>
+  <USER_ID>AlmKrak08%aK08</USER_ID>
+  <USER_ID>AlmKrak09%aK09</USER_ID>
+  <USER_ID>AlmKrak10%aK10</USER_ID>
+  <USER_ID>AlmKrak11%aK11</USER_ID>
+  <USER_ID>AlmKrak12%aK12</USER_ID>
+  <USER_ID>Test%testowanie</USER_ID>
+  <USER_ID>Marcin%601331981</USER_ID>
+  <USER_ID>Zbyszek%2121</USER_ID>
+</SURVEY>
+
+</SURVEYS>

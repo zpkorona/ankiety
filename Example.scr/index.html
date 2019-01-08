@@ -1,0 +1,825 @@
+<!doctype html>
+<html>
+<head>
+  <title>Badanie ..... ankieta rekrutacyjna</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+  <meta http-equiv="Cache-Control" content="post-check=0, pre-check=0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=10, user-scalable=yes">
+  <meta name="description" content="Badanie .... ankieta rekrutacujna">
+  <meta name="keywords" content="AZetKa ankieta">
+  <meta name="author" content="AZetKa studio">
+  <link rel="shortcut icon" href="../mediafiles/favicon.ico">
+  <link rel="stylesheet" type="text/css" href="../csstyles/badania.css">
+  <link rel="stylesheet" type="text/css" href="./csstyles/badanie.css">
+  <script language="JavaScript" type="text/javascript" src="./jscripts/badanie.js"></script>
+</head>
+
+<body>
+<div id="top-banner" class="top-banner full-size-banner">
+  <div id="top-banner-left" class="tab-col1of5 text-left">&nbsp;</div>
+  <div id="top-banner-center" class="tab-col3of5 text-center"><em>Ładowanie badania...</em></div>
+  <div id="top-banner-right" class="tab-col1of5 text-right italic smaller"><img src="../mediafiles/AZetKa_pas.gif" alt="AZetKa" height="14px"></div>
+</div>
+
+
+<div id="middle-banner" class="middle-banner div-row">
+  <div id="questions-place" class="questions-place">
+
+    <!-- NIE MA COOKIES ================================================== -->
+    <div id="cookies-confirm" class="cookies-info">
+      <div>
+        W celu przeprowadzenia ankiety wykorzystujemy ciasteczka.<br>
+        Są one przez nas używane jedynie w celu zapamiętania aktualnego stanu
+        wypełnienia ankiety na wypadek utracenia połączenia z serwerem oraz
+        sprawdzania, czy z tego komputera były robione już jakieś nasze ankiety.
+        Nasze ciasteczka nie służą żadnym celom handlowym ani reklamowym.
+      </div>
+      <div>
+        <button id="cookies-confirm-yes" class="nav-button" onclick="cookiesConfirmed()" value="yes">OK</button>
+      </div>
+    </div>
+    <!--div class="question-break"></div-->
+
+
+    <!-- SĄ COOKIES ================================================== -->
+    <div id="ask-restore-intv" class="ask-user-box">
+      <div class="section-text text-center">
+        W celu przeprowadzenia ankiety wykorzystujemy ciasteczka.
+      </div>
+      <!--div class="question-break"></div-->
+      <div class="question-info text-cont">
+        W pamięci przeglądarki znajdują sie dane z poprzedniej, prawdopodobnie niezakończonej <br>
+         lub niezapisanej ankiety do tego badania.
+      </div>
+      <!--div class="question-break"></div-->
+      <div class="question-info text-center">
+        <p>
+          Czy pobrać te dane i kontynuować rozpoczętą wcześniej ankietę?
+        </p>
+        <p>
+          Czy usunąć te dane o rozpocząć nową ankietę? Nie będzie powrotu do poprzedniej ankiety.
+        </p>
+      </div>
+      <!--div class="question-break"></div-->
+      <div>
+        <progress id="restore-progress" class="restore-progress" value="1" max="300"></progress>
+      </div>
+      <!--div class="question-break"></div-->
+      <div id="restore-buttons" class="buttons-place">
+        <button class="nav-button" id="restore-interview" onclick="restoreFromCookies()" value="old">Poprzednia ankieta</button>
+        <button class="nav-button" id="new-interview" onclick="newInterview()" value="new">Nowa ankieta</button>
+      </div>
+    </div>
+    <!--div class="question-break"></div-->
+
+
+    <!-- NIE MA IDENTYFIKATORA ============================================= -->
+    <div id="reload-survey-info" class="ask-user-box">
+      <div id="reload-text1" class="section-text">
+        Błąd:
+      </div>
+      <div id="reload-text2" class="question-info">
+        Bo.
+      </div>
+      <!--div class="question-break"></div-->
+      <!--div id="reload-buttons" class="buttons-place">
+          <button class="nav-button" id="reload-survey" onclick="gotoBadania()" value="no">Powrót</button>
+      </div-->
+    </div>
+    <!--div class="question-break"></div-->
+
+
+    <!-- ANKIETA ==================================================================================================== -->
+    <!-- ANKIETA ==================================================================================================== -->
+    <!-- ANKIETA ==================================================================================================== -->
+    <form name="questForm" action="_php_/zapiszData2disk.php" enctype="text/plan" method="POST"
+          onsubmit="event.preventDefault(); return finishWithFormData();" target="php-output">
+      <div id="all-questions" class="questionnaire">
+
+        <!-- NUMER ANKIETY ================================================== -->
+        <div class="question_" id="quest-intv_num">
+          <div id="survey-name" class="section-text text-center">
+            <b>ANKIETA REKRUTACYJNA</b>
+          </div>
+          <!--div class="question-break"></div-->
+          <div class="answer_">
+            <div id="log-in-div" class="log-in-div answer-table answer-table-vert"><!--class="answer-div"-->
+              <div>
+                <div style="vertical-align:top;padding-top:0.4em;">
+                  Proszę wpisać numer ankiety<span id="intv_num-range"> [1-110,1011-1110]</span>:
+                </div>
+                <div style="vertical-align:top;">
+                  <input type="number" name="intv_num" id="intv_num" maxlength="7" size="7" onkeypress="checkIntvIdEnter(event)">
+                  <span id="quest-intv_num-error" class="error-comment">(błędny&nbsp;numer&nbsp;ankiety)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="question-info">
+            <br /><br />
+            W tej ankiecie identyfikator nadawany jest automatycznie, więc nie można go zmienić.<br />
+            Możliwe są inne są inne metody ustalanie identyfikatora, poprzez identyfikator użytkownika, <br />
+            lub zwyczajne wpisanie go.
+          </div>
+          <input type="text" name="survey_id"  class="no-display">
+          <input type="text" name="stage_no"   class="no-display">
+          <input type="text" name="user_id"    class="no-display">
+          <input type="text" name="start_time" class="no-display">
+          <input type="text" name="end_time"   class="no-display">
+          <input type="text" name="duration"   class="no-display">
+          <div class="section-text text-center">
+            <b><i>Nie ma co się bać. Będzie dobrze.</i></b>
+          </div>
+        </div>
+        <!--div class="question-break"></div-->
+
+
+        <!-- INTRO 0 ================================================== -->
+        <div class="question_" id="quest-intro0">
+          <div class="section-text">
+            Przykładowa ankieta.
+          </div>
+          <div class="question-info">
+            Dokładnie rzecz biorąc, to nie jest to ankieta, lecz prezentacja
+            pytań jakie magą być użyte przy tworzeniu ankiety.
+            <br />
+            Druga ankieta, Example.tst, prezentuje przykładowy test kilku produktów.
+          </div>
+        </div>
+        <!--div class="question-break"></div-->
+
+        <!-- Rekrut quest rA ================================================== -->
+        <div class="question_" id="quest-rA">
+          <div class="question-text-indent">
+            Pyt.A.
+            Proszę zaznaczyć znane nazwy?<br />
+            Jest to pytanie z możliwością wybrania wielu odpowiedzi.
+            <br>
+            <span class="fill-info hidden">(proszę zaznaczyć przynajmniej jedną odpowiedź)</span>
+          </div>
+          <!--div class="question-break"></div-->
+          <div class="answer_">
+            <div class="answer-table answer-table-vert">
+              <div><div><label for="rA_1">Nazwa 1 </label></div>  <div><input type="checkbox" name="rA_1" id="rA_1" value="1"></div></div>
+              <div><div><label for="rA_2">Nazwa 2 </label></div>  <div><input type="checkbox" name="rA_2" id="rA_2" value="2"></div></div>
+              <div><div><label for="rA_3">Nazwa 3 </label></div>  <div><input type="checkbox" name="rA_3" id="rA_3" value="3"></div></div>
+              <div><div><label for="rA_4">Nazwa 4 </label></div>  <div><input type="checkbox" name="rA_4" id="rA_4" value="4"></div></div>
+              <div><div><label for="rA_5">Nazwa 5 </label></div>  <div><input type="checkbox" name="rA_5" id="rA_5" value="5"></div></div>
+              <div><div><label for="rA_6">Nazwa 6 </label></div>  <div><input type="checkbox" name="rA_6" id="rA_6" value="6"></div></div>
+              <div><div><label for="rA_7">Nazwa 7 </label></div>  <div><input type="checkbox" name="rA_7" id="rA_7" value="7"></div></div>
+              <div><div><label for="rA_8">Nazwa 8 </label></div>  <div><input type="checkbox" name="rA_8" id="rA_8" value="8"></div></div>
+              <div><div><label for="rA_9">Nazwa 9 </label></div>  <div><input type="checkbox" name="rA_9" id="rA_9" value="9"></div></div>
+              <div><div><label for="rA_10">Nazwa 10 </label></div>  <div><input type="checkbox" name="rA_10" id="rA_10" value="10"></div></div>
+              <div><div><label for="rA_11">Nazwa 11 </label></div>  <div><input type="checkbox" name="rA_11" id="rA_11" value="11"></div></div>
+              <div><div><label for="rA_12">Nazwa 12 </label></div>  <div><input type="checkbox" name="rA_12" id="rA_12" value="12"></div></div>
+              <div><div><label for="rA_13">Nazwa 13 </label></div>  <div><input type="checkbox" name="rA_13" id="rA_13" value="13"></div></div>
+              <div><div><label for="rA_14">Nazwa 14 </label></div>  <div><input type="checkbox" name="rA_14" id="rA_14" value="14"></div></div>
+              <div><div><label for="rA_15">Nazwa 15 </label></div>  <div><input type="checkbox" name="rA_15" id="rA_15" value="15"></div></div>
+              <div><div>Inna nazwa: (Jaka?)&nbsp;<input type="text" name="rAt16" id="rAt16" value=""></div>
+                                                                    <div><input type="checkbox" name="rA_16" id="rA_16" value="16"></div></div>
+            </div>
+          </div>
+        </div>
+        <!--div class="question-break"></div-->
+
+        <!-- Rekrut quest rB ================================================== -->
+        <div class="question_" id="quest-rB">
+          <div class="question-text-indent">
+            Pyt.B.
+            Proszę zaznaczyć widziane nazwy?<br />
+            Jest to pytanie z możliwością wybrania wielu odpowiedzi, ale
+             spośród zaznaczonych w poprzednim pytaniu.
+            <br>
+            <span class="fill-info hidden">(proszę zaznaczyć przynajmniej jedną odpowiedź)</span>
+          </div>
+          <!--div class="question-break"></div-->
+          <div class="answer_">
+            <div class="answer-table answer-table-vert">
+              <div><div><label for="rB_1">Nazwa 1 </label></div>  <div><input type="checkbox" name="rB_1" id="rB_1" value="1"></div></div>
+              <div><div><label for="rB_2">Nazwa 2 </label></div>  <div><input type="checkbox" name="rB_2" id="rB_2" value="2"></div></div>
+              <div><div><label for="rB_3">Nazwa 3 </label></div>  <div><input type="checkbox" name="rB_3" id="rB_3" value="3"></div></div>
+              <div><div><label for="rB_4">Nazwa 4 </label></div>  <div><input type="checkbox" name="rB_4" id="rB_4" value="4"></div></div>
+              <div><div><label for="rB_5">Nazwa 5 </label></div>  <div><input type="checkbox" name="rB_5" id="rB_5" value="5"></div></div>
+              <div><div><label for="rB_6">Nazwa 6 </label></div>  <div><input type="checkbox" name="rB_6" id="rB_6" value="6"></div></div>
+              <div><div><label for="rB_7">Nazwa 7 </label></div>  <div><input type="checkbox" name="rB_7" id="rB_7" value="7"></div></div>
+              <div><div><label for="rB_8">Nazwa 8 </label></div>  <div><input type="checkbox" name="rB_8" id="rB_8" value="8"></div></div>
+              <div><div><label for="rB_9">Nazwa 9 </label></div>  <div><input type="checkbox" name="rB_9" id="rB_9" value="9"></div></div>
+              <div><div><label for="rB_10">Nazwa 10 </label></div>  <div><input type="checkbox" name="rB_10" id="rB_10" value="10"></div></div>
+              <div><div><label for="rB_11">Nazwa 11 </label></div>  <div><input type="checkbox" name="rB_11" id="rB_11" value="11"></div></div>
+              <div><div><label for="rB_12">Nazwa 12 </label></div>  <div><input type="checkbox" name="rB_12" id="rB_12" value="12"></div></div>
+              <div><div><label for="rB_13">Nazwa 13 </label></div>  <div><input type="checkbox" name="rB_13" id="rB_13" value="13"></div></div>
+              <div><div><label for="rB_14">Nazwa 14 </label></div>  <div><input type="checkbox" name="rB_14" id="rB_14" value="14"></div></div>
+              <div><div><label for="rB_15">Nazwa 15 </label></div>  <div><input type="checkbox" name="rB_15" id="rB_15" value="15"></div></div>
+              <div><div><label for="rB_16" id="rBt16"><em>Inna nazwa</em></label></div>
+                                                                    <div><input type="checkbox" name="rB_16" id="rB_16" value="16"></div></div>
+            </div>
+          </div>
+        </div>
+        <!--div class="question-break"></div-->
+
+        <!-- Rekrut quest rC ================================================== -->
+        <div class="question_" id="quest-rC">
+          <div class="question-text-indent">
+            Pyt.C.
+            Proszę zaznaczyć najładniejszą nazwę?<br />
+            Jest to pytanie z możliwością wybrania jednej odpowiedzi spośród zaznaczonych w poprzednim pytaniu.
+            <br>
+            <span class="fill-info">(proszę zaznaczyć jedną odpowiedź)</span>
+          </div>
+          <!--div class="question-break"></div-->
+          <div class="answer_">
+            <div class="answer-table answer-table-vert">
+              <div><div><label for="rC_1">Nazwa 1 </label></div>  <div><input type="radio" name="rC" id="rC_1" value="1"></div></div>
+              <div><div><label for="rC_2">Nazwa 2 </label></div>  <div><input type="radio" name="rC" id="rC_2" value="2"></div></div>
+              <div><div><label for="rC_3">Nazwa 3 </label></div>  <div><input type="radio" name="rC" id="rC_3" value="3"></div></div>
+              <div><div><label for="rC_4">Nazwa 4 </label></div>  <div><input type="radio" name="rC" id="rC_4" value="4"></div></div>
+              <div><div><label for="rC_5">Nazwa 5 </label></div>  <div><input type="radio" name="rC" id="rC_5" value="5"></div></div>
+              <div><div><label for="rC_6">Nazwa 6 </label></div>  <div><input type="radio" name="rC" id="rC_6" value="6"></div></div>
+              <div><div><label for="rC_7">Nazwa 7 </label></div>  <div><input type="radio" name="rC" id="rC_7" value="7"></div></div>
+              <div><div><label for="rC_8">Nazwa 8 </label></div>  <div><input type="radio" name="rC" id="rC_8" value="8"></div></div>
+              <div><div><label for="rC_9">Nazwa 9 </label></div>  <div><input type="radio" name="rC" id="rC_9" value="9"></div></div>
+              <div><div><label for="rC_10">Nazwa 10 </label></div>  <div><input type="radio" name="rC" id="rC_10" value="10"></div></div>
+              <div><div><label for="rC_11">Nazwa 11 </label></div>  <div><input type="radio" name="rC" id="rC_11" value="11"></div></div>
+              <div><div><label for="rC_12">Nazwa 12 </label></div>  <div><input type="radio" name="rC" id="rC_12" value="12"></div></div>
+              <div><div><label for="rC_13">Nazwa 13 </label></div>  <div><input type="radio" name="rC" id="rC_13" value="13"></div></div>
+              <div><div><label for="rC_14">Nazwa 14 </label></div>  <div><input type="radio" name="rC" id="rC_14" value="14"></div></div>
+              <div><div><label for="rC_15">Nazwa 15 </label></div>  <div><input type="radio" name="rC" id="rC_15" value="15"></div></div>
+              <div><div><label for="rC_16" id="rCt16"><em>Inna nazwa</em></label></div>
+                                                                    <div><input type="radio" name="rC" id="rC_16" value="16"></div></div>
+            </div>
+          </div>
+        </div>
+        <!--div class="question-break"></div-->
+
+        <!-- Rekrut quest rD ================================================== -->
+        <div class="question_" id="quest-rD">
+          <div class="question-text-indent">
+            Pyt.D.
+            Czy podoba się nazwa NAZWA?<br />
+            Pytanie z pionowym układem odpowiedzi.
+            <br>
+            <span class="fill-info">(proszę zaznaczyć jedną odpowiedź)</span>
+          </div>
+          <!--div class="question-break"></div-->
+          <div class="answer_">
+            <div class="answer-table answer-table-vert">
+              <div><div><label for="rD_1">Tak x 3</label></div> <div><input type="radio" name="rD" id="rD_1" value="3"></div></div>
+              <div><div><label for="rD_2">Tak x 2</label></div> <div><input type="radio" name="rD" id="rD_2" value="2"></div></div>
+              <div><div><label for="rD_3">Tak x 1</label></div> <div><input type="radio" name="rD" id="rD_3" value="1"></div></div>
+              <div><div><label for="rD_4">Tak nie</label></div> <div><input type="radio" name="rD" id="rD_4" value="0"></div></div>
+              <div><div><label for="rD_5">Nie x 1</label></div> <div><input type="radio" name="rD" id="rD_5" value="-1"></div></div>
+              <div><div><label for="rD_6">Nie x 2</label></div> <div><input type="radio" name="rD" id="rD_6" value="-2"></div></div>
+              <div><div><label for="rD_7">Nie x 3</label></div> <div><input type="radio" name="rD" id="rD_7" value="-3"></div></div>
+            </div>
+          </div>
+        </div>
+        <!--div class="question-break"></div-->
+
+        <!-- Rekrut quest rE ================================================== -->
+        <div class="question_" id="quest-rE">
+          <div class="question-text-indent">
+            Pyt.E.
+            Czy podoba się nazwa NAZWA?<br />
+            Pytanie z poziomym układem odpowiedzi.
+            <br>
+            <span class="fill-info">(proszę wpisać dokładny wiek)</span>
+          </div>
+          <div class="answer_">
+            <div class="answer-table answer-table-horiz">
+              <div>
+                <div >Tak x 3</div>
+                <div >Tak x 2</div>
+                <div >Tak x 1</div>
+                <div >Tak nie</div>
+                <div >Nie x 1</div>
+                <div >Nie x 2</div>
+                <div >Nie x 3</div>
+              </div>
+              <div>
+                <div><input type="radio" name="rE" id="rE_1" value="3"></div>
+                <div><input type="radio" name="rE" id="rE_2" value="2" /></div>
+                <div><input type="radio" name="rE" id="rE_3" value="1"></div>
+                <div><input type="radio" name="rE" id="rE_4" value="0"></div>
+                <div><input type="radio" name="rE" id="rE_5" value="-1"></div>
+                <div><input type="radio" name="rE" id="rE_6" value="-2"></div>
+                <div><input type="radio" name="rE" id="rE_7" value="-3"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--div class="question-break"></div-->
+
+        <!-- Rekrut quest rF ================================================== -->
+        <div class="question_" id="quest-rF">
+          <div class="question-text-indent">
+            Pyt.F.
+            Czy podoba się nazwa NAZWA?<br />
+            Pytanie z poziomym suwakiem.
+            <span class="fill-info hidden">(proszę zaznaczyć JEDNĄ odpowiedź w każdym wierszu)</span>
+          </div>
+          <!--div class="question-break"></div-->
+          <div class="answer_">
+            <div class="answer-range">
+              <div>
+                <input type="range" name="rF" list="tF_list" min="-3" max="3" class="reverse">
+                <datalist id="tF_list">
+                  <option>3</option>
+                  <option>2</option>
+                  <option>1</option>
+                  <option>0</option>
+                  <option>-1</option>
+                  <option>-2</option>
+                  <option>-3</option>
+                </datalist>
+              </div>
+              <div>
+                <div>tak x 3</div>
+                <div>tak x 2</div>
+                <div>tak x 1</div>
+                <div>tak i nie</div>
+                <div>nie x 1</div>
+                <div>nie x 2</div>
+                <div>nie x 3</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--div class="question-break"></div-->
+
+        <!-- Rekrut quest rG ================================================== -->
+        <div class="question_" id="quest-rG">
+          <div class="question-text-indent">
+            Pyt.G. Prosze napisać co się podoba w nazwie NAZWA.<br />
+            To jest pytanie otwarte zadawane po filtrze z poprzedniego pytania, gdy odpowiedź nie była negatywna.
+            <br>
+            <span class="fill-info">(proszę wpisać odpowiedź)</span>
+          </div>
+          <!--div class="question-break"></div-->
+          <div class="answer_">
+            <div class="answer-open">
+              <textarea name="rG" autofocus></textarea>
+            </div>
+          </div>
+        </div>
+        <!--div class="question-break"></div-->
+
+        <!-- Rekrut quest rH ================================================== -->
+        <div class="question_" id="quest-rH">
+          <div class="question-text-indent">
+            Pyt.H.
+            Prosze napisać co się nie podoba w nazwie NAZWA.<br />
+            To jest pytanie otwarte zadawane po filtrze z poprzedniego pytania, gdy odpowiedź nie była pozytywna.
+            <br>
+            <span class="fill-info">(proszę wpisać odpowiedź)</span>
+          </div>
+          <!--div class="question-break"></div-->
+          <div class="answer_">
+            <div class="answer-open">
+              <textarea name="rH" autofocus></textarea>
+            </div>
+          </div>
+        </div>
+        <!--div class="question-break"></div-->
+
+        <!-- Rekrut quest rI ================================================== -->
+        <div class="question_" id="quest-rI">
+          <div class="question-text-indent">
+            Pyt.I.
+            Proszę ocenić w jakim stopniu poszczególne cechy pasują do nazwy NAZWA. <br />
+            W pytaniu tym kolejność cech jest inna dla kolejnych respondentów.
+            <br>
+            <span class="fill-info">(proszę zaznaczyć JEDNĄ odpowiedź w każdym wierszu)</span>
+          </div>
+          <!--div class="question-break"></div-->
+          <div class="answer_">
+            <div class="answer-table answer-table-horiz-xn">
+              <div style="font-size:smaller;">
+                <div ><br></div>
+                <div >Bardzo pasuje</div>
+                <div >Pasuje</div>
+                <div >Troche pasuje</div>
+                <div >Ani pasuje, ani nie pasuje</div>
+                <div >Trochę nie pasuje</div>
+                <div >Nie pasuje</div>
+                <div >Bardzo nie pasuje</div>
+              </div>
+              <div>
+                <div id="rIitem1">Cecha pierwsza</div>
+                <div><input type="radio" name="rI_1" value="7"></div>
+                <div><input type="radio" name="rI_1" value="6"></div>
+                <div><input type="radio" name="rI_1" value="5"></div>
+                <div><input type="radio" name="rI_1" value="4"></div>
+                <div><input type="radio" name="rI_1" value="3"></div>
+                <div><input type="radio" name="rI_1" value="2"></div>
+                <div><input type="radio" name="rI_1" value="1"></div>
+              </div>
+              <div>
+                <div id="rIitem2">Cecha druga</div>
+                <div><input type="radio" name="rI_2" value="7"></div>
+                <div><input type="radio" name="rI_2" value="6"></div>
+                <div><input type="radio" name="rI_2" value="5"></div>
+                <div><input type="radio" name="rI_2" value="4"></div>
+                <div><input type="radio" name="rI_2" value="3"></div>
+                <div><input type="radio" name="rI_2" value="2"></div>
+                <div><input type="radio" name="rI_2" value="1"></div>
+              </div>
+              <div>
+                <div id="rIitem3">Cecha trzecia</div>
+                <div><input type="radio" name="rI_3" value="7"></div>
+                <div><input type="radio" name="rI_3" value="6"></div>
+                <div><input type="radio" name="rI_3" value="5"></div>
+                <div><input type="radio" name="rI_3" value="4"></div>
+                <div><input type="radio" name="rI_3" value="3"></div>
+                <div><input type="radio" name="rI_3" value="2"></div>
+                <div><input type="radio" name="rI_3" value="1"></div>
+              </div>
+              <div>
+                <div id="rIitem4">Cecha czwarta</div>
+                <div><input type="radio" name="rI_4" value="7"></div>
+                <div><input type="radio" name="rI_4" value="6"></div>
+                <div><input type="radio" name="rI_4" value="5"></div>
+                <div><input type="radio" name="rI_4" value="4"></div>
+                <div><input type="radio" name="rI_4" value="3"></div>
+                <div><input type="radio" name="rI_4" value="2"></div>
+                <div><input type="radio" name="rI_4" value="1"></div>
+              </div>
+              <div>
+                <div id="rIitem5">Cecha piąta</div>
+                <div><input type="radio" name="rI_5" value="7"></div>
+                <div><input type="radio" name="rI_5" value="6"></div>
+                <div><input type="radio" name="rI_5" value="5"></div>
+                <div><input type="radio" name="rI_5" value="4"></div>
+                <div><input type="radio" name="rI_5" value="3"></div>
+                <div><input type="radio" name="rI_5" value="2"></div>
+                <div><input type="radio" name="rI_5" value="1"></div>
+              </div>
+              <div>
+                <div id="rIitem6">Cecha szósta</div>
+                <div><input type="radio" name="rI_6" value="7"></div>
+                <div><input type="radio" name="rI_6" value="6"></div>
+                <div><input type="radio" name="rI_6" value="5"></div>
+                <div><input type="radio" name="rI_6" value="4"></div>
+                <div><input type="radio" name="rI_6" value="3"></div>
+                <div><input type="radio" name="rI_6" value="2"></div>
+                <div><input type="radio" name="rI_6" value="1"></div>
+              </div>
+              <div>
+                <div id="rIitem7">Cecha siudma</div>
+                <div><input type="radio" name="rI_7" value="7"></div>
+                <div><input type="radio" name="rI_7" value="6"></div>
+                <div><input type="radio" name="rI_7" value="5"></div>
+                <div><input type="radio" name="rI_7" value="4"></div>
+                <div><input type="radio" name="rI_7" value="3"></div>
+                <div><input type="radio" name="rI_7" value="2"></div>
+                <div><input type="radio" name="rI_7" value="1"></div>
+              </div>
+              <div>
+                <div id="rIitem8">Cecha ósma</div>
+                <div><input type="radio" name="rI_8" value="7"></div>
+                <div><input type="radio" name="rI_8" value="6"></div>
+                <div><input type="radio" name="rI_8" value="5"></div>
+                <div><input type="radio" name="rI_8" value="4"></div>
+                <div><input type="radio" name="rI_8" value="3"></div>
+                <div><input type="radio" name="rI_8" value="2"></div>
+                <div><input type="radio" name="rI_8" value="1"></div>
+              </div>
+              <div>
+                <div id="rIitem9">Cech dziewiąta</div>
+                <div><input type="radio" name="rI_9" value="7"></div>
+                <div><input type="radio" name="rI_9" value="6"></div>
+                <div><input type="radio" name="rI_9" value="5"></div>
+                <div><input type="radio" name="rI_9" value="4"></div>
+                <div><input type="radio" name="rI_9" value="3"></div>
+                <div><input type="radio" name="rI_9" value="2"></div>
+                <div><input type="radio" name="rI_9" value="1"></div>
+              </div>
+              <div>
+                <div id="rIitem10">Cech dziewiąta</div>
+                <div><input type="radio" name="rI_10" value="7"></div>
+                <div><input type="radio" name="rI_10" value="6"></div>
+                <div><input type="radio" name="rI_10" value="5"></div>
+                <div><input type="radio" name="rI_10" value="4"></div>
+                <div><input type="radio" name="rI_10" value="3"></div>
+                <div><input type="radio" name="rI_10" value="2"></div>
+                <div><input type="radio" name="rI_10" value="1"></div>
+              </div>
+              <div>
+                <div id="rIitem11">Cech jedenasta</div>
+                <div><input type="radio" name="rI_11" value="7"></div>
+                <div><input type="radio" name="rI_11" value="6"></div>
+                <div><input type="radio" name="rI_11" value="5"></div>
+                <div><input type="radio" name="rI_11" value="4"></div>
+                <div><input type="radio" name="rI_11" value="3"></div>
+                <div><input type="radio" name="rI_11" value="2"></div>
+                <div><input type="radio" name="rI_11" value="1"></div>
+              </div>
+              <div>
+                <div id="rIitem12">Cecha dwunasta</div>
+                <div><input type="radio" name="rI_12" value="7"></div>
+                <div><input type="radio" name="rI_12" value="6"></div>
+                <div><input type="radio" name="rI_12" value="5"></div>
+                <div><input type="radio" name="rI_12" value="4"></div>
+                <div><input type="radio" name="rI_12" value="3"></div>
+                <div><input type="radio" name="rI_12" value="2"></div>
+                <div><input type="radio" name="rI_12" value="1"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--div class="question-break"></div-->
+
+        <!-- Rekrut quest rJ ================================================== -->
+        <div class="question_" id="quest-rJ">
+          <div class="question-text-indent">
+            Pyt.J.
+            Proszę ocenić w jakim stopniu poszczególne cechy pasują do nazwy NAZWA. <br />
+            Tym razem za pomocą suwaków.
+            W pytaniu tym kolejność cech jest inna dla kolejnych respondentów.
+            <br>
+            <span class="fill-info">(proszę zaznaczyć JEDNĄ odpowiedź w każdym wierszu)</span>
+          </div>
+          <!--div class="question-break"></div-->
+          <div class="answer_">
+            <div class="answer-table-range">
+              <div>
+                <div >&nbsp;<br />&nbsp;</div>
+                <div>
+                  <div>
+                    <div >Bardzo pasuje</div>
+                    <div >Pasuje</div>
+                    <div >Troche pasuje</div>
+                    <div >Ani pasuje, ani nie pasuje</div>
+                    <div >Trochę nie pasuje</div>
+                    <div >Nie pasuje</div>
+                    <div >Bardzo nie pasuje</div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div id="rJitem1">Cecha pierwsza</div>
+                <div><input type="range" name="rJ_1" min="1" max="7" class="reverse"></div>
+              </div>
+              <div>
+                <div id="rJitem2">Cecha druga</div>
+                <div><input type="range" name="rJ_2" min="1" max="7" class="reverse"></div>
+              </div>
+              <div>
+                <div id="rJitem3">Cecha trzecia</div>
+                <div><input type="range" name="rJ_3" min="1" max="7" class="reverse"></div>
+              </div>
+              <div>
+                <div id="rJitem4">Cecha czwarta</div>
+                <div><input type="range" name="rJ_4" min="1" max="7" class="reverse"></div>
+              </div>
+              <div>
+                <div id="rJitem5">Cecha piąta</div>
+                <div><input type="range" name="rJ_5" min="1" max="7" class="reverse"></div>
+              </div>
+              <div>
+                <div id="rJitem6">Cecha szósta</div>
+                <div><input type="range" name="rJ_6" min="1" max="7" class="reverse"></div>
+              </div>
+              <div>
+                <div id="rJitem7">Cecha siudma</div>
+                <div><input type="range" name="rJ_7" min="1" max="7" class="reverse"></div>
+              </div>
+              <div>
+                <div id="rJitem8">Cecha ósma</div>
+                <div><input type="range" name="rJ_8" min="1" max="7" class="reverse"></div>
+              </div>
+              <div>
+                <div id="rJitem9">Cech dziewiąta</div>
+                <div><input type="range" name="rJ_9" min="1" max="7" class="reverse"></div>
+              </div>
+              <div>
+                <div id="rJitem10">Cech dziewiąta</div>
+                <div><input type="range" name="rJ_10" min="1" max="7" class="reverse"></div>
+              </div>
+              <div>
+                <div id="rJitem11">Cech jedenasta</div>
+                <div><input type="range" name="rJ_11" min="1" max="7" class="reverse"></div>
+              </div>
+              <div>
+                <div id="rJitem12">Cecha dwunasta</div>
+                <div><input type="range" name="rJ_12" min="1" max="7" class="reverse"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--div class="question-break"></div-->
+
+        <!-- Rekrut quest rK ================================================== -->
+        <div class="question_" id="quest-rK">
+          <div class="question-text-indent">
+            Pyt.K.
+            Proszę obejrzeć wszystkie obrazki i wybrać najładniejszy?
+            <br>
+            <span class="fill-info">(proszę zaznaczyć jedną odpowiedź)</span>
+          </div>
+          <!--div class="question-break"></div-->
+          <div id="images-slider-rK" class="images-slider">
+            <img src="./mediafiles/pic01.jpg" onclick="document.questForm.rK[0].checked = true;">
+            <img src="./mediafiles/pic02.jpg" onclick="document.questForm.rK[1].checked = true;">
+            <img src="./mediafiles/pic03.jpg" onclick="document.questForm.rK[2].checked = true;">
+            <img src="./mediafiles/pic04.jpg" onclick="document.questForm.rK[3].checked = true;">
+            <img src="./mediafiles/pic05.jpg" onclick="document.questForm.rK[4].checked = true;">
+            <img src="./mediafiles/pic06.jpg" onclick="document.questForm.rK[5].checked = true;">
+          </div>
+          <div class="answer_">
+            <div class="answer-table answer-table-vert">
+              <div><div><label for="rK_1">1</label></div> <div><input type="radio" name="rK" id="rK_1" value="1"></div></div>
+              <div><div><label for="rK_2">2</label></div> <div><input type="radio" name="rK" id="rK_2" value="2"></div></div>
+              <div><div><label for="rK_3">3</label></div> <div><input type="radio" name="rK" id="rK_3" value="3"></div></div>
+              <div><div><label for="rK_4">4</label></div> <div><input type="radio" name="rK" id="rK_4" value="4"></div></div>
+              <div><div><label for="rK_5">5</label></div> <div><input type="radio" name="rK" id="rK_5" value="5"></div></div>
+              <div><div><label for="rK_6">6</label></div> <div><input type="radio" name="rK" id="rK_6" value="6"></div></div>
+            </div>
+          </div>
+        </div>
+        <!--div class="question-break"></div-->
+
+        <!-- Rekrut quest rL ================================================== -->
+        <div class="question_" id="quest-rL">
+          <div class="question-text-indent">
+            Pyt.L.
+            Proszę obejrzeć cały film i ocenić go?
+            <br>
+            <span class="fill-info">(proszę zaznaczyć jedną odpowiedź)</span>
+          </div>
+          <!--div class="question-break"></div-->
+          <div class="film-screen">
+            <!--video id="filmik" width="640" height="480" controls preload="none"-->
+            <video id="filmik" width="640" height="480" controls>
+              <source src="./mediafiles/filmik.mp4" type="video/mp4" media="(min-width: 450px)">
+            </video>
+          </div>
+          <div class="answer_">
+            <div class="answer-table answer-table-vert">
+              <div><div><label for="rL_1">Bardzo ładny  </label></div> <div><input type="radio" name="rL" id="rL_1" value="5"></div></div>
+              <div><div><label for="rL_2">Ładny         </label></div> <div><input type="radio" name="rL" id="rL_2" value="4"></div></div>
+              <div><div><label for="rL_3">Taki sobie    </label></div> <div><input type="radio" name="rL" id="rL_3" value="3"></div></div>
+              <div><div><label for="rL_4">Brzydki       </label></div> <div><input type="radio" name="rL" id="rL_4" value="2"></div></div>
+              <div><div><label for="rL_5">Bardzo brzydki</label></div> <div><input type="radio" name="rL" id="rL_5" value="1"></div></div>
+            </div>
+          </div>
+        </div>
+        <!--div class="question-break"></div-->
+
+        <!-- Rekrut quest rM ================================================== -->
+        <div class="question_" id="quest-rM">
+          <div class="question-text-indent">
+            Pyt.M.
+            Proszę wybrać kilka opcji?
+            <br>
+            <span class="fill-info">(proszę zaznaczyć przynajmniej jedną odpowiedź)</span>
+          </div>
+          <!--div class="question-break"></div-->
+          <div class="answer_">
+            <select name="rM[]" id="rM" multiple size="3">
+              <option value="nazwa1">Nnnazwa1</option>
+              <option value="nazwa2">Nnnazwa2</option>
+              <option value="nazwa3">Nnnazwa3</option>
+              <option value="nazwa4">Nnnazwa4</option>
+            </select>
+          </div>
+        </div>
+        <!--div class="question-break"></div-->
+
+        <!-- Rekrut quest rN ================================================== -->
+        <div class="question_" id="quest-rN">
+          <div class="question-text-indent">
+            <p>
+              N. Proszę wybrać jedną opcję?
+              <br>
+              <span class="fill-info">(proszę zaznaczyć jedną odpowiedź)</span>
+            </p>
+          </div>
+          <!--div class="question-break"></div-->
+          <div class="answer_">
+            <select name="rN" id="rN">
+              <option value="nazwa1">Nnnazwa1</option>
+              <option value="nazwa2">Nnnazwa2</option>
+              <option value="nazwa3">Nnnazwa3</option>
+              <option value="nazwa4">Nnnazwa4</option>
+            </select>
+          </div>
+        </div>
+        <!--div class="question-break"></div-->
+
+
+        <!-- Test prod 1 exit ================================================== -->
+        <div class="question_" id="quest-wait01">
+          <div class="section-text text-center">
+            To nie jest pytanie, tylko czekanie<br>
+          </div>
+          <div class="question-info text-center">
+            Wymuszone czekanie, by odpocząć po wczesniejszych pytaniach.
+          </div>
+          <div class="question-info text-center">
+            <span id="wait01-90">Proszę odczekać <span id="wait01-seconds">90</span> sekund przed odpowiadaniem na kolejne pytania.</span><br />
+            <span id="wait01-pp">Proszę poinformować naszego ankietera, że jest Pan/i gotów/a na ocenę kolejnego produktu.</span>
+          </div>
+          <div class="question-info text-center">
+            <span id="wait01-clock"><canvas id="wait01-clockC" width="200px" height="200px"><img src="../mediafiles/zegar.gif" alt="" height="200px"></canvas></span>
+            <span id="wait01-prod"><img src="../mediafiles/szklanka.gif" alt="" height="200px"></span>
+          </div>
+          <div id="wait01-pclock" class="question-info text-center">
+            <span id="wait01-ptime">Pozostało jeszcze 10 godzin.</span>
+          </div>
+        </div>
+        <!--div class="question-break"></div-->
+
+
+        <!-- Rekrut quest rZ ================================================== -->
+        <div class="question_" id="quest-rZ">
+          <div class="question-text-indent">
+            Pyt.Z.
+            Czy podoba się ta prezentacja?
+            <br>
+            <span class="fill-info">(proszę zaznaczyć jedną odpowiedź)</span>
+          </div>
+          <!--div class="question-break"></div-->
+          <div class="answer_">
+            <div class="answer-table answer-table-vert">
+              <div><div><label for="rZ_1">Tak</label></div> <div><input type="radio" name="rZ" id="rZ_1" value="1"></div></div>
+              <div><div><label for="rZ_2">Nie</label></div> <div><input type="radio" name="rZ" id="rZ_2" value="2"></div></div>
+            </div>
+          </div>
+        </div>
+        <!--div class="question-break"></div-->
+
+      </div>
+    </form>
+  <!-- KONIEC ANKIETY ============================================================================================== -->
+  <!-- KONIEC ANKIETY ============================================================================================== -->
+  <!-- KONIEC ANKIETY ============================================================================================== -->
+
+
+  <!-- KOŃCZENIE ANKIETY ============================================= -->
+    <div id="finish-quest-info" class="ask-user-box">
+      <div id="data-submit-info-" class="section-text text-center">
+        <h2>DZIĘKUJEMY ZA UDZIAŁ W BADANIU.</h2>
+      </div>
+      <div id="data-submit-info" class="section-text text-center">
+        Zapisywanie danych.
+      </div>
+      <!--div class="question-break"></div-->
+      <div id="data-saving-progess" class="question-info text-center">
+        <button id="data-saved-next" class="single-button" onclick="cleanData()" value="yes">Dane zostały zapisane.</button>
+      </div>
+      <!--div class="question-break"></div-->
+      <span id="press-text1" style="font-size:80%;font-style:italic">(proszę wcisnąć przycisk)</span>
+      <!--div class="question-break"></div-->
+      <div id="data-saved" class="section-text text-center">
+        Dane zostały zapisane.
+      </div>
+      <!--div class="question-break"></div-->
+      <div id="data-removing-info" class="section-text text-center">
+        Usuwanie danych z formularza.
+      </div>
+      <!--div class="question-break"></div-->
+      <div id="cookies-removing-info" class="section-text text-center">
+        Usuwanie ciasteczek.
+      </div>
+      <!--div class="question-break"></div-->
+      <div id="finish-buttons" class="question-info text-center">
+        <button id="all-done-end" class="nav-button" onclick="endInterview()" value="no">Koniec. Bardzo dziękuję.</button>
+        <!--button class="nav-button" id="all-done-next" onclick="nextInterview()" value="yes">Rozpoczęcie kolejnego wywiadu.</button-->
+      </div>
+    </div>
+  </div>
+
+
+  <div id="quest-nav-buttons" class="quest-nav-buttons buttons-place">
+    <div id="button-left-tab"><button class="nav-button" id="prev-button" onclick="gotoPrevQuestion()" value="prev">Wstecz</button></div>
+    <div id="button-center-tab"><button class="nav-button" id="fill-button" onclick="showAllQuestions()" value="fill">Załaduj pytania</button></div>
+    <div id="button-right-tab"><button class="nav-button" id="next-button" onclick="gotoNextQuestion()" value="next">Dalej</button></div>
+  </div>
+</div>
+
+
+<div id="bottom-banner" class="bottom-banner table-row">
+  <div id="bottom-banner-left" class="bottom-banner-left tab-col3of10">
+    <span id="user-id-info"></span>#<span id="intv-num-info"></span>.<span id="test-prod-info"></span>
+  </div>
+  <div id="position-info" class="bottom-banner-center tab-col4of10">
+    Strona <span id="question-no">0</span> / <span id="questions-num">3</span> <progress id="quest-progress" value="0" max="3" width="300px"></progress>
+  </div>
+  <div id="bottom-banner-right" class="bottom-banner-right tab-col3of10">
+    <span id="survey-id-info"></span> / <span id="client-name-info">AZETKA very special forces</span>
+  </div>
+</div>
+
+<div id="monitor-monitor" class="monitor-div">
+</div>
+
+<div id="iframe-php-monitor" class="iframe-php-div">
+<iframe name="php-output" id="php-output"></iframe>
+</div>
+
+</body>
+
+</html>

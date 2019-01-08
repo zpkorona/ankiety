@@ -1,0 +1,882 @@
+<html>
+<head>
+  <title>Badanie 171554 test zapachu</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Expires" content="0">
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate"> 
+  <meta http-equiv="Cache-Control" content="post-check=0, pre-check=0">
+  <meta http-equiv="Pragma" content="no-cache"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AZetKa ankiety badanie 171532 dla Almares">
+  <meta name="keywords" content="ankieta">
+  <meta name="author" content="AZetKa studio">
+  <script language="JavaScript" type="text/javascript" src="js/badanie.js"></script>
+  <link rel="stylesheet" type="text/css" href="../css/badania.css">
+  <link rel="stylesheet" type="text/css" href="css/badanie.css">
+</head>
+
+<body>
+<div id="top-banner" class="full-size-banner">
+  <div id="top-banner-left" class="tab-col1of5">&nbsp;</div>
+  <div id="top-banner-center" class="tab-col3of5"><em>Ładowanie badania...</em></div>
+  <div id="top-banner-right" class="tab-col1of5"><img src="grafiki/AZetKa-pas.gif" alt="" height="20px"></div>
+</div>
+
+
+<div id="middle-banner" class="div-row">
+  <div id="questions-place" class="questions-place">
+
+    <!-- NIE MA COOKIES ================================================== -->
+    <div id="cookies-confirm" class="cookies-info">
+      <div>
+        W celu przeprowadzenia ankiety wykorzystujemy ciasteczka.<br>
+        Są one przez nas używane jedynie w celu zapamiętania aktualnego stanu 
+        wypełnienia ankiety na wypadek utracenia połączenia z serwerem oraz 
+        sprawdzania, czy z tego komputera były robione już jakieś nasze ankiety.
+        Nasze ciasteczka nie służą żadnym celom handlowym ani reklamowym.
+      </div>
+      <div>
+        <button id="cookies-confirm-yes" class="nav-button" onclick="cookiesConfirmed()" value="yes">OK</button>
+      </div>
+    </div>
+    <div class="question-break"></div>
+
+
+    <!-- SĄ COOKIES ================================================== -->
+    <div id="ask-restore-intv" class="ask-user-box">
+      <div class="section-text-center">
+        W celu przeprowadzenia ankiety wykorzystujemy ciasteczka.
+      </div>
+      <div class="question-break"></div>
+      <div class="question-cont">
+        W pamięci przeglądarki znajdują sie dane z poprzedniej, prawdopodobnie niezakończonej <br>
+         lub niezapisanej ankiety do tego badania.
+      </div>
+      <div class="question-break"></div>
+      <div class="question-info-center">
+        <p>
+          Czy pobrać te dane i kontynuować rozpoczętą wcześniej ankietę?
+        </p>
+        <p>
+          Czy usunąć te dane o rozpocząć nową ankietę? Nie będzie powrotu do poprzedniej ankiety.
+        </p>
+      </div>
+      <div class="question-break"></div>
+      <div>
+        <progress id="restore-progress" value="1" max="300"></progress>
+      </div>
+      <div class="question-break"></div>
+      <div id="restore-buttons" class="buttons-place">
+        <button class="nav-button" id="restore-interview" onclick="restoreFromCookies()" value="old">Poprzednia ankieta</button>
+        <button class="nav-button" id="new-interview" onclick="newInterview()" value="new">Nowa ankieta</button>
+      </div>
+    </div>
+    <div class="question-break"></div>
+
+
+    <!-- NIE MA IDENTYFIKATORA ============================================= -->
+    <div id="reload-survey-info" class="ask-user-box">
+      <div id="reload-text1" class="section-text">
+        Błąd:
+      </div>
+      <div id="reload-text2" class="question-info">
+        Bo.
+      </div>
+      <div class="question-break"></div>
+      <!--div id="reload-buttons" class="buttons-place">
+          <button class="nav-button" id="reload-survey" onclick="gotoBadania()" value="no">Powrót</button>
+      </div-->
+    </div>
+    <div class="question-break"></div>
+
+
+    <!-- ANKIETA ==================================================================================================== -->
+    <!-- ANKIETA ==================================================================================================== -->
+    <!-- ANKIETA ==================================================================================================== -->
+    <form name="questForm" action="php/zapiszData2disk.php" enctype="text/plan" method="POST"
+          onSubmit="event.preventDefault(); return finishWithFormData();" target="php-output">
+      <div id="all-questions" class="questionnaire">
+
+        <!-- NUMER ANKIETY ================================================== -->
+        <div class="question_" id="quest-intv_num">
+          <div id="survey-name" class="section-text-center">
+            <b>KWESTIONARIUSZ GŁÓWNY ZAPACHY.</b>
+          </div>
+          <div class="question-break"></div>
+          <div id="log-in-div" class="answers-table-vert"><!--class="answer-div"-->
+            <div>
+              <div>
+                Proszę wpisać numer ankiety [1001-1120,1121-1150]:
+              </div>
+              <div>
+                <input type="number" name="intv_num" id="intv_num" maxlength="7" size="7" onkeypress="checkIntvIdEnter(event)">
+                <span id="quest-intv_num-error" class="error-comment">(błędny numer ankiety)</span>
+              </div>
+            </div>
+          </div>
+          <input type="text" name="survey_id"  class="no-display">
+          <input type="text" name="stage_no"   class="no-display">
+          <input type="text" name="user_id"    class="no-display">
+          <input type="text" name="start_time" class="no-display">
+          <input type="text" name="end_time"   class="no-display">
+          <input type="text" name="duration"   class="no-display">
+          <div class="section-text-center">
+            <b><i>ANKIETER: Sprawdzić czy kody z ankiety pasują do tych, umieszczonych na produktach testowych.</i></b>
+          </div>
+        </div>
+        <div class="question-break"></div>
+
+
+        <!-- INTRO 0 ================================================== -->
+        <div class="question_" id="quest-intro0">
+          <div class="section-text-center">
+            Witamy i dziękujemy za chęć udziału w naszym badaniu!
+          </div>
+          <div class="question-info-center">
+            <p>
+            <b><i>
+            Chcielibyśmy poznać Pani opinię na temat nowego zapachu perfum. <br>
+            Przekażę teraz Pani testowany produkt i pomogę Pani zaaplikować go Pani do powąchania. <br>
+            Może go Pani wąchać tyle razy ile będzie Pani potrzebowała, żeby odpowiedzieć na moje pytania.
+            </i></b>
+            </p>
+          </div>
+          <div class="question-info-center">
+            <p>
+              Prosimy udzielać odpowiedzi na pytania po kolei.
+            </p>
+            <p>
+              Prosimy NIE ROZMAWIAĆ na temat produktów z innymi uczestnikami!
+            </p>
+            <p>
+              W przypadku jakichkolwiek pytań, proszę zwrócić się do jednego z naszych asystentów.
+            </p>
+          </div>
+        </div>
+        <div class="question-break"></div>
+
+
+        <!-- INTRO Test prod 1 intro ================================================== -->
+        <div class="question_" id="quest-tp1_intro">
+          <div class="section-text-center">
+          </div>
+          <div class="question-text-center">
+            <p>
+              <b><u>TEST ZAPACHU PRODUKTU NA SKÓRZE.</u></b>
+            </p>
+            <p>
+              PRODUKT:
+              <input type="text" name="tp1_ord" id="tp1_ord" value="1"  class="no-display">
+              <input type="text" name="tp1_name" id="tp1_name" value="146" size="1" readonly>
+            </p>
+          </div>
+          <div class="question-info-center">
+            <b><u>Proszę postępować zgodnie z instrukcją testu produktu.</u></b>
+          </div>
+        </div>
+        <div class="question-break"></div>
+
+        <!-- Test prod 1 quest 1 ================================================== -->
+        <div class="question_" id="quest-tp1_q1">
+          <div class="question-info">
+            <b>Wąchając zapach tego produktu proszę w pełni doświadczyć tego zapachu.</b>
+          </div>
+          <div class="question-text-indent">
+            <p>
+              1. Biorąc pod uwagę <b>Pani osobistą opinię</b>, proszę powiedzieć w jakim stopniu PODOBA SIĘ Pani ten zapach.<br>
+              Proszę posłużyć się skalą od 0 do 10, gdzie 0 oznacza "W OGÓLE MI SIĘ NIE PODOBA" a 10 oznacza <br>
+              "ZDECYDOWANIE MI SIĘ PODOBA".
+              <br>
+              <span class="fill-info">(proszę zaznaczyć jedną odpowiedź)</span>
+            </p>
+          </div>
+          <div class="question-break"></div>
+          <div class="answers-table-horiz">
+            <div>
+              <div><input type="radio" name="tp1_q1" id="tp1_q1_0" value="0"></div>
+              <div><input type="radio" name="tp1_q1" id="tp1_q1_1" value="1"></div>
+              <div><input type="radio" name="tp1_q1" id="tp1_q1_2" value="2"></div>
+              <div><input type="radio" name="tp1_q1" id="tp1_q1_3" value="3"></div>
+              <div><input type="radio" name="tp1_q1" id="tp1_q1_4" value="4"></div>
+              <div><input type="radio" name="tp1_q1" id="tp1_q1_5" value="5"></div>
+              <div><input type="radio" name="tp1_q1" id="tp1_q1_6" value="6"></div>
+              <div><input type="radio" name="tp1_q1" id="tp1_q1_7" value="7"></div>
+              <div><input type="radio" name="tp1_q1" id="tp1_q1_8" value="8"></div>
+              <div><input type="radio" name="tp1_q1" id="tp1_q1_9" value="9"></div>
+              <div><input type="radio" name="tp1_q1" id="tp1_q1_10" value="10"></div>
+            </div>
+            <div>
+              <div><label for="tp1_q1_0">0<br>W<small>OGÓLE MI<br>SIĘ NIE PODOBA  </small></label></div>
+              <div><label for="tp1_q1_1">1                             </label></div>
+              <div><label for="tp1_q1_2">2                             </label></div>
+              <div><label for="tp1_q1_3">3                             </label></div>
+              <div><label for="tp1_q1_4">4                             </label></div>
+              <div><label for="tp1_q1_5">5                             </label></div>
+              <div><label for="tp1_q1_6">6                             </label></div>
+              <div><label for="tp1_q1_7">7                             </label></div>
+              <div><label for="tp1_q1_8">8                             </label></div>
+              <div><label for="tp1_q1_9">9                             </label></div>
+              <div><label for="tp1_q1_10">10<br>Z<small>DECYDOWANIE<br>MI SIĘ PODOBA</small></label></div>
+            </div>
+          </div>
+        </div>
+        <div class="question-break"></div>
+
+        <!-- Test prod 1 quest 2 ================================================== -->
+        <div class="question_" id="quest-tp1_q2">
+          <div class="question-text-indent">
+            <p>
+              2.
+              Myśląc o intensywności tego zapachu, który przed chwilą Pani wąchała, <br>
+              czy powiedziała by Pani, że jest on ...
+              <br>
+              <span class="fill-info">(proszę zaznaczyć jedną odpowiedź)</span>
+            </p>
+          </div>
+          <div class="question-break"></div>
+          <div class="answers-table-horiz">
+            <div>
+              <div><input type="radio" name="tp1_q2" id="tp1_q2_1" value="5"></div>
+              <div><input type="radio" name="tp1_q2" id="tp1_q2_2" value="4"></div>
+              <div><input type="radio" name="tp1_q2" id="tp1_q2_3" value="3"></div>
+              <div><input type="radio" name="tp1_q2" id="tp1_q2_4" value="2"></div>
+              <div><input type="radio" name="tp1_q2" id="tp1_q2_5" value="1"></div>
+            </div>
+            <div>
+              <div><label for="tp1_q2_1">Z<small>DECYDOWANIE<br>ZA INTENSYWNY       </small></label></div>
+              <div><label for="tp1_q2_2">W<small> PEWNYM<br>STOPNIU ZA<br>INTENSYWNY</small></label></div>
+              <div><label for="tp1_q2_3">O<small>DPOWIEDNI                          </small></label></div>
+              <div><label for="tp1_q2_4">W<small> PEWNYM<br>STOPNIU ZA<br>SŁABY     </small></label></div>
+              <div><label for="tp1_q2_5">Z<small>DECYDOWANIE<br>ZA SŁABY            </small></label></div>
+            </div>
+          </div>
+        </div>
+        <div class="question-break"></div>
+
+        <!-- Test prod 1 quest 3 ================================================== -->
+        <div class="question_" id="quest-tp1_q3">
+          <div class="question-text-indent">
+            <p>
+              3.
+              Przeczytam teraz Pani listę określeń, które mogą być użyte do <b>opisania tego zapachu</b>.<br>
+              Dla każdego z nich proszę określić na ile się Pani z nim zgadza, lub nie, w kontekście testowanego przed chwilą zapachu. <br>
+              Tak jak poprzednio, może Pani wąchać zapach kilka razy. 
+              <br>
+              <span class="fill-info">(proszę zaznaczyć JEDNĄ odpowiedź w każdym wierszu)</span>
+            </p>
+            <p>
+            </p>
+          </div>
+          <div class="question-break"></div>
+          <div class="answers-table-horiz-xn">
+            <div>
+              <div style="width:30em"><br></div>
+              <div >Z<small>DECYDO<br>WANIE SIĘ <br>ZGADZAM</small></div>
+              <div >W<small> PEWNYM <br>STOPNIU <br>SIĘ <br>ZGADZAM</small></div>
+              <div >A<small>NI SIĘ <br>ZGADZAM, <br>ANI SIĘ NIE <br>ZGADZAM</small></div>
+              <div >W<small> PEWNYM <br>STOPNIU <br>SIĘ NIE <br>ZGADZAM</small></div>
+              <div >Z<small>DECYDO<br>WANIE SIĘ <br>NIE <br>ZGADZAM</small></div>
+            </div>
+            <div>
+              <div id="tp1_q3item1">ATRAKCYJNY</div>
+              <div><input type="radio" name="tp1_q3_1" id="tp1_q3_1_1" value="5"></div>
+              <div><input type="radio" name="tp1_q3_1" id="tp1_q3_1_2" value="4"></div>
+              <div><input type="radio" name="tp1_q3_1" id="tp1_q3_1_3" value="3"></div>
+              <div><input type="radio" name="tp1_q3_1" id="tp1_q3_1_4" value="2"></div>
+              <div><input type="radio" name="tp1_q3_1" id="tp1_q3_1_5" value="1"></div>
+            </div>
+            <div>
+              <div id="tp1_q3item2">ŁATWY DO NOSZENIA</div>
+              <div><input type="radio" name="tp1_q3_2" id="tp1_q3_2_1" value="5"></div>
+              <div><input type="radio" name="tp1_q3_2" id="tp1_q3_2_2" value="4"></div>
+              <div><input type="radio" name="tp1_q3_2" id="tp1_q3_2_3" value="3"></div>
+              <div><input type="radio" name="tp1_q3_2" id="tp1_q3_2_4" value="2"></div>
+              <div><input type="radio" name="tp1_q3_2" id="tp1_q3_2_5" value="1"></div>
+            </div>
+            <div>
+              <div id="tp1_q3item3">KOBIECY</div>
+              <div><input type="radio" name="tp1_q3_3" id="tp1_q3_3_1" value="5"></div>
+              <div><input type="radio" name="tp1_q3_3" id="tp1_q3_3_2" value="4"></div>
+              <div><input type="radio" name="tp1_q3_3" id="tp1_q3_3_3" value="3"></div>
+              <div><input type="radio" name="tp1_q3_3" id="tp1_q3_3_4" value="2"></div>
+              <div><input type="radio" name="tp1_q3_3" id="tp1_q3_3_5" value="1"></div>
+            </div>
+            <div>
+              <div id="tp1_q3item4">ŚWIEŻY</div>
+              <div><input type="radio" name="tp1_q3_4" id="tp1_q3_4_1" value="5"></div>
+              <div><input type="radio" name="tp1_q3_4" id="tp1_q3_4_2" value="4"></div>
+              <div><input type="radio" name="tp1_q3_4" id="tp1_q3_4_3" value="3"></div>
+              <div><input type="radio" name="tp1_q3_4" id="tp1_q3_4_4" value="2"></div>
+              <div><input type="radio" name="tp1_q3_4" id="tp1_q3_4_5" value="1"></div>
+            </div>
+            <div>
+              <div id="tp1_q3item5">DOBREJ JAKOŚCI</div>
+              <div><input type="radio" name="tp1_q3_5" id="tp1_q3_5_1" value="5"></div>
+              <div><input type="radio" name="tp1_q3_5" id="tp1_q3_5_2" value="4"></div>
+              <div><input type="radio" name="tp1_q3_5" id="tp1_q3_5_3" value="3"></div>
+              <div><input type="radio" name="tp1_q3_5" id="tp1_q3_5_4" value="2"></div>
+              <div><input type="radio" name="tp1_q3_5" id="tp1_q3_5_5" value="1"></div>
+            </div>
+            <div>
+              <div id="tp1_q3item6">MA CHARAKTER, OSOBOWOŚĆ</div>
+              <div><input type="radio" name="tp1_q3_6" id="tp1_q3_6_1" value="5"></div>
+              <div><input type="radio" name="tp1_q3_6" id="tp1_q3_6_2" value="4"></div>
+              <div><input type="radio" name="tp1_q3_6" id="tp1_q3_6_3" value="3"></div>
+              <div><input type="radio" name="tp1_q3_6" id="tp1_q3_6_4" value="2"></div>
+              <div><input type="radio" name="tp1_q3_6" id="tp1_q3_6_5" value="1"></div>
+            </div>
+            <div>
+              <div id="tp1_q3item7">OPTYMISTYCZNY, POZYTYWNY</div>
+              <div><input type="radio" name="tp1_q3_7" id="tp1_q3_7_1" value="5"></div>
+              <div><input type="radio" name="tp1_q3_7" id="tp1_q3_7_2" value="4"></div>
+              <div><input type="radio" name="tp1_q3_7" id="tp1_q3_7_3" value="3"></div>
+              <div><input type="radio" name="tp1_q3_7" id="tp1_q3_7_4" value="2"></div>
+              <div><input type="radio" name="tp1_q3_7" id="tp1_q3_7_5" value="1"></div>
+            </div>
+            <div>
+              <div id="tp1_q3item8">SPRAWIA, ŻE CZUJĘ SIĘ PEWNA SIEBIE</div>
+              <div><input type="radio" name="tp1_q3_8" id="tp1_q3_8_1" value="5"></div>
+              <div><input type="radio" name="tp1_q3_8" id="tp1_q3_8_2" value="4"></div>
+              <div><input type="radio" name="tp1_q3_8" id="tp1_q3_8_3" value="3"></div>
+              <div><input type="radio" name="tp1_q3_8" id="tp1_q3_8_4" value="2"></div>
+              <div><input type="radio" name="tp1_q3_8" id="tp1_q3_8_5" value="1"></div>
+            </div>
+            <div>
+              <div id="tp1_q3item9">NOWOCZESNY</div>
+              <div><input type="radio" name="tp1_q3_9" id="tp1_q3_9_1" value="5"></div>
+              <div><input type="radio" name="tp1_q3_9" id="tp1_q3_9_2" value="4"></div>
+              <div><input type="radio" name="tp1_q3_9" id="tp1_q3_9_3" value="3"></div>
+              <div><input type="radio" name="tp1_q3_9" id="tp1_q3_9_4" value="2"></div>
+              <div><input type="radio" name="tp1_q3_9" id="tp1_q3_9_5" value="1"></div>
+            </div>
+            <div>
+              <div id="tp1_q3item10">WYRAFINOWANY / ELEGANCKI</div>
+              <div><input type="radio" name="tp1_q3_10" id="tp1_q3_10_1" value="5"></div>
+              <div><input type="radio" name="tp1_q3_10" id="tp1_q3_10_2" value="4"></div>
+              <div><input type="radio" name="tp1_q3_10" id="tp1_q3_10_3" value="3"></div>
+              <div><input type="radio" name="tp1_q3_10" id="tp1_q3_10_4" value="2"></div>
+              <div><input type="radio" name="tp1_q3_10" id="tp1_q3_10_5" value="1"></div>
+            </div>
+            <div>
+              <div id="tp1_q3item11">ROMANTYCZNY</div>
+              <div><input type="radio" name="tp1_q3_11" id="tp1_q3_11_1" value="5"></div>
+              <div><input type="radio" name="tp1_q3_11" id="tp1_q3_11_2" value="4"></div>
+              <div><input type="radio" name="tp1_q3_11" id="tp1_q3_11_3" value="3"></div>
+              <div><input type="radio" name="tp1_q3_11" id="tp1_q3_11_4" value="2"></div>
+              <div><input type="radio" name="tp1_q3_11" id="tp1_q3_11_5" value="1"></div>
+            </div>
+            <div>
+              <div id="tp1_q3item12">ZMYSŁOWY</div>
+              <div><input type="radio" name="tp1_q3_12" id="tp1_q3_12_1" value="5"></div>
+              <div><input type="radio" name="tp1_q3_12" id="tp1_q3_12_2" value="4"></div>
+              <div><input type="radio" name="tp1_q3_12" id="tp1_q3_12_3" value="3"></div>
+              <div><input type="radio" name="tp1_q3_12" id="tp1_q3_12_4" value="2"></div>
+              <div><input type="radio" name="tp1_q3_12" id="tp1_q3_12_5" value="1"></div>
+            </div>
+            <div>
+              <div id="tp1_q3item13">WYSZUKANY</div>
+              <div><input type="radio" name="tp1_q3_13" id="tp1_q3_13_1" value="5"></div>
+              <div><input type="radio" name="tp1_q3_13" id="tp1_q3_13_2" value="4"></div>
+              <div><input type="radio" name="tp1_q3_13" id="tp1_q3_13_3" value="3"></div>
+              <div><input type="radio" name="tp1_q3_13" id="tp1_q3_13_4" value="2"></div>
+              <div><input type="radio" name="tp1_q3_13" id="tp1_q3_13_5" value="1"></div>
+            </div>
+            <div>
+              <div id="tp1_q3item14">STYMULUJĄCY</div>
+              <div><input type="radio" name="tp1_q3_14" id="tp1_q3_14_1" value="5"></div>
+              <div><input type="radio" name="tp1_q3_14" id="tp1_q3_14_2" value="4"></div>
+              <div><input type="radio" name="tp1_q3_14" id="tp1_q3_14_3" value="3"></div>
+              <div><input type="radio" name="tp1_q3_14" id="tp1_q3_14_4" value="2"></div>
+              <div><input type="radio" name="tp1_q3_14" id="tp1_q3_14_5" value="1"></div>
+            </div>
+            <div>
+              <div id="tp1_q3item15">UNIKALNY / INNY</div>
+              <div><input type="radio" name="tp1_q3_15" id="tp1_q3_15_1" value="5"></div>
+              <div><input type="radio" name="tp1_q3_15" id="tp1_q3_15_2" value="4"></div>
+              <div><input type="radio" name="tp1_q3_15" id="tp1_q3_15_3" value="3"></div>
+              <div><input type="radio" name="tp1_q3_15" id="tp1_q3_15_4" value="2"></div>
+              <div><input type="radio" name="tp1_q3_15" id="tp1_q3_15_5" value="1"></div>
+            </div>
+            <div>
+              <div id="tp1_q3item16">MŁODZIEŻOWY</div>
+              <div><input type="radio" name="tp1_q3_16" id="tp1_q3_16_1" value="5"></div>
+              <div><input type="radio" name="tp1_q3_16" id="tp1_q3_16_2" value="4"></div>
+              <div><input type="radio" name="tp1_q3_16" id="tp1_q3_16_3" value="3"></div>
+              <div><input type="radio" name="tp1_q3_16" id="tp1_q3_16_4" value="2"></div>
+              <div><input type="radio" name="tp1_q3_16" id="tp1_q3_16_5" value="1"></div>
+            </div>
+            <div>
+              <div id="tp1_q3item17">INSPIRUJĄCY</div>
+              <div><input type="radio" name="tp1_q3_17" id="tp1_q3_17_1" value="5"></div>
+              <div><input type="radio" name="tp1_q3_17" id="tp1_q3_17_2" value="4"></div>
+              <div><input type="radio" name="tp1_q3_17" id="tp1_q3_17_3" value="3"></div>
+              <div><input type="radio" name="tp1_q3_17" id="tp1_q3_17_4" value="2"></div>
+              <div><input type="radio" name="tp1_q3_17" id="tp1_q3_17_5" value="1"></div>
+            </div>
+            <div>
+              <div id="tp1_q3item18">ŚWIETLISTY, ŻYWY</div>
+              <div><input type="radio" name="tp1_q3_18" id="tp1_q3_18_1" value="5"></div>
+              <div><input type="radio" name="tp1_q3_18" id="tp1_q3_18_2" value="4"></div>
+              <div><input type="radio" name="tp1_q3_18" id="tp1_q3_18_3" value="3"></div>
+              <div><input type="radio" name="tp1_q3_18" id="tp1_q3_18_4" value="2"></div>
+              <div><input type="radio" name="tp1_q3_18" id="tp1_q3_18_5" value="1"></div>
+            </div>
+            <div>
+              <div id="tp1_q3item19">PROMIENNY</div>
+              <div><input type="radio" name="tp1_q3_19" id="tp1_q3_19_1" value="5"></div>
+              <div><input type="radio" name="tp1_q3_19" id="tp1_q3_19_2" value="4"></div>
+              <div><input type="radio" name="tp1_q3_19" id="tp1_q3_19_3" value="3"></div>
+              <div><input type="radio" name="tp1_q3_19" id="tp1_q3_19_4" value="2"></div>
+              <div><input type="radio" name="tp1_q3_19" id="tp1_q3_19_5" value="1"></div>
+            </div>
+          </div>
+        </div>
+        <div class="question-break"></div>
+
+        <!-- Test prod 1 quest 4 ================================================== -->
+        <div class="question_" id="quest-tp1_q4">
+          <div class="question-text-indent">
+            <p>
+              4.
+              Ten zapach sprawia, że czuję się ...
+              <i>(Z PONIŻSZEJ LISTY PROSZĘ WYBRAĆ TYLE STWIERDZEŃ, ILE SOBIE PANI ŻYCZY)</i>
+              <br>
+              <span class="fill-info">(proszę zaznaczyć przynajmniej jedną odpowiedź)</span>
+            </p>
+          </div>
+          <div class="question-break"></div>
+          <div class="answers-table-vert">
+            <div><div><label for="tp1_q4_1">Szczęśliwa                         </label></div>  <div><input type="checkbox" name="tp1_q4_1" id="tp1_q4_1" value="1"></div></div>
+            <div><div><label for="tp1_q4_2">Elegancka                          </label></div>  <div><input type="checkbox" name="tp1_q4_2" id="tp1_q4_2" value="1"></div></div>
+            <div><div><label for="tp1_q4_3">Uwodzicielska                      </label></div>  <div><input type="checkbox" name="tp1_q4_3" id="tp1_q4_3" value="1"></div></div>
+            <div><div><label for="tp1_q4_4">Pewna siebie                       </label></div>  <div><input type="checkbox" name="tp1_q4_4" id="tp1_q4_4" value="1"></div></div>
+            <div><div><label for="tp1_q4_5">Pobudzona                          </label></div>  <div><input type="checkbox" name="tp1_q4_5" id="tp1_q4_5" value="1"></div></div>
+            <div><div><label for="tp1_q4_6">Wesoła                             </label></div>  <div><input type="checkbox" name="tp1_q4_6" id="tp1_q4_6" value="1"></div></div>
+            <div><div><label for="tp1_q4_7">Smutna                             </label></div>  <div><input type="checkbox" name="tp1_q4_7" id="tp1_q4_7" value="1"></div></div>
+            <div><div><label for="tp1_q4_8">Śmiała                             </label></div>  <div><input type="checkbox" name="tp1_q4_8" id="tp1_q4_8" value="1"></div></div>
+            <div><div><label for="tp1_q4_9">Olśniewająca                       </label></div>  <div><input type="checkbox" name="tp1_q4_9" id="tp1_q4_9" value="1"></div></div>
+            <div><div><label for="tp1_q4_10">Rozmarzona                        </label></div>  <div><input type="checkbox" name="tp1_q4_10" id="tp1_q4_10" value="1"></div></div>
+            <div><div><label for="tp1_q4_11">Poirytowana                       </label></div>  <div><input type="checkbox" name="tp1_q4_11" id="tp1_q4_11" value="1"></div></div>
+            <div><div><label for="tp1_q4_12">Zrelaksowana, uspokojona          </label></div>  <div><input type="checkbox" name="tp1_q4_12" id="tp1_q4_12" value="1"></div></div>
+            <div><div><label for="tp1_q4_13">Zaniepokojona, niespokojna, spięta</label></div>  <div><input type="checkbox" name="tp1_q4_13" id="tp1_q4_13" value="1"></div></div>
+            <div><div><label for="tp1_q4_14">Seksowna                          </label></div>  <div><input type="checkbox" name="tp1_q4_14" id="tp1_q4_14" value="1"></div></div>
+            <div><div><label for="tp1_q4_15">Chora                             </label></div>  <div><input type="checkbox" name="tp1_q4_15" id="tp1_q4_15" value="1"></div></div>
+            <div><div><label for="tp1_q4_16">Romantyczna                       </label></div>  <div><input type="checkbox" name="tp1_q4_16" id="tp1_q4_16" value="1"></div></div>
+            <div><div><label for="tp1_q4_17">Zainspirowana                     </label></div>  <div><input type="checkbox" name="tp1_q4_17" id="tp1_q4_17" value="1"></div></div>
+            <div><div><label for="tp1_q4_18">Niezależna                        </label></div>  <div><input type="checkbox" name="tp1_q4_18" id="tp1_q4_18" value="1"></div></div>
+            <div><div><label for="tp1_q4_19">Rozświetlona                      </label></div>  <div><input type="checkbox" name="tp1_q4_19" id="tp1_q4_19" value="1"></div></div>
+            <div><div><label for="tp1_q4_20">Nie wpływa na moje uczucia        </label></div>  <div><input type="checkbox" name="tp1_q4_20" id="tp1_q4_20" value="1"></div></div>
+          </div>
+        </div>
+        <div class="question-break"></div>
+
+        <!-- Test prod 1 quest 5 ================================================== -->
+        <div class="question_" id="quest-tp1_q5">
+          <div class="question-text-indent">
+            <p>
+              5.
+              Jak długo, Pani zdaniem, ten zapach będzie się utrzymywał?
+              <br>
+              <span class="fill-info">(proszę zaznaczyć jedną odpowiedź)</span>
+            </p>
+          </div>
+          <div class="question-break"></div>
+          <div class="answers-table-vert">
+            <div><div><label for="tp1_q5_1">Poniżej 1 godziny</label></div> <div><input type="radio" name="tp1_q5" id="tp1_q5_1" value="1"></div></div>
+            <div><div><label for="tp1_q5_2">1 godzinę        </label></div> <div><input type="radio" name="tp1_q5" id="tp1_q5_2" value="2"></div></div>
+            <div><div><label for="tp1_q5_3">2 godziny        </label></div> <div><input type="radio" name="tp1_q5" id="tp1_q5_3" value="3"></div></div>
+            <div><div><label for="tp1_q5_4">3 godziny        </label></div> <div><input type="radio" name="tp1_q5" id="tp1_q5_4" value="4"></div></div>
+            <div><div><label for="tp1_q5_5">4 godziny        </label></div> <div><input type="radio" name="tp1_q5" id="tp1_q5_5" value="5"></div></div>
+            <div><div><label for="tp1_q5_6">5 godzin         </label></div> <div><input type="radio" name="tp1_q5" id="tp1_q5_6" value="6"></div></div>
+            <div><div><label for="tp1_q5_7">6 godzin         </label></div> <div><input type="radio" name="tp1_q5" id="tp1_q5_7" value="7"></div></div>
+            <div><div><label for="tp1_q5_8">7 godzin         </label></div> <div><input type="radio" name="tp1_q5" id="tp1_q5_8" value="8"></div></div>
+            <div><div><label for="tp1_q5_9">8 godzin         </label></div> <div><input type="radio" name="tp1_q5" id="tp1_q5_9" value="9"></div></div>
+            <div><div><label for="tp1_q5_10">Ponad 8 godzin  </label></div> <div><input type="radio" name="tp1_q5" id="tp1_q5_10" value="10"></div></div>
+          </div>
+        </div>
+        <div class="question-break"></div>
+
+        <!-- Test prod 1 quest 6 ================================================== -->
+        <div class="question_" id="quest-tp1_q6">
+          <div class="question-text-indent">
+            <p>
+              6.
+              W jakim stopniu byłaby Pani skłonna kupić ten zapach? Czy powiedziałaby Pani, że ...?
+              <br>
+              <span class="fill-info">(proszę zaznaczyć jedną odpowiedź)</span>
+            </p>
+          </div>
+          <div class="question-break"></div>
+          <div class="answers-table-vert">
+            <div><div><label for="tp1_q6_1">Zdecydowanie bym go nie kupiła            </label></div> <div><input type="radio" name="tp1_q6" id="tp1_q6_1" value="1"></div></div>
+            <div><div><label for="tp1_q6_2">Raczej bym go nie kupiła                  </label></div> <div><input type="radio" name="tp1_q6" id="tp1_q6_2" value="2"></div></div>
+            <div><div><label for="tp1_q6_3">Nie wiem czy bym go kupiła, czy nie kupiła</label></div> <div><input type="radio" name="tp1_q6" id="tp1_q6_3" value="3"></div></div>
+            <div><div><label for="tp1_q6_4">Raczej bym go kupiła                      </label></div> <div><input type="radio" name="tp1_q6" id="tp1_q6_4" value="4"></div></div>
+            <div><div><label for="tp1_q6_5">Zdecydowanie bym go kupiła                </label></div> <div><input type="radio" name="tp1_q6" id="tp1_q6_5" value="5"></div></div>
+          </div>
+        </div>
+        <div class="question-break"></div>
+
+        <!-- Test prod 1 quest 7 ================================================== -->
+        <div class="question_" id="quest-tp1_q7">
+          <div class="question-text-indent">
+            <p>
+              7.
+              Czy woli Pani ten zapach od Pani zazwyczaj używanego zapachu? Czy powiedziałaby Pani, że ...? 
+              <br>
+              <span class="fill-info">(proszę zaznaczyć jedną odpowiedź)</span>
+            </p>
+          </div>
+          <div class="question-break"></div>
+          <div class="answers-table-vert">
+            <div><div><label for="tp1_q7_1">Zdecydowanie wolę ten zapach                    </label></div> <div><input type="radio" name="tp1_q7" id="tp1_q7_1" value="5"></div></div>
+            <div><div><label for="tp1_q7_2">Prawdopodobnie wolę ten zapach                  </label></div> <div><input type="radio" name="tp1_q7" id="tp1_q7_2" value="4"></div></div>
+            <div><div><label for="tp1_q7_3">Nie mam preferencji                             </label></div> <div><input type="radio" name="tp1_q7" id="tp1_q7_3" value="3"></div></div>
+            <div><div><label for="tp1_q7_4">Prawdopodobnie wolę mój zazwyczaj używany zapach</label></div> <div><input type="radio" name="tp1_q7" id="tp1_q7_4" value="2"></div></div>
+            <div><div><label for="tp1_q7_5">Zdecydowanie wolę mój zazwyczaj używany zapach  </label></div> <div><input type="radio" name="tp1_q7" id="tp1_q7_5" value="1"></div></div>
+          </div>
+        </div>
+        <div class="question-break"></div>
+
+        <!-- Test prod 1 quest 8 ================================================== -->
+        <div class="question_" id="quest-tp1_q8">
+          <div class="question-text-indent">
+            <p>
+              8.
+              Na ile, Pani zdaniem, ten zapach pasuje do kobiety w Pani wieku? Czy powiedziałaby Pani, że ...? 
+              <br>
+              <span class="fill-info">(proszę zaznaczyć jedną odpowiedź)</span>
+            </p>
+          </div>
+          <div class="question-break"></div>
+          <div class="answers-table-vert">
+            <div><div><label for="tp1_q8_1">Zdecydowanie nie pasuje   </label></div> <div><input type="radio" name="tp1_q8" id="tp1_q8_1" value="1"></div></div>
+            <div><div><label for="tp1_q8_2">Raczej nie pasuje         </label></div> <div><input type="radio" name="tp1_q8" id="tp1_q8_2" value="2"></div></div>
+            <div><div><label for="tp1_q8_3">Ani pasuje, ani nie pasuje</label></div> <div><input type="radio" name="tp1_q8" id="tp1_q8_3" value="3"></div></div>
+            <div><div><label for="tp1_q8_4">Raczej pasuje             </label></div> <div><input type="radio" name="tp1_q8" id="tp1_q8_4" value="4"></div></div>
+            <div><div><label for="tp1_q8_5">Zdecydowanie pasuje       </label></div> <div><input type="radio" name="tp1_q8" id="tp1_q8_5" value="5"></div></div>
+          </div>
+        </div>
+        <div class="question-break"></div>
+
+        <!-- Test prod 1 quest 9 ================================================== -->
+        <div class="question_" id="quest-tp1_q9">
+          <div class="question-text-indent">
+            <p>
+              9.
+              Proszę powiedzieć, z którym z poniższych stwierdzeń się Pani utożsamia? 
+              <br>
+              <span class="fill-info">(proszę zaznaczyć jedną odpowiedź)</span>
+            </p>
+          </div>
+          <div class="question-break"></div>
+          <div class="answers-table-vert">
+            <div><div><label for="tp1_q9_1">Im dłużej będę nosiła ten zapach, tym bardziej będzie mi się podobał</label></div> <div><input type="radio" name="tp1_q9" id="tp1_q9_1" value="1"></div></div>
+            <div><div><label for="tp1_q9_2">Noszenie tego zapachu nie zmieni mojej opinii na jego temat         </label></div> <div><input type="radio" name="tp1_q9" id="tp1_q9_2" value="2"></div></div>
+            <div><div><label for="tp1_q9_3">Im dłużej będę nosiła ten zapach, tym mniej będzie mi się podobał   </label></div> <div><input type="radio" name="tp1_q9" id="tp1_q9_3" value="3"></div></div>
+          </div>
+        </div>
+        <div class="question-break"></div>
+
+        <!-- Test prod 1 quest 10 ================================================== -->
+        <div class="question_" id="quest-tp1_q10">
+          <div class="question-text-indent">
+            <p>
+              10.
+              Kiedy nosiłaby Pani ten zapach? 
+              <br>
+              <span class="fill-info">(proszę zaznaczyć jedną odpowiedź)</span>
+            </p>
+          </div>
+          <div class="question-break"></div>
+          <div class="answers-table-vert">
+            <div><div><label for="tp1_q10_1">W ciągu dnia                                    </label></div> <div><input type="radio" name="tp1_q10" id="tp1_q10_1" value="1"></div></div>
+            <div><div><label for="tp1_q10_2">Na wieczorne wyjście                            </label></div> <div><input type="radio" name="tp1_q10" id="tp1_q10_2" value="2"></div></div>
+            <div><div><label for="tp1_q10_3">Zarówno w ciągu dnia, jak i na wieczorne wyjście</label></div> <div><input type="radio" name="tp1_q10" id="tp1_q10_3" value="3"></div></div>
+          </div>
+        </div>
+        <div class="question-break"></div>
+
+        <!-- Test prod 1 quest 11 ================================================== -->
+        <div class="question_" id="quest-tp1_q11">
+          <div class="question-text-indent">
+            <p>
+              11.
+              Na jakie okazje, Pani zdaniem, mogłaby Pani nosić ten zapach? 
+              <br>
+              <span class="fill-info">(proszę zaznaczyć jedną odpowiedź)</span>
+            </p>
+          </div>
+          <div class="question-break"></div>
+          <div class="answers-table-vert">
+            <div><div><label for="tp1_q11_1">Na codzień                                   </label></div> <div><input type="radio" name="tp1_q11" id="tp1_q11_1" value="1"></div></div>
+            <div><div><label for="tp1_q11_2">Na specjalne okazje                          </label></div> <div><input type="radio" name="tp1_q11" id="tp1_q11_2" value="2"></div></div>
+            <div><div><label for="tp1_q11_3">Zarówno na codzień, jak i na specjalne okazje</label></div> <div><input type="radio" name="tp1_q11" id="tp1_q11_3" value="3"></div></div>
+          </div>
+        </div>
+        <div class="question-break"></div>
+
+        <!-- Test prod 1 inter ================================================== -->
+        <div class="question_" id="quest-tp1_inter1">
+          <div class="question-text">
+            <b>
+            <p>
+              Proszę poprosić ankietera o pokazanie <a href="Koncept.pdf">"konceptu produktu"</a>.
+            </p>
+            </b>
+            <img width="100%" src="grafiki/pg_1.jpg" ALT="">
+            <img width="100%" src="grafiki/pg_2.jpg" ALT="">
+            <img width="100%" src="grafiki/pg_3.jpg" ALT="">
+            <img height="90%" src="grafiki/pg_4.jpg" ALT="">
+          </div>
+        </div>
+        <div class="question-break"></div>
+
+        <!-- Test prod 1 inter ================================================== -->
+        <div class="question_" id="quest-tp1_inter2">
+          <div class="question-text">
+            <b>
+            <p>
+              Teraz poprosimy Panią o ocenę konceptu (pomysłu) i opakowania nowych perfum. 
+            </p> 
+            <p>
+              <i>Chcielibyśmy poznać Pani opinię na temat nowego zapachu perfum. <br>
+              Prosimy przeczytać i ocenić wszystkie elementy tego produktu.</i>
+            </p>
+            </b>
+          </div>
+        </div>
+        <div class="question-break"></div>
+
+        <!-- Test prod 1 quest 12 ================================================== -->
+        <div class="question_" id="quest-tp1_q12">
+          <div class="question-text-indent">
+            <p>
+              12.
+              Teraz, biorąc pod uwagę wszystko, co Pani zobaczyła i przeczytała na temat tego produktu, 
+              proszę powiedzieć na ile podoba się Pani ten zapach. <br>
+              Proszę posłużyć się skalą od 0 do 10 gdzie 0 oznacza "W OGÓLE MI SIĘ NIE PODOBA",
+              a 10 oznacza "ZDECYDOWANIE MI SIĘ PODOBA". 
+              <br>
+              <span class="fill-info">(proszę zaznaczyć jedną odpowiedź)</span>
+            </p>
+          </div>
+          <div class="question-break"></div>
+          <div class="answers-table-horiz">
+            <div>
+              <div><input type="radio" name="tp1_q12" id="tp1_q12_0" value="0"></div>
+              <div><input type="radio" name="tp1_q12" id="tp1_q12_1" value="1"></div>
+              <div><input type="radio" name="tp1_q12" id="tp1_q12_2" value="2"></div>
+              <div><input type="radio" name="tp1_q12" id="tp1_q12_3" value="3"></div>
+              <div><input type="radio" name="tp1_q12" id="tp1_q12_4" value="4"></div>
+              <div><input type="radio" name="tp1_q12" id="tp1_q12_5" value="5"></div>
+              <div><input type="radio" name="tp1_q12" id="tp1_q12_6" value="6"></div>
+              <div><input type="radio" name="tp1_q12" id="tp1_q12_7" value="7"></div>
+              <div><input type="radio" name="tp1_q12" id="tp1_q12_8" value="8"></div>
+              <div><input type="radio" name="tp1_q12" id="tp1_q12_9" value="9"></div>
+              <div><input type="radio" name="tp1_q12" id="tp1_q12_10" value="10"></div>
+            </div>
+            <div>
+              <div><label for="tp1_q12_0">0<br>W<small>OGÓLE MI<br>SIĘ NIE PODOBA  </small></label></div>
+              <div><label for="tp1_q12_1">1                              </label></div>
+              <div><label for="tp1_q12_2">2                              </label></div>
+              <div><label for="tp1_q12_3">3                              </label></div>
+              <div><label for="tp1_q12_4">4                              </label></div>
+              <div><label for="tp1_q12_5">5                              </label></div>
+              <div><label for="tp1_q12_6">6                              </label></div>
+              <div><label for="tp1_q12_7">7                              </label></div>
+              <div><label for="tp1_q12_8">8                              </label></div>
+              <div><label for="tp1_q12_9">9                              </label></div>
+              <div><label for="tp1_q12_10">10<br>Z<small>DECYDOWANIE<br>MI SIĘ PODOBA</small></label></div>
+            </div>
+          </div>
+        </div>
+        <div class="question-break"></div>
+
+        <!-- Test prod 1 quest 13 ================================================== -->
+        <div class="question_" id="quest-tp1_q13">
+          <div class="question-text-indent">
+            <p>
+              13.
+              Przeczytam teraz Pani listę określeń, które mogą być użyte do <b>opisania tego zapachu</b>.<br>
+              Dla każdego z nich proszę określić na ile się Pani z nim zgadza, lub nie, w kontekście testowanego przed chwilą zapachu. <br>
+              Tak jak poprzednio, może Pani wąchać zapach kilka razy. 
+              <br>
+              <span class="fill-info">(proszę zaznaczyć JEDNĄ odpowiedź w każdym wierszu)</span>
+            </p>
+            <p>
+            </p>
+          </div>
+          <div class="question-break"></div>
+          <div class="answers-table-horiz-xn">
+            <div>
+              <div style="width:30em"><br></div>
+              <div >Z<small>DECYDO<br>WANIE SIĘ <br>ZGADZAM</small></div>
+              <div >W<small> PEWNYM <br>STOPNIU <br>SIĘ <br>ZGADZAM</small></div>
+              <div >A<small>NI SIĘ <br>ZGADZAM, <br>ANI SIĘ NIE <br>ZGADZAM</small></div>
+              <div >W<small> PEWNYM <br>STOPNIU <br>SIĘ NIE <br>ZGADZAM</small></div>
+              <div >Z<small>DECYDO<br>WANIE SIĘ <br>NIE <br>ZGADZAM</small></div>
+            </div>
+            <div>
+              <div id="tp1_q13item1">POLECIŁABYM GO PRZYJACIÓŁCE </div>
+              <div><input type="radio" name="tp1_q13_1" id="tp1_q13_1_1" value="5"></div>
+              <div><input type="radio" name="tp1_q13_1" id="tp1_q13_1_2" value="4"></div>
+              <div><input type="radio" name="tp1_q13_1" id="tp1_q13_1_3" value="3"></div>
+              <div><input type="radio" name="tp1_q13_1" id="tp1_q13_1_4" value="2"></div>
+              <div><input type="radio" name="tp1_q13_1" id="tp1_q13_1_5" value="1"></div>
+            </div>
+            <div>
+              <div id="tp1_q13item2">KUPIŁABYM GO JAKO PREZENT</div>
+              <div><input type="radio" name="tp1_q13_2" id="tp1_q13_2_1" value="5"></div>
+              <div><input type="radio" name="tp1_q13_2" id="tp1_q13_2_2" value="4"></div>
+              <div><input type="radio" name="tp1_q13_2" id="tp1_q13_2_3" value="3"></div>
+              <div><input type="radio" name="tp1_q13_2" id="tp1_q13_2_4" value="2"></div>
+              <div><input type="radio" name="tp1_q13_2" id="tp1_q13_2_5" value="1"></div>
+            </div>
+            <div>
+              <div id="tp1_q13item3">BYŁABYM ZACHWYCONA, GDYBYM DOSTAŁA GO NA PREZENT </div>
+              <div><input type="radio" name="tp1_q13_3" id="tp1_q13_3_1" value="5"></div>
+              <div><input type="radio" name="tp1_q13_3" id="tp1_q13_3_2" value="4"></div>
+              <div><input type="radio" name="tp1_q13_3" id="tp1_q13_3_3" value="3"></div>
+              <div><input type="radio" name="tp1_q13_3" id="tp1_q13_3_4" value="2"></div>
+              <div><input type="radio" name="tp1_q13_3" id="tp1_q13_3_5" value="1"></div>
+            </div>
+            <div>
+              <div id="tp1_q13item4">UŻYWAŁABYM/ NOSIŁABYM GO NA SPECJALNE OKAZJE </div>
+              <div><input type="radio" name="tp1_q13_4" id="tp1_q13_4_1" value="5"></div>
+              <div><input type="radio" name="tp1_q13_4" id="tp1_q13_4_2" value="4"></div>
+              <div><input type="radio" name="tp1_q13_4" id="tp1_q13_4_3" value="3"></div>
+              <div><input type="radio" name="tp1_q13_4" id="tp1_q13_4_4" value="2"></div>
+              <div><input type="radio" name="tp1_q13_4" id="tp1_q13_4_5" value="1"></div>
+            </div>
+            <div>
+              <div id="tp1_q13item5">TO WYRAFINOWANY / WYSOKIEJ JAKOŚCI ZAPACH </div>
+              <div><input type="radio" name="tp1_q13_5" id="tp1_q13_5_1" value="5"></div>
+              <div><input type="radio" name="tp1_q13_5" id="tp1_q13_5_2" value="4"></div>
+              <div><input type="radio" name="tp1_q13_5" id="tp1_q13_5_3" value="3"></div>
+              <div><input type="radio" name="tp1_q13_5" id="tp1_q13_5_4" value="2"></div>
+              <div><input type="radio" name="tp1_q13_5" id="tp1_q13_5_5" value="1"></div>
+            </div>
+          </div>
+        </div>
+        <div class="question-break"></div>
+
+        <!-- Test prod 1 quest 14 ================================================== -->
+        <div class="question_" id="quest-tp1_q14">
+          <div class="question-text-indent">
+            <p>
+              14.
+              Po dokonaniu oceny <b>wszystkich elementów tego produktu</b>, proszę powąchać ten zapach raz jeszcze, 
+              proszę powiedzieć na ile podoba się Pani ten zapach.  <br>
+              Proszę posłużyć się skalą od 0 do 10 gdzie 0 oznacza "W OGÓLE MI SIĘ NIE PODOBA", 
+              a 10 oznacza "ZDECYDOWANIE MI SIĘ PODOBA".  
+              <br>
+              <span class="fill-info">(proszę zaznaczyć jedną odpowiedź)</span>
+            </p>
+          </div>
+          <div class="question-break"></div>
+          <div class="answers-table-horiz">
+            <div>
+              <div><input type="radio" name="tp1_q14" id="tp1_q14_0" value="0"></div>
+              <div><input type="radio" name="tp1_q14" id="tp1_q14_1" value="1"></div>
+              <div><input type="radio" name="tp1_q14" id="tp1_q14_2" value="2"></div>
+              <div><input type="radio" name="tp1_q14" id="tp1_q14_3" value="3"></div>
+              <div><input type="radio" name="tp1_q14" id="tp1_q14_4" value="4"></div>
+              <div><input type="radio" name="tp1_q14" id="tp1_q14_5" value="5"></div>
+              <div><input type="radio" name="tp1_q14" id="tp1_q14_6" value="6"></div>
+              <div><input type="radio" name="tp1_q14" id="tp1_q14_7" value="7"></div>
+              <div><input type="radio" name="tp1_q14" id="tp1_q14_8" value="8"></div>
+              <div><input type="radio" name="tp1_q14" id="tp1_q14_9" value="9"></div>
+              <div><input type="radio" name="tp1_q14" id="tp1_q14_10" value="10"></div>
+            </div>
+            <div>
+              <div><label for="tp1_q14_0">0<br>W<small>OGÓLE MI<br>SIĘ NIE PODOBA  </small></label></div>
+              <div><label for="tp1_q14_1">1                              </label></div>
+              <div><label for="tp1_q14_2">2                              </label></div>
+              <div><label for="tp1_q14_3">3                              </label></div>
+              <div><label for="tp1_q14_4">4                              </label></div>
+              <div><label for="tp1_q14_5">5                              </label></div>
+              <div><label for="tp1_q14_6">6                              </label></div>
+              <div><label for="tp1_q14_7">7                              </label></div>
+              <div><label for="tp1_q14_8">8                              </label></div>
+              <div><label for="tp1_q14_9">9                              </label></div>
+              <div><label for="tp1_q14_10">10<br>Z<small>DECYDOWANIE<br>MI SIĘ PODOBA</small></label></div>
+            </div>
+          </div>
+        </div>
+        <div class="question-break"></div>
+
+      </div>
+    </form>
+  <!-- KONIEC ANKIETY ============================================================================================== -->
+  <!-- KONIEC ANKIETY ============================================================================================== -->
+  <!-- KONIEC ANKIETY ============================================================================================== -->
+
+
+
+  <!-- KOŃCZENIE ANKIETY ============================================= -->
+    <div id="finish-quest-info" class="ask-user-box">
+      <div id="data-submit-info" class="section-text-center">
+        <h2>DZIĘKUJEMY ZA UDZIAŁ W BADANIU.</h2>
+      </div>
+      <div id="data-submit-info" class="section-text-center">
+        Zapisywanie danych.
+      </div>
+      <!--div class="question-break"></div-->
+      <div id="data-saving-progess" class="question-info-center">
+        <button id="data-saved-next" class="single-button" onclick="cleanData()" value="yes">Dane zostały zapisane.</button>
+      </div>
+      <!--div class="question-break"></div-->
+      <span id="press-text1">(proszę wcisnąć przycisk)</span>
+      <!--div class="question-break"></div-->
+      <div id="data-saved" class="section-text-center">
+        Dane zostały zapisane.
+      </div>
+      <!--div class="question-break"></div-->
+      <div id="data-removing-info" class="section-text-center">
+        Usuwanie danych z formularza.
+      </div>
+      <!--div class="question-break"></div-->
+      <div id="cookies-removing-info" class="section-text-center">
+        Usuwanie ciasteczek.
+      </div>
+      <!--div class="question-break"></div-->
+      <div id="finish-buttons" class="question-info-center">
+        <button id="all-done-end" class="nav-button" onclick="endInterview()" value="no">Koniec. Bardzo dziękuję.</button>
+        <!--button class="nav-button" id="all-done-next" onclick="nextInterview()" value="yes">Rozpoczęcie kolejnego wywiadu.</button-->
+      </div>
+    </div>
+  </div>
+
+
+  <div id="quest-nav-buttons" class="buttons-place">
+    <div id="button-left-tab"><button class="nav-button" id="prev-button" onclick="gotoPrevQuestion()" value="prev">Wstecz</button></div>
+    <div id="button-center-tab"><button class="nav-button" id="fill-button" onclick="showAllQuestions()" value="fill">Załaduj pytania</button></div>
+    <div id="button-right-tab"><button class="nav-button" id="next-button" onclick="gotoNextQuestion()" value="next">Dalej</button></div>
+  </div>
+</div>
+
+
+<div id="bottom-banner" class="table-row">
+  <div id="bottom-banner-left" class="tab-col3of10">
+    <span id="user-id-info"></span>#<span id="intv-num-info"></span>.<span id="test-prod-info"></span>
+  </div>
+  <div id="position-info" class="tab-col4of10">
+    Strona <span id="question-no">0</span> / <span id="questions-num">3</span> <progress id="quest-progress" value="0" max="3" width="300px"></progress>
+  </div>
+  <div id="bottom-banner-right" class="tab-col3of10">
+    <span id="survey-id-info"></span> / <span id="client-name-info">AZETKA very special forces</span>
+  </div>
+</div>
+
+<div id="monitor-monitor">
+</div>
+
+<div id="iframe-php-monitor">
+<iframe name="php-output" id="php-output"></iframe>
+</div>
+
+
+</body>
+
+</html>
