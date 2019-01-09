@@ -4,18 +4,20 @@
 //IF int_no IS -1, RETURNS FIRST waiting____________ OR FIRST FREE int_no FOR GIVEN user_id
 //IF int_no IS NOT -1, RETURNS IT IF IT'S waiting____________ OR NOT USED AND user_id IS CORRECT OR -1 OTHERWISE
 $req_intv_num = -1;
-if (array_key_exists('user_id', $_GET) &&
+if (array_key_exists('survey_id', $_GET) &&
+    array_key_exists('user_id', $_GET) &&
     array_key_exists('int_no',  $_GET)) {
+  $survey_id = $_GET['survey_id'];
   $req_user_id  = $_GET['user_id'];
   $req_intv_num = $_GET['int_no'];
   if ($req_user_id == -1) {
     $req_user_id = "#NN#";
   }//if
   //echo "<hr>req_user_id=$req_user_id, req_intv_num=$req_intv_num<hr>";
-  $file_name  = "../datafiles/intvnums_autoi.txt";
+  $file_name  = "./$survey_id/datafiles/intvnums_autoi.txt";
   $waitingstr = "waiting____________";
-  if (!file_exists("../datafiles")) {
-    mkdir("../datafiles");
+  if (!file_exists("./$survey_id/datafiles")) {
+    mkdir("./$survey_id/datafiles");
   }//if
   if (file_exists($file_name)) {
     $file = fopen($file_name, "r+");

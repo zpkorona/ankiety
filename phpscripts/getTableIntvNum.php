@@ -4,8 +4,10 @@
 //IF int_no IS NOT -1, RETURNS IT IF IT'S waiting____________ OR started____________ AND user_id IS CORRECT
 //  SETS FOUND TO started____________
 $req_intv_num = -1;
-if (array_key_exists('user_id', $_GET) &&
+if (array_key_exists('survey_id', $_GET) &&
+    array_key_exists('user_id', $_GET) &&
     array_key_exists('int_no',  $_GET)) {
+  $survey_id = $_GET['survey_id'];
   $req_user_id  = $_GET['user_id'];
   $req_intv_num = $_GET['int_no'];
   if ($req_user_id == -1) {
@@ -18,7 +20,7 @@ if (array_key_exists('user_id', $_GET) &&
     $req_user___ = "";
   }//else
   //echo "<hr>req_user_id=$req_user_id, req_intv_num=$req_intv_num<hr>";
-  $file_name   = "../datafiles/intvnums_table.txt";
+  $file_name   = "./$survey_id/datafiles/intvnums_table.txt";
   $waitingstr  = "waiting____________";
   $startedstr  = "started____________";
   $file = @fopen($file_name, "r+");

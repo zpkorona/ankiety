@@ -2,15 +2,15 @@
 //zapiszTempValue.php ....
 //echo "<hr>saveData2disk.php, " . $_SERVER['PHP_SELF'] . "<hr>";
 //foreach ($_GET as $n => $v)  echo "_GET[$n] = $v<br>";
-if (array_key_exists('int_no', $_GET) &&
-    array_key_exists('survey_id', $_GET) &&
-    array_key_exists('stage_no', $_GET) &&
-    array_key_exists('user_id', $_GET) &&
-    array_key_exists('var', $_GET) &&
-    array_key_exists('val', $_GET) &&
-    array_key_exists('opq', $_GET)) {
-  $intv_num  = $_GET['int_no'];
+if (array_key_exists('survey_id', $_GET) &&
+    array_key_exists('int_no',    $_GET) &&
+    array_key_exists('stage_no',  $_GET) &&
+    array_key_exists('user_id',   $_GET) &&
+    array_key_exists('var',       $_GET) &&
+    array_key_exists('val',       $_GET) &&
+    array_key_exists('opq',       $_GET)) {
   $survey_id = $_GET['survey_id'];
+  $intv_num  = $_GET['int_no'];
   $stage_no  = $_GET['stage_no'];
   if ($stage_no == -1) {
     $stage_no = "_";
@@ -19,13 +19,13 @@ if (array_key_exists('int_no', $_GET) &&
   $variable  = $_GET['var'];
   $value     = $_GET['val'];
   $openQuest = $_GET['opq'];
-  if (!file_exists("../datafiles")) {
-    @mkdir("../datafiles");
+  if (!file_exists("./$survey_id/datafiles")) {
+    @mkdir("./$survey_id/datafiles");
   }//if
-  if (!file_exists("../datafiles/tmp")) {
-    @mkdir("../datafiles/tmp");
+  if (!file_exists("./$survey_id/datafiles/tmp")) {
+    @mkdir("./$survey_id/datafiles/tmp");
   }//if
-  $file_name = "../datafiles/tmp/$survey_id$stage_no($intv_num)$user_id.dat";
+  $file_name = "./$survey_id/datafiles/tmp/$survey_id$stage_no($intv_num)$user_id.dat";
   $file = @fopen($file_name, "a");
   //echo "<hr>" . $intv_num . ", " . $survey_id . ", " . $stage_no . ", " . $user_id . ", " . $variable . ", " . $value . ", " . $openQuest . " :: " . $file_name . "<hr>";
   if ($file) {

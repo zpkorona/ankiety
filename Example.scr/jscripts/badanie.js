@@ -269,7 +269,7 @@ function saveSurveyLog (extraText) {
     if (this.readyState == 4 && this.status == 200)
       txt = this.responseText;
   };//function()
-  xhr.open("GET", "../phpscripts/zapiszSurveyLog.php?stage_no=" + parStageNo + "&user_id=" + parUserId + "&int_no=" + parIntvNum +
+  xhr.open("GET", "../phpscripts/zapiszSurveyLog.php?survey_id=" + parSurveyId + "&stage_no=" + parStageNo + "&user_id=" + parUserId + "&int_no=" + parIntvNum +
                                              "&agent=" + "agent" + "&extra=" + extraText, true);
   xhr.send();
 }//saveSurveyLog
@@ -330,14 +330,14 @@ function isIntvNumWaiting (tstUserId, tstIntvNum, tstStageNo) {
   window.console.log("isIntvNumWaiting(" + tstUserId + ", " + tstIntvNum + ", " + tstStageNo + ")");
   xhr = new window.XMLHttpRequest();
   if (intvNumAuto || intvNumGiven) {
-    xhr.open("GET", "../phpscripts/isAutoIntvNumWaiting.php?user_id=" + tstUserId + "&int_no=" + tstIntvNum, false);//SYNCHRONICZNIE
+    xhr.open("GET", "../phpscripts/isAutoIntvNumWaiting.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum, false);//SYNCHRONICZNIE
   }//if
   else {
     if (stagesNum == 1) {//tstStageNo == -1)
-      xhr.open("GET", "../phpscripts/isTableIntvNumWaiting.php?user_id=" + tstUserId + "&int_no=" + tstIntvNum, false);//SYNCHRONICZNIE
+      xhr.open("GET", "../phpscripts/isTableIntvNumWaiting.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum, false);//SYNCHRONICZNIE
     }//if
     else {
-      xhr.open("GET", "../phpscripts/isM_TabIntvNumWaiting.php?user_id=" + tstUserId + "&int_no=" + tstIntvNum + "&stage_no=" + tstStageNo, false);//SYNCHRONICZNIE
+      xhr.open("GET", "../phpscripts/isM_TabIntvNumWaiting.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum + "&stage_no=" + tstStageNo, false);//SYNCHRONICZNIE
     }//else
   }//else
   xhr.send();
@@ -361,12 +361,12 @@ function isIntvNumStarted (tstUserId, tstIntvNum, tstStageNo) {
   window.console.log("isIntvNumStarted(" + tstUserId + ", " + tstIntvNum + ", " + tstStageNo + ")");
   xhr = new window.XMLHttpRequest();
   if (intvNumAuto || intvNumGiven)
-    xhr.open("GET", "../phpscripts/isAutoIntvNumStarted.php?user_id=" + tstUserId + "&int_no=" + tstIntvNum, false);//SYNCHRONICZNIE
+    xhr.open("GET", "../phpscripts/isAutoIntvNumStarted.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum, false);//SYNCHRONICZNIE
   else
     if (stagesNum == 1)//tstStageNo == -1)
-      xhr.open("GET", "../phpscripts/isTableIntvNumStarted.php?user_id=" + tstUserId + "&int_no=" + tstIntvNum, false);//SYNCHRONICZNIE
+      xhr.open("GET", "../phpscripts/isTableIntvNumStarted.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum, false);//SYNCHRONICZNIE
     else
-      xhr.open("GET", "../phpscripts/isM_TabIntvNumStarted.php?user_id=" + tstUserId + "&int_no=" + tstIntvNum + "&stage_no=" + tstStageNo, false);//SYNCHRONICZNIE
+      xhr.open("GET", "../phpscripts/isM_TabIntvNumStarted.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum + "&stage_no=" + tstStageNo, false);//SYNCHRONICZNIE
   xhr.send();
   if (xhr.status != 200 && xhr.responseText == "ERROR") {
     window.alert("Błąd odczytu pliku z identyfikatorami, status=" + xhr.status);
@@ -389,19 +389,19 @@ function isIntvNumUsable (tstUserId, tstIntvNum, tstStageNo) {
   window.console.log("isIntvNumUsable(" + tstUserId + ", " + tstIntvNum + ", " + tstStageNo + ")");
   xhr = new window.XMLHttpRequest();
   if (intvNumAuto) {
-    xhr.open("GET", "../phpscripts/isAutoIntvNumUsable.php?user_id=" + tstUserId + "&int_no=" + tstIntvNum, false);//SYNCHRONICZNIE
+    xhr.open("GET", "../phpscripts/isAutoIntvNumUsable.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum, false);//SYNCHRONICZNIE
   }//if
   else {
     if (intvNumGiven) {
-      xhr.open("GET", "../phpscripts/isGivenIntvNumUsable.php?user_id=" + tstUserId + "&int_no=" + tstIntvNum, false);//SYNCHRONICZNIE
+      xhr.open("GET", "../phpscripts/isGivenIntvNumUsable.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum, false);//SYNCHRONICZNIE
     }//if
     else {
       if (intvNumTable) {
         if (stagesNum == 1) {//tstStageNo == -1)
-          xhr.open("GET", "../phpscripts/isTableIntvNumUsable.php?user_id=" + tstUserId + "&int_no=" + tstIntvNum, false);//SYNCHRONICZNIE
+          xhr.open("GET", "../phpscripts/isTableIntvNumUsable.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum, false);//SYNCHRONICZNIE
         }//if
         else {
-          xhr.open("GET", "../phpscripts/isM_TabIntvNumUsable.php?user_id=" + tstUserId + "&int_no=" + tstIntvNum + "&stage_no=" + tstStageNo, false);//SYNCHRONICZNIE
+          xhr.open("GET", "../phpscripts/isM_TabIntvNumUsable.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum + "&stage_no=" + tstStageNo, false);//SYNCHRONICZNIE
         }//else
       }//if
     }//else
@@ -426,14 +426,14 @@ function useIntvNum (tstUserId, tstIntvNum, tstStageNo) {
   window.console.log("useIntvNum(" + tstUserId + ", " + tstIntvNum + ", " + tstStageNo + ")");
   xhr = new window.XMLHttpRequest();
   if (intvNumAuto || intvNumGiven) {
-    xhr.open("GET", "../phpscripts/useAutoIntvNum.php?user_id=" + tstUserId + "&int_no=" + tstIntvNum, false);//SYNCHRONICZNIE
+    xhr.open("GET", "../phpscripts/useAutoIntvNum.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum, false);//SYNCHRONICZNIE
   }//if
   else {
     if (stagesNum == 1) {//tstStageNo == -1)
-      xhr.open("GET", "../phpscripts/useTableIntvNum.php?user_id=" + tstUserId + "&int_no=" + tstIntvNum, false);//SYNCHRONICZNIE
+      xhr.open("GET", "../phpscripts/useTableIntvNum.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum, false);//SYNCHRONICZNIE
     }//if
     else {
-      xhr.open("GET", "../phpscripts/useM_TabIntvNum.php?user_id=" + tstUserId + "&int_no=" + tstIntvNum + "&stage_no=" + tstStageNo, false);//SYNCHRONICZNIE
+      xhr.open("GET", "../phpscripts/useM_TabIntvNum.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum + "&stage_no=" + tstStageNo, false);//SYNCHRONICZNIE
     }//else
   }//else
   xhr.send();
@@ -456,12 +456,12 @@ function getIntvNum (tstUserId, tstIntvNum, tstStageNo) {
   window.console.log("getIntvNum(" + tstUserId + ", " + tstIntvNum + ", " + tstStageNo + ")");
   xhr = new window.XMLHttpRequest();
   if (intvNumAuto || intvNumGiven)
-    xhr.open("GET", "../phpscripts/getAutoIntvNum.php?user_id=" + tstUserId + "&int_no=" + tstIntvNum, false);//SYNCHRONICZNIE
+    xhr.open("GET", "../phpscripts/getAutoIntvNum.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum, false);//SYNCHRONICZNIE
   else
     if (stagesNum == 1)//tstStageNo == -1)
-      xhr.open("GET", "../phpscripts/getTableIntvNum.php?user_id=" + tstUserId + "&int_no=" + tstIntvNum, false);//SYNCHRONICZNIE
+      xhr.open("GET", "../phpscripts/getTableIntvNum.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum, false);//SYNCHRONICZNIE
     else
-      xhr.open("GET", "../phpscripts/getM_TabIntvNum.php?user_id=" + tstUserId + "&int_no=" + tstIntvNum + "&stage_no=" + tstStageNo, false);//SYNCHRONICZNIE
+      xhr.open("GET", "../phpscripts/getM_TabIntvNum.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum + "&stage_no=" + tstStageNo, false);//SYNCHRONICZNIE
   xhr.send();
   if (xhr.status == 200) {
     intvNum = xhr.responseText;
@@ -1059,12 +1059,12 @@ function setIntvNumComplete (tstUserId, tstIntvNum, tstStageNo) {
       }//if
     };//function()
   if (intvNumAuto || intvNumGiven)
-    xhr.open("GET", "../phpscripts/setAutoIntvNumComplete.php?user_id=" + tstUserId + "&int_no=" + tstIntvNum, true);//ASYNCHRONICZNIE
+    xhr.open("GET", "../phpscripts/setAutoIntvNumComplete.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum, true);//ASYNCHRONICZNIE
   else
     if (tstStageNo == -1)
-      xhr.open("GET", "../phpscripts/setTableIntvNumComplete.php?user_id=" + tstUserId + "&int_no=" + tstIntvNum, true);//ASYNCHRONICZNIE
+      xhr.open("GET", "../phpscripts/setTableIntvNumComplete.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum, true);//ASYNCHRONICZNIE
     else
-      xhr.open("GET", "../phpscripts/setM_TabIntvNumComplete.php?user_id=" + tstUserId + "&int_no=" + tstIntvNum + "&stage_no=" + tstStageNo, true);//ASYNCHRONICZNIE
+      xhr.open("GET", "../phpscripts/setM_TabIntvNumComplete.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum + "&stage_no=" + tstStageNo, true);//ASYNCHRONICZNIE
   xhr.send();
 }//setIntvNumComplete
 

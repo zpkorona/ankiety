@@ -4,14 +4,16 @@
 //RETURNS int_no IF IT'S waiting____________ OR started____________ FOR GIVEN user_id AND stage_no
 //  SETS FOUND TO started____________
 $req_intv_num = -1;
-if (array_key_exists('user_id',  $_GET) &&
+if (array_key_exists('survey_id', $_GET) &&
+    array_key_exists('user_id',  $_GET) &&
     array_key_exists('int_no',   $_GET) &&
     array_key_exists('stage_no', $_GET)) {
+  $survey_id = $_GET['survey_id'];
   $req_user_id  = $_GET['user_id'];
   $req_intv_num = $_GET['int_no'];
   $req_stage_no = $_GET['stage_no'];
   //echo "<hr>$req_user_id, $req_intv_num, $req_stage_no<hr>";
-  $file_name   = "../datafiles/intvnums_m_tab.txt";
+  $file_name   = "./$survey_id/datafiles/intvnums_m_tab.txt";
   $waitingstr  = "waiting____________";
   $startedstr  = "started____________";
   if ($req_user_id  != -1 && $req_intv_num != -1 && 0 < $req_stage_no && $req_stage_no < 11) {
