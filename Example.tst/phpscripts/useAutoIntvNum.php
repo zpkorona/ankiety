@@ -12,9 +12,9 @@ if (array_key_exists('user_id', $_GET) &&
   if ($req_user_id == -1)
     $req_user_id = "#NN#";
   //echo "<hr>req_user_id=$req_user_id, req_intv_num=$req_intv_num<hr>";
-  if (!file_exists("../_dat_"))
-    @mkdir("../_dat_");
-  $file_name   = "../_dat_/intvnums_autoi.txt";
+  if (!file_exists("../datafiles"))
+    @mkdir("../datafiles");
+  $file_name   = "../datafiles/intvnums_autoi.txt";
   $waitingstr  = "waiting____________";
   $startedstr  = "started____________";
   if ($req_intv_num != -1) {
