@@ -12,7 +12,7 @@ if (array_key_exists('survey_id', $_GET) &&
   $req_intv_num = $_GET['int_no'];
   $req_stage_no = $_GET['stage_no'];
   //echo "<hr>$req_user_id, $req_intv_num, $req_stage_no<hr>";
-  $file_name   = "./$survey_id/datafiles/intvnums_m_tab.txt";
+  $file_name   = "../$survey_id/datafiles/intvnums_m_tab.txt";
   $startedstr  = "started____________";
   if ($req_user_id  != -1 && $req_intv_num != -1 && 0 < $req_stage_no && $req_stage_no < 11) {
     $file = @fopen($file_name, "r");

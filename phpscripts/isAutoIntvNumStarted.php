@@ -14,7 +14,7 @@ if (array_key_exists('survey_id', $_GET) &&
   }//if
   //echo "<hr>req_user_id=$req_user_id, req_intv_num=$req_intv_num<hr>";
   if ($req_intv_num != -1) {
-    $file_name   = "./$survey_id/datafiles/intvnums_autoi.txt";
+    $file_name   = "../$survey_id/datafiles/intvnums_autoi.txt";
     $startedstr  = "started____________";
     $file = @fopen($file_name, "r");
 

@@ -14,9 +14,9 @@ if (array_key_exists('survey_id', $_GET) &&
   if ($req_user_id == -1)
     $req_user_id = "#NN#";
   //echo "<hr>req_user_id=$req_user_id, req_intv_num=$req_intv_num<hr>";
-  if (!file_exists("./$survey_id/datafiles"))
-    @mkdir("./$survey_id/datafiles");
-  $file_name   = "./$survey_id/datafiles/intvnums_autoi.txt";
+  if (!file_exists("../$survey_id/datafiles"))
+    @mkdir("../$survey_id/datafiles");
+  $file_name   = "../$survey_id/datafiles/intvnums_autoi.txt";
   $waitingstr  = "waiting____________";
   $startedstr  = "started____________";
   if ($req_intv_num != -1) {

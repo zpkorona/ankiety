@@ -17,10 +17,10 @@ if (array_key_exists('survey_id', $_GET) &&
   //echo "<hr>req_user_id=$req_user_id, req_intv_num=$req_intv_num<hr>";
 
   if ($req_intv_num != -1) {
-    $file_name   = "./$survey_id/datafiles/intvnums_autoi.txt";
+    $file_name   = "../$survey_id/datafiles/intvnums_autoi.txt";
     $waitingstr  = "waiting____________";
-    if (!file_exists("./$survey_id/datafiles")) {
-      @mkdir("./$survey_id/datafiles");
+    if (!file_exists("../$survey_id/datafiles")) {
+      @mkdir("../$survey_id/datafiles");
     }//if
   	if (file_exists($file_name)) {
      	 $file = @fopen($file_name, "r+");

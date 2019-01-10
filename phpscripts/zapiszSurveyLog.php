@@ -17,10 +17,10 @@ if (array_key_exists('survey_id', $_GET) &&
   $serv_REMOTE_PORT = "--";
   if (array_key_exists('REMOTE_HOST', $_SERVER)) $serv_REMOTE_HOST = $_SERVER['REMOTE_HOST'];
   if (array_key_exists('REMOTE_PORT', $_SERVER)) $serv_REMOTE_PORT = $_SERVER['REMOTE_PORT'];
-  if (!file_exists("./$survey_id/datafiles")) {
-    @mkdir("./$survey_id/datafiles");
+  if (!file_exists("../$survey_id/datafiles")) {
+    @mkdir("../$survey_id/datafiles");
   }//if
-  $file_name = "./$survey_id/datafiles/surveyLogFile.dat";
+  $file_name = "../$survey_id/datafiles/surveyLogFile.dat";
   $file = @fopen($file_name, "a");
   if ($file) {
     flock($file, LOCK_EX);

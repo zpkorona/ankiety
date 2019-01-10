@@ -195,13 +195,17 @@ function getSurveysInfoFromXML () {
     elemTab = xhr.responseXML.getElementsByTagName("SURVEY");
     window.console.log("elemTab.len=" + elemTab.length + ", " + elemTab[0].getElementsByTagName("ID")[0].childNodes[0].nodeValue);
     survey = -1;
-    if (parSurveyId != -1)
-      for (i = 0; i < elemTab.length; i++)
-        if (elemTab[i].getElementsByTagName("ID")[0].childNodes[0].nodeValue == parSurveyId)//zakładam, że jest survey
+    if (parSurveyId != -1) {
+      for (i = 0; i < elemTab.length; i++) {
+        if (elemTab[i].getElementsByTagName("ID")[0].childNodes[0].nodeValue == parSurveyId) {//zakładam, że jest survey
           survey = elemTab[survPos=i];
+        }//if
+      }//for
+    }//if
     if (survey != -1) { //survPos < elemTab.length
       surveyId  = parSurveyId;//zmienna globalna
-      stagesNum = survey.getElementsByTagName("STAGES")[0].childNodes[0].nodeValue;
+      elemtab = survey.getElementsByTagName("STAGES");
+      stagesNum = elemtab.length == 0 ? 1 : elemtab[0].childNodes[0].nodeValue;
       if (1 < stagesNum)
         if (1 <= parStageNo && parStageNo <= stagesNum)
           stageNo = parStageNo;
@@ -212,11 +216,16 @@ function getSurveysInfoFromXML () {
         parStageNo = -1;
         stageNo = -1;
       }//else
-      clientName   = survey.getElementsByTagName("CLIENT")[0].childNodes[0].nodeValue;
-      subjectTxt   = survey.getElementsByTagName("SUBJECT")[0].childNodes[0].nodeValue;
-      firstIntvNum = survey.getElementsByTagName("FIRST_NUMBER")[0].childNodes[0].nodeValue;
-      lastIntvNum  = survey.getElementsByTagName("LAST_NUMBER")[0].childNodes[0].nodeValue;
-      intvNumType  = survey.getElementsByTagName("INTV_NUMBER")[0].childNodes[0].nodeValue;
+      elemtab = survey.getElementsByTagName("CLIENT");
+      clientName = elemtab.length == 0 ? "CLIENT" : elemtab[0].childNodes[0].nodeValue;
+      elemtab = survey.getElementsByTagName("SUBJECT");
+      subjectTxt   =  elemtab.length == 0 ? "SUBJECT" : elemtab[0].childNodes[0].nodeValue;
+      elemtab = survey.getElementsByTagName("FIRST_NUMBER");
+      firstIntvNum = elemtab.length == 0 ? 1 : elemtab[0].childNodes[0].nodeValue;
+      elemtab = survey.getElementsByTagName("LAST_NUMBER");
+      lastIntvNum = elemtab.length == 0 ? 1000000 : elemtab[0].childNodes[0].nodeValue;
+      elemtab = survey.getElementsByTagName("INTV_NUMBER");
+      intvNumType = elemtab.length == 0 ? "AUTO HIDDEN" : elemtab[0].childNodes[0].nodeValue;
       intvNumAuto  = intvNumType.indexOf("AUTO") != -1;
       intvNumGiven = intvNumType.indexOf("GIVEN") != -1;
       intvNumTable = intvNumType.indexOf("TABLE") != -1;
@@ -237,16 +246,22 @@ function getSurveysInfoFromXML () {
         document.getElementById("intv_num-range").style.display = "none";
       }//if
       elemTab     = survey.getElementsByTagName("USER_ID");
-      window.console.log("sId=[" + surveyId + "]" + "\nsNum=[" + stagesNum + "]" + "\nsNo=[" + stageNo + "]");
-      window.console.log("client=[" + clientName + "]" + "\nsubject=[" + subjectTxt + "]" + "\nfrst=[" + firstIntvNum + "]" + ", last=[" + lastIntvNum + "]");
-      window.console.log("iNGiven=[" + intvNumGiven + "]" + "\niNAuto=[" + intvNumAuto + "]" + "\niNTable=[" + intvNumTable + "]" + "\niNShow=[" + intvNumShow + "]");
-      window.console.log("elemTab.len=[" + elemTab.length + "]");
-      if (parUserId == -1 && (intvNumAuto || intvNumGiven) && elemTab.length) {
-        gotUser = elemTab[0].childNodes[0].nodeValue;
-        userId = gotUser.substring(0, gotUser.indexOf("%")).trim();
+      window.console.log("sId=[" + surveyId + "]" + "\nsNum=[" + stagesNum + "]" + "\nsNo=[" + stageNo + "]" +
+                         "\nclient=[" + clientName + "]" + "\nsubject=[" + subjectTxt + "]" + "\nfrst=[" + firstIntvNum + "]" + ", last=[" + lastIntvNum + "]" +
+                         "\niNGiven=[" + intvNumGiven + "]" + "\niNAuto=[" + intvNumAuto + "]" + "\niNTable=[" + intvNumTable + "]" + "\niNShow=[" + intvNumShow + "]" +
+                         "\nelemTab.len=[" + elemTab.length + "]");
+      if (parUserId == -1 && (intvNumAuto || intvNumGiven)) {//nie ma użytkownika w parametrach
+        if ( elemTab.length == 0) {
+          gotUser = "empty";
+          userId = "YOU";
+        }//if
+        else {
+          gotUser = elemTab[0].childNodes[0].nodeValue;
+          userId = gotUser.substring(0, gotUser.indexOf("%")).trim();
+        }//else
         window.console.log(gotUser + "=> userId=" + userId);
       }//if
-      else {//jeśli parUserId == -1, to tylko wydruk uzytkowników, bo i tak kupa
+      else {//jeśli parUserId == -1, to tylko wydruk użytkowników, bo i tak kupa
         window.console.log("users:");
         for (i = 0; i < elemTab.length; i++) {//wczytanie użytkowników
           gotUser = elemTab[i].childNodes[0].nodeValue;

@@ -19,13 +19,13 @@ if (array_key_exists('survey_id', $_GET) &&
   $variable  = $_GET['var'];
   $value     = $_GET['val'];
   $openQuest = $_GET['opq'];
-  if (!file_exists("./$survey_id/datafiles")) {
-    @mkdir("./$survey_id/datafiles");
+  if (!file_exists("../$survey_id/datafiles")) {
+    @mkdir("../$survey_id/datafiles");
   }//if
-  if (!file_exists("./$survey_id/datafiles/tmp")) {
-    @mkdir("./$survey_id/datafiles/tmp");
+  if (!file_exists("../$survey_id/datafiles/tmp")) {
+    @mkdir("../$survey_id/datafiles/tmp");
   }//if
-  $file_name = "./$survey_id/datafiles/tmp/$survey_id$stage_no($intv_num)$user_id.dat";
+  $file_name = "../$survey_id/datafiles/tmp/$survey_id$stage_no($intv_num)$user_id.dat";
   $file = @fopen($file_name, "a");
   //echo "<hr>" . $intv_num . ", " . $survey_id . ", " . $stage_no . ", " . $user_id . ", " . $variable . ", " . $value . ", " . $openQuest . " :: " . $file_name . "<hr>";
   if ($file) {

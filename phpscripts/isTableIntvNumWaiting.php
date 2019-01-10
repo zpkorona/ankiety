@@ -19,7 +19,7 @@ if (array_key_exists('survey_id', $_GET) &&
     $req_user___ = "";
   }//else
   //echo "<hr>req_user_id=$req_user_id, req_intv_num=$req_intv_num<hr>";
-  $file_name   = "./$survey_id/datafiles/intvnums_table.txt";
+  $file_name   = "../$survey_id/datafiles/intvnums_table.txt";
   $waitingstr  = "waiting____________";
   if ($req_intv_num != -1) {
     $file = @fopen($file_name, "r+");
