@@ -336,6 +336,9 @@ form {
   padding: 0 3em 1.5em 3em;
   /*  text-align: left;*/
 }
+#ident-origin-info {
+  padding: 3em 3em 1.5em 3em;
+}
 .question-break- {
   content: "";
   height: 0;

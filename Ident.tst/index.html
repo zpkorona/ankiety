@@ -1,0 +1,250 @@
+<!doctype html>
+<html>
+<head>
+  <title>Badanie ..... ankieta rekrutacyjna</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+  <meta http-equiv="Cache-Control" content="post-check=0, pre-check=0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=10, user-scalable=yes">
+  <meta name="description" content="Badanie .... ankieta rekrutacujna">
+  <meta name="keywords" content="AZetKa ankieta">
+  <meta name="author" content="AZetKa studio">
+  <link rel="shortcut icon" href="../mediafiles/favicon.ico">
+  <link rel="stylesheet" type="text/css" href="../csstyles/badania.css">
+  <link rel="stylesheet" type="text/css" href="./csstyles/badanie.css">
+  <script language="JavaScript" type="text/javascript" src="./jscripts/badanie.js"></script>
+</head>
+
+<body>
+<div id="top-banner" class="top-banner full-size-banner">
+  <div id="top-banner-left" class="tab-col1of5 text-left">&nbsp;</div>
+  <div id="top-banner-center" class="tab-col3of5 text-center"><em>Ładowanie badania...</em></div>
+  <div id="top-banner-right" class="tab-col1of5 text-right italic smaller"><img src="../mediafiles/AZetKa_pas.gif" alt="AZetKa" height="14px"></div>
+</div>
+
+
+<div id="middle-banner" class="middle-banner div-row">
+  <div id="questions-place" class="questions-place">
+
+    <!-- NIE MA COOKIES ================================================== -->
+    <div id="cookies-confirm" class="cookies-info">
+      <div>
+        W celu przeprowadzenia ankiety wykorzystujemy ciasteczka.<br>
+        Są one przez nas używane jedynie w celu zapamiętania aktualnego stanu
+        wypełnienia ankiety na wypadek utracenia połączenia z serwerem oraz
+        sprawdzania, czy z tego komputera były robione już jakieś nasze ankiety.
+        Nasze ciasteczka nie służą żadnym celom handlowym ani reklamowym.
+      </div>
+      <div>
+        <button id="cookies-confirm-yes" class="nav-button" onclick="cookiesConfirmed()" value="yes">OK</button>
+      </div>
+    </div>
+    <!--div class="question-break"></div-->
+
+
+    <!-- SĄ COOKIES ================================================== -->
+    <div id="ask-restore-intv" class="ask-user-box">
+      <div class="section-text text-center">
+        W celu przeprowadzenia ankiety wykorzystujemy ciasteczka.
+      </div>
+      <!--div class="question-break"></div-->
+      <div class="question-info text-cont">
+        W pamięci przeglądarki znajdują sie dane z poprzedniej, prawdopodobnie niezakończonej <br>
+         lub niezapisanej ankiety do tego badania.
+      </div>
+      <!--div class="question-break"></div-->
+      <div class="question-info text-center">
+        <p>
+          Czy pobrać te dane i kontynuować rozpoczętą wcześniej ankietę?
+        </p>
+        <p>
+          Czy usunąć te dane o rozpocząć nową ankietę? Nie będzie powrotu do poprzedniej ankiety.
+        </p>
+      </div>
+      <!--div class="question-break"></div-->
+      <div>
+        <progress id="restore-progress" class="restore-progress" value="1" max="300"></progress>
+      </div>
+      <!--div class="question-break"></div-->
+      <div id="restore-buttons" class="buttons-place">
+        <button class="nav-button" id="restore-interview" onclick="restoreFromCookies()" value="old">Poprzednia ankieta</button>
+        <button class="nav-button" id="new-interview" onclick="newInterview()" value="new">Nowa ankieta</button>
+      </div>
+    </div>
+    <!--div class="question-break"></div-->
+
+
+    <!-- NIE MA IDENTYFIKATORA ============================================= -->
+    <div id="reload-survey-info" class="ask-user-box">
+      <div id="reload-text1" class="section-text">
+        Błąd:
+      </div>
+      <div id="reload-text2" class="question-info">
+        Bo.
+      </div>
+      <!--div class="question-break"></div-->
+      <!--div id="reload-buttons" class="buttons-place">
+          <button class="nav-button" id="reload-survey" onclick="gotoBadania()" value="no">Powrót</button>
+      </div-->
+    </div>
+    <!--div class="question-break"></div-->
+
+
+    <!-- ANKIETA ==================================================================================================== -->
+    <!-- ANKIETA ==================================================================================================== -->
+    <!-- ANKIETA ==================================================================================================== -->
+    <form name="questForm" action="_php_/zapiszData2disk.php" enctype="text/plan" method="POST"
+          onsubmit="event.preventDefault(); return finishWithFormData();" target="php-output">
+      <div id="all-questions" class="questionnaire">
+
+        <!-- NUMER ANKIETY ================================================== -->
+        <div class="question_" id="quest-intv_num">
+          <div id="survey-name" class="section-text text-center">
+            <b>ANKIETA REKRUTACYJNA</b>
+          </div>
+          <!--div class="question-break"></div-->
+          <div class="answer_">
+            <div id="log-in-div" class="log-in-div answer-table answer-table-vert"><!--class="answer-div"-->
+              <div>
+                <div style="vertical-align:top;padding-top:0.4em;">
+                  Proszę wpisać numer ankiety<span id="intv_num-range"> [1-110,1011-1110]</span>:
+                </div>
+                <div style="vertical-align:top;">
+                  <input type="number" name="intv_num" id="intv_num" maxlength="7" size="7" onkeypress="checkIntvIdEnter(event)">
+                  <span id="quest-intv_num-error" class="error-comment">(błędny&nbsp;numer&nbsp;ankiety)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="question-info" id="ident-origin-info">
+          </div>
+          <input type="text" name="survey_id"  class="no-display">
+          <input type="text" name="stage_no"   class="no-display">
+          <input type="text" name="user_id"    class="no-display">
+          <input type="text" name="start_time" class="no-display">
+          <input type="text" name="end_time"   class="no-display">
+          <input type="text" name="duration"   class="no-display">
+          <div class="section-text text-center">
+            <b><i>Nie ma co się bać. Będzie dobrze.</i></b>
+          </div>
+        </div>
+        <!--div class="question-break"></div-->
+
+
+        <!-- Rekrut quest rE ================================================== -->
+        <div class="question_" id="quest-rE">
+          <div class="question-text-indent">
+            Pyt.E.<br />
+            Pytanie z poziomym układem odpowiedzi.
+            <br>
+            <span class="fill-info">(proszę wybrać co się chce)</span>
+          </div>
+          <div class="answer_">
+            <div class="answer-table answer-table-horiz">
+              <div>
+                <div >1</div>
+                <div >2</div>
+                <div >3</div>
+                <div >4</div>
+                <div >5</div>
+                <div >6</div>
+                <div >7</div>
+                <div >8</div>
+                <div >9</div>
+                <div >10</div>
+                <div >11</div>
+                <div >12</div>
+              </div>
+              <div>
+                <div><input type="radio" name="rE" id="rE_1" value="1"></div>
+                <div><input type="radio" name="rE" id="rE_2" value="2" /></div>
+                <div><input type="radio" name="rE" id="rE_3" value="3"></div>
+                <div><input type="radio" name="rE" id="rE_4" value="4"></div>
+                <div><input type="radio" name="rE" id="rE_5" value="5"></div>
+                <div><input type="radio" name="rE" id="rE_6" value="6"></div>
+                <div><input type="radio" name="rE" id="rE_7" value="7"></div>
+                <div><input type="radio" name="rE" id="rE_8" value="8"></div>
+                <div><input type="radio" name="rE" id="rE_9" value="9"></div>
+                <div><input type="radio" name="rE" id="rE_10" value="10"></div>
+                <div><input type="radio" name="rE" id="rE_11" value="11"></div>
+                <div><input type="radio" name="rE" id="rE_12" value="12"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--div class="question-break"></div-->
+
+      </div>
+    </form>
+  <!-- KONIEC ANKIETY ============================================================================================== -->
+  <!-- KONIEC ANKIETY ============================================================================================== -->
+  <!-- KONIEC ANKIETY ============================================================================================== -->
+
+
+  <!-- KOŃCZENIE ANKIETY ============================================= -->
+    <div id="finish-quest-info" class="ask-user-box">
+      <div id="data-submit-info-" class="section-text text-center">
+        <h2>DZIĘKUJEMY ZA UDZIAŁ W BADANIU.</h2>
+      </div>
+      <div id="data-submit-info" class="section-text text-center">
+        Zapisywanie danych.
+      </div>
+      <!--div class="question-break"></div-->
+      <div id="data-saving-progess" class="question-info text-center">
+        <button id="data-saved-next" class="single-button" onclick="cleanData()" value="yes">Dane zostały zapisane.</button>
+      </div>
+      <!--div class="question-break"></div-->
+      <span id="press-text1" style="font-size:80%;font-style:italic">(proszę wcisnąć przycisk)</span>
+      <!--div class="question-break"></div-->
+      <div id="data-saved" class="section-text text-center">
+        Dane zostały zapisane.
+      </div>
+      <!--div class="question-break"></div-->
+      <div id="data-removing-info" class="section-text text-center">
+        Usuwanie danych z formularza.
+      </div>
+      <!--div class="question-break"></div-->
+      <div id="cookies-removing-info" class="section-text text-center">
+        Usuwanie ciasteczek.
+      </div>
+      <!--div class="question-break"></div-->
+      <div id="finish-buttons" class="question-info text-center">
+        <button id="all-done-end" class="nav-button" onclick="endInterview()" value="no">Koniec. Bardzo dziękuję.</button>
+        <!--button class="nav-button" id="all-done-next" onclick="nextInterview()" value="yes">Rozpoczęcie kolejnego wywiadu.</button-->
+      </div>
+    </div>
+  </div>
+
+
+  <div id="quest-nav-buttons" class="quest-nav-buttons buttons-place">
+    <div id="button-left-tab"><button class="nav-button" id="prev-button" onclick="gotoPrevQuestion()" value="prev">Wstecz</button></div>
+    <div id="button-center-tab"><button class="nav-button" id="fill-button" onclick="showAllQuestions()" value="fill">Załaduj pytania</button></div>
+    <div id="button-right-tab"><button class="nav-button" id="next-button" onclick="gotoNextQuestion()" value="next">Dalej</button></div>
+  </div>
+</div>
+
+
+<div id="bottom-banner" class="bottom-banner table-row">
+  <div id="bottom-banner-left" class="bottom-banner-left tab-col3of10">
+    <span id="user-id-info"></span>#<span id="intv-num-info"></span>.<span id="test-prod-info"></span>
+  </div>
+  <div id="position-info" class="bottom-banner-center tab-col4of10">
+    Strona <span id="question-no">0</span> / <span id="questions-num">3</span> <progress id="quest-progress" value="0" max="3" width="300px"></progress>
+  </div>
+  <div id="bottom-banner-right" class="bottom-banner-right tab-col3of10">
+    <span id="survey-id-info"></span> / <span id="client-name-info">AZETKA very special forces</span>
+  </div>
+</div>
+
+<div id="monitor-monitor" class="monitor-div">
+</div>
+
+<div id="iframe-php-monitor" class="iframe-php-div">
+<iframe name="php-output" id="php-output"></iframe>
+</div>
+
+</body>
+
+</html>

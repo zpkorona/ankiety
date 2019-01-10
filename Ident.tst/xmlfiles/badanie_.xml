@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<SURVEYS>
+
+<SURVEY>
+  <ID>Ident.tst</ID>
+  <STAGES>1</STAGES>
+  <CLIENT>myself</CLIENT>
+  <SUBJECT>Ident test</SUBJECT>
+  <FIRST_NUMBER>1</FIRST_NUMBER>
+  <LAST_NUMBER>20000</LAST_NUMBER>
+  <INTV_NUMBER>GIVEN SHOW</INTV_NUMBER>
+  <USER_ID>Gość%guest</USER_ID>
+  <USER_ID>Test%testowanie</USER_ID>
+  <USER_ID>Zbyszek%2121</USER_ID>
+</SURVEY>
+
+</SURVEYS>

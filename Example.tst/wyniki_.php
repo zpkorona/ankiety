@@ -7,7 +7,7 @@
   <meta name="description" content="Cześciowe dane z wywiadów">
   <meta name="keywords" content="programowanie, strony internetowe, C++, Java Script, HTML, Php">
   <meta name="author" content="AZetKa studio">
-  <link rel="stylesheet" type="text/css" href="../_css_/badania.css">
+  <link rel="stylesheet" type="text/css" href="../csstyles/badania.css">
 </head>
 <body>
 
@@ -42,24 +42,24 @@ function show ($file_name) {
           }//while
         echo "</div>";
       flock($file, LOCK_UN);
-      fclose($file);  
+      fclose($file);
     }//if
   }//if
   echo "<hr>";
 }//function
 
-show("_dat_/DataFile.dat");
-show("_dat_/DataFile0.dat");
-show("_dat_/DataFile1.dat");
-show("_dat_/DataFile2.dat");
-show("_dat_/DataFile3.dat");
-show("_dat_/DataFile4.dat");
-show("_dat_/DataFile5.dat");
-show("_dat_/DataFile6.dat");
-show("_dat_/DataFile7.dat");
-show("_dat_/DataFile8.dat");
-show("_dat_/DataFile9.dat");
-show("_dat_/DataFile10.dat");
+show("./datafiles/DataFile.dat");
+show("./datafiles/DataFile0.dat");
+show("./datafiles/DataFile1.dat");
+show("./datafiles/DataFile2.dat");
+show("./datafiles/DataFile3.dat");
+show("./datafiles/DataFile4.dat");
+show("./datafiles/DataFile5.dat");
+show("./datafiles/DataFile6.dat");
+show("./datafiles/DataFile7.dat");
+show("./datafiles/DataFile8.dat");
+show("./datafiles/DataFile9.dat");
+show("./datafiles/DataFile10.dat");
 
 ?>
 

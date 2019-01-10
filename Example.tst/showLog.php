@@ -7,12 +7,12 @@
   <meta name="description" content="Log realizacji wywiadów">
   <meta name="keywords" content="programowanie, strony internetowe, C++, Java Script, HTML, Php">
   <meta name="author" content="AZetKa studio">
-  <link rel="stylesheet" type="text/css" href="../_css_/badania.css">
+  <link rel="stylesheet" type="text/css" href="../csstyles/badania.css">
 </head>
 <body>
 
 <?php
-$file_name = "_dat_/surveyLogFile.dat";
+$file_name = "./datafiles/surveyLogFile.dat";
 if (file_exists($file_name)) {
   $file = fopen($file_name, "r");
   if ($file) {

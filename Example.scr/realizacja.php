@@ -11,7 +11,7 @@
   <meta name="description" content="Tabela realizacji wywiadów">
   <meta name="keywords" content="programowanie, strony internetowe, C++, Java Script, HTML, Php">
   <meta name="author" content="AZetKa studio">
-  <link rel="stylesheet" type="text/css" href="../_css_/badania.css">
+  <link rel="stylesheet" type="text/css" href="../csstyles/badania.css">
 </head>
 <body>
 
@@ -57,7 +57,7 @@ function sortTab (&$table, $tab_width, $tab_len, $sort_pos, $sort_dir="asc") {
 }//function sortTab
 
 
-$file_name = "_dat_/intvnums_autoi.txt";
+$file_name = "./datafiles/intvnums_autoi.txt";
 if (file_exists($file_name)) {
   $file = fopen($file_name, "r");
   if ($file) {
@@ -149,7 +149,7 @@ if (file_exists($file_name)) {
 }//if
 
 
-$file_name = "_dat_/intvnums_table.txt";
+$file_name = "./datafiles/intvnums_table.txt";
 if (file_exists($file_name)) {
   $file = fopen($file_name, "r");
   if ($file) {
@@ -241,7 +241,7 @@ if (file_exists($file_name)) {
 }//if
 
 
-$file_name = "_dat_/intvnums_m_tab.txt";
+$file_name = "./datafiles/intvnums_m_tab.txt";
 $stages_num = 7;
 if (file_exists($file_name)) {
   $file = fopen($file_name, "r");
