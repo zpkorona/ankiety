@@ -21,7 +21,9 @@ if (array_key_exists('intv_num'  , $_POST) &&
   $replace = array("'",  "/",  ".", ", ",   ", ", ", ");
 
   //  if ($form_data['stage_no'] == -1) {
-    $form_data['rE']    = "";
+    $form_data['rA']    = "";
+    $form_data['rB']    = "";
+    $form_data['rC']    = "";
 
   //foreach($_POST as $name => $value)
   //  $form_data[$name] = $value;
@@ -29,7 +31,9 @@ if (array_key_exists('intv_num'  , $_POST) &&
 //ZAMIANA
 //^    \$form_data\[('.*')\] += "";
 //    if (array_key_exists($1,  $_POST)) $form_data[$1]  = $_POST[$1];
-    if (array_key_exists('rE',    $_POST)) $form_data['rE']    = $_POST['rE'];
+    if (array_key_exists('rA',    $_POST)) $form_data['rA']    = $_POST['rA'];
+    if (array_key_exists('rB',    $_POST)) $form_data['rB']    = $_POST['rB'];
+    if (array_key_exists('rC',    $_POST)) $form_data['rC']    = $_POST['rC'];
 //  }//if
 
   if ($form_data['stage_no'] == 1) {

@@ -4,6 +4,15 @@
 //IF int_no IS -1, RETURNS FIRST waiting____________ OR FREE int_no FOR GIVEN user_id
 //IF int_no IS NOT -1, RETURNS IT IF IT'S waiting____________ AND user_id IS CORRECT OR FIRST waiting____________ / NOT USED OTHERWISE
 //  SETS FOUND TO started____________
+
+$logfile = fopen("php-calls.log", "a+");
+if ($logfile) {
+  flock($logfile, LOCK_EX);
+  fwrite($logfile, date("Y-m-d H:i:s") . ": " . $_SERVER['REMOTE_ADDR'] . "/" . $_SERVER['PHP_SELF'] . "?" . urldecode($_SERVER['QUERY_STRING']) . "\n");
+  flock($logfile, LOCK_UN);
+  fclose($logfile);
+}//if
+
 $req_intv_num = -1;
 if (array_key_exists('survey_id', $_GET) &&
     array_key_exists('user_id', $_GET) &&
@@ -25,7 +34,7 @@ if (array_key_exists('survey_id', $_GET) &&
     $file = @fopen($file_name, "r+");
   }//if
   else {
-    $file = @fopen($file_name, "c+");
+    $file = @fopen($file_name, "w+");
   }//else
   if ($file) {
     flock($file, LOCK_EX);

@@ -31,7 +31,9 @@ if (array_key_exists('int_no', $_GET) &&
   $form_data['duration'  ] = "";
 
 //  if ($form_data['stage_no'] == -1) {
-    $form_data['rE']    = "";
+    $form_data['rA']    = "";
+    $form_data['rB']    = "";
+    $form_data['rC']    = "";
 //  }//if
 
   $file = @fopen($file_name, "r");

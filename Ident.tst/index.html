@@ -8,7 +8,7 @@
   <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
   <meta http-equiv="Cache-Control" content="post-check=0, pre-check=0">
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=10, user-scalable=yes">
-  <meta name="description" content="Badanie .... ankieta rekrutacujna">
+  <meta name="description" content="Badanie .... ankieta">
   <meta name="keywords" content="AZetKa ankieta">
   <meta name="author" content="AZetKa studio">
   <link rel="shortcut icon" href="../mediafiles/favicon.ico">
@@ -95,14 +95,14 @@
     <!-- ANKIETA ==================================================================================================== -->
     <!-- ANKIETA ==================================================================================================== -->
     <!-- ANKIETA ==================================================================================================== -->
-    <form name="questForm" action="_php_/zapiszData2disk.php" enctype="text/plan" method="POST"
+    <form name="questForm" action="./phpscripts/zapiszData2disk.php" enctype="text/plan" method="POST"
           onsubmit="event.preventDefault(); return finishWithFormData();" target="php-output">
       <div id="all-questions" class="questionnaire">
 
         <!-- NUMER ANKIETY ================================================== -->
         <div class="question_" id="quest-intv_num">
           <div id="survey-name" class="section-text text-center">
-            <b>ANKIETA REKRUTACYJNA</b>
+            <b>ANKIETA</b>
           </div>
           <!--div class="question-break"></div-->
           <div class="answer_">
@@ -133,10 +133,10 @@
         <!--div class="question-break"></div-->
 
 
-        <!-- Rekrut quest rE ================================================== -->
-        <div class="question_" id="quest-rE">
+        <!-- Rekrut quest rA ================================================== -->
+        <div class="question_" id="quest-rA">
           <div class="question-text-indent">
-            Pyt.E.<br />
+            Pyt.A.<br />
             Pytanie z poziomym układem odpowiedzi.
             <br>
             <span class="fill-info">(proszę wybrać co się chce)</span>
@@ -158,18 +158,104 @@
                 <div >12</div>
               </div>
               <div>
-                <div><input type="radio" name="rE" id="rE_1" value="1"></div>
-                <div><input type="radio" name="rE" id="rE_2" value="2" /></div>
-                <div><input type="radio" name="rE" id="rE_3" value="3"></div>
-                <div><input type="radio" name="rE" id="rE_4" value="4"></div>
-                <div><input type="radio" name="rE" id="rE_5" value="5"></div>
-                <div><input type="radio" name="rE" id="rE_6" value="6"></div>
-                <div><input type="radio" name="rE" id="rE_7" value="7"></div>
-                <div><input type="radio" name="rE" id="rE_8" value="8"></div>
-                <div><input type="radio" name="rE" id="rE_9" value="9"></div>
-                <div><input type="radio" name="rE" id="rE_10" value="10"></div>
-                <div><input type="radio" name="rE" id="rE_11" value="11"></div>
-                <div><input type="radio" name="rE" id="rE_12" value="12"></div>
+                <div><input type="radio" name="rA" id="rA_1" value="1"></div>
+                <div><input type="radio" name="rA" id="rA_2" value="2" /></div>
+                <div><input type="radio" name="rA" id="rA_3" value="3"></div>
+                <div><input type="radio" name="rA" id="rA_4" value="4"></div>
+                <div><input type="radio" name="rA" id="rA_5" value="5"></div>
+                <div><input type="radio" name="rA" id="rA_6" value="6"></div>
+                <div><input type="radio" name="rA" id="rA_7" value="7"></div>
+                <div><input type="radio" name="rA" id="rA_8" value="8"></div>
+                <div><input type="radio" name="rA" id="rA_9" value="9"></div>
+                <div><input type="radio" name="rA" id="rA_10" value="10"></div>
+                <div><input type="radio" name="rA" id="rA_11" value="11"></div>
+                <div><input type="radio" name="rA" id="rA_12" value="12"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--div class="question-break"></div-->
+
+        <!-- Rekrut quest rB ================================================== -->
+        <div class="question_" id="quest-rB">
+          <div class="question-text-indent">
+            Pyt.B.<br />
+            Pytanie z poziomym układem odpowiedzi.
+            <br>
+            <span class="fill-info">(proszę wybrać co się chce)</span>
+          </div>
+          <div class="answer_">
+            <div class="answer-table answer-table-horiz">
+              <div>
+                <div >21</div>
+                <div >22</div>
+                <div >23</div>
+                <div >24</div>
+                <div >25</div>
+                <div >26</div>
+                <div >27</div>
+                <div >28</div>
+                <div >29</div>
+                <div >30</div>
+                <div >31</div>
+                <div >32</div>
+              </div>
+              <div>
+                <div><input type="radio" name="rB" id="rB_21" value="21"></div>
+                <div><input type="radio" name="rB" id="rB_22" value="22" /></div>
+                <div><input type="radio" name="rB" id="rB_23" value="23"></div>
+                <div><input type="radio" name="rB" id="rB_24" value="24"></div>
+                <div><input type="radio" name="rB" id="rB_25" value="25"></div>
+                <div><input type="radio" name="rB" id="rB_26" value="26"></div>
+                <div><input type="radio" name="rB" id="rB_27" value="27"></div>
+                <div><input type="radio" name="rB" id="rB_28" value="28"></div>
+                <div><input type="radio" name="rB" id="rB_29" value="29"></div>
+                <div><input type="radio" name="rB" id="rB_20" value="30"></div>
+                <div><input type="radio" name="rB" id="rB_31" value="31"></div>
+                <div><input type="radio" name="rB" id="rB_32" value="32"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--div class="question-break"></div-->
+
+        <!-- Rekrut quest rC ================================================== -->
+        <div class="question_" id="quest-rC">
+          <div class="question-text-indent">
+            Pyt.C.<br />
+            Pytanie z poziomym układem odpowiedzi.
+            <br>
+            <span class="fill-info">(proszę wybrać co się chce)</span>
+          </div>
+          <div class="answer_">
+            <div class="answer-table answer-table-horiz">
+              <div>
+                <div >41</div>
+                <div >42</div>
+                <div >43</div>
+                <div >44</div>
+                <div >45</div>
+                <div >46</div>
+                <div >47</div>
+                <div >48</div>
+                <div >49</div>
+                <div >50</div>
+                <div >51</div>
+                <div >52</div>
+              </div>
+              <div>
+                <div><input type="radio" name="rC" id="rC_41" value="41"></div>
+                <div><input type="radio" name="rC" id="rC_42" value="42" /></div>
+                <div><input type="radio" name="rC" id="rC_43" value="43"></div>
+                <div><input type="radio" name="rC" id="rC_44" value="44"></div>
+                <div><input type="radio" name="rC" id="rC_45" value="45"></div>
+                <div><input type="radio" name="rC" id="rC_46" value="46"></div>
+                <div><input type="radio" name="rC" id="rC_47" value="47"></div>
+                <div><input type="radio" name="rC" id="rC_48" value="48"></div>
+                <div><input type="radio" name="rC" id="rC_49" value="49"></div>
+                <div><input type="radio" name="rC" id="rC_50" value="50"></div>
+                <div><input type="radio" name="rC" id="rC_51" value="51"></div>
+                <div><input type="radio" name="rC" id="rC_52" value="52"></div>
               </div>
             </div>
           </div>

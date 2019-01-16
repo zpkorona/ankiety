@@ -4,6 +4,15 @@
 //int_no MUST NOT BE -1
 //RETURNS int_no IF IT'S waiting____________/NOT USED AND user_id IS CORRECT
 //  SETS FOUND TO started____________
+
+$logfile = fopen("php-calls.log", "a+");
+if ($logfile) {
+  flock($logfile, LOCK_EX);
+  fwrite($logfile, date("Y-m-d H:i:s") . ": " . $_SERVER['REMOTE_ADDR'] . "/" . $_SERVER['PHP_SELF'] . "?" . urldecode($_SERVER['QUERY_STRING']) . "\n");
+  flock($logfile, LOCK_UN);
+  fclose($logfile);
+}//if
+
 $req_intv_num = -1;
 if (array_key_exists('survey_id', $_GET) &&
     array_key_exists('user_id', $_GET) &&
@@ -24,7 +33,7 @@ if (array_key_exists('survey_id', $_GET) &&
       $file = @fopen($file_name, "r+");
     }//if
     else {
-      $file = @fopen($file_name, "c+");
+      $file = @fopen($file_name, "w+");
     }//else
 
     if ($file) {

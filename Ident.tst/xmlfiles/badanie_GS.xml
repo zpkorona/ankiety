@@ -16,6 +16,7 @@
   <USER_ID>Zbyszek%21</USER_ID>
   <USER_ID>Ania%22</USER_ID>
   <USER_ID>xyz[0-9]+$%</USER_ID>
+  <USER_ID>Żółć%</USER_ID>
 </SURVEY>
 
 </SURVEYS>
