@@ -1,0 +1,2 @@
+intv_num;survey_id;stage_no;user_id;start_time;end_time;duration;tp1_ord;tp1_name;tp1_q1;tp1_q2;tp1_q3;tp2_ord;tp2_name;tp2_q1;tp2_q2;tp2_q3;q7;q8_1;q8_2;q8_3;q8_4;q8_5;q8_6;q8_7;q8_8;q8_9;q8_10;q8_11;q8_12
+1;Example.tst;-1;Zbyszek;"2018-05-23 20:01:02";"2018-05-23 20:01:27";25;1;"Nazwa A";0;5;10;2;"Nazwa B";1;6;9;1;7;6;5;4;3;2;1;7;6;5;4;3

@@ -1,0 +1,15 @@
+intv_num=1&user_id=gość&status=2018-05-23 20:01:28
+intv_num=2&user_id=gość&status=started____________
+intv_num=3&user_id=gość&status=waiting____________
+intv_num=4&user_id=gość&status=waiting____________
+intv_num=5&user_id=gość&status=waiting____________
+intv_num=6&user_id=gość&status=waiting____________
+intv_num=7&user_id=gość&status=waiting____________
+intv_num=8&user_id=gość&status=waiting____________
+intv_num=9&user_id=gość&status=waiting____________
+intv_num=10&user_id=gość&status=waiting____________
+intv_num=11&user_id=gość&status=waiting____________
+intv_num=12&user_id=gość&status=waiting____________
+intv_num=22&user_id=gość&status=waiting____________
+intv_num=22&user_id=Wawa33&status=waiting____________
+intv_num=22&user_id=Wawa..&status=waiting____________

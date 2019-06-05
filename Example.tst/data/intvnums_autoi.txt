@@ -1,0 +1,2 @@
+intv_num=1&user_id=gość&status=2019-06-05 09:57:38
+intv_num=2&user_id=gość&status=waiting____________
