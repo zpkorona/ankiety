@@ -1,7 +1,7 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
-  <title>Cześciowe dane z wywiadów</title>
+  <title>Częściowe dane z wywiadów</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
@@ -11,7 +11,7 @@
   <meta name="description" content="Cześciowe dane z wywiadów">
   <meta name="keywords" content="programowanie, strony internetowe, C++, Java Script, HTML, Php">
   <meta name="author" content="AZetKa studio">
-  <link rel="stylesheet" type="text/css" href="./csstyles/badania.css">
+  <link rel="stylesheet" type="text/css" href="../css/badania.css">
 </head>
 <body>
 
@@ -24,16 +24,23 @@ function show ($file_name) {
       flock($file, LOCK_SH);
         $fsize = filesize($file_name);
         echo "<div class='resultsshow-table'>";
-        //echo "<div></div>";//bo nie wiem po co to
+        echo "<div>";
+        echo "</div>";
         $lp = 0;
         while(ftell($file) < $fsize && !feof($file)) {
           $line = fgets($file);
           $values = str_getcsv($line, ";");
           if ($lp == 0)
-            echo "<div><div>lp.</div>";
+            echo "<div><div>l.p.</div>";
           else
             echo "<div><div>$lp</div>";
-          foreach($values as $value) echo "<div>$value</div>";
+          //foreach($values as $value) echo "<div>$value</div>";
+          echo "<div>$values[0]</div>";
+          echo "<div>$values[1]</div>";
+          echo "<div>$values[2]</div>";
+          echo "<div>$values[4]</div>";
+          echo "<div>$values[5]</div>";
+          echo "<div>$values[6]</div>";
           echo "</div>";
           $lp++;
           }//while
@@ -45,18 +52,18 @@ function show ($file_name) {
   echo "<hr>";
 }//function
 
-show("./datafiles/DataFile.dat");
-show("./datafiles/DataFile0.dat");
-show("./datafiles/DataFile1.dat");
-show("./datafiles/DataFile2.dat");
-show("./datafiles/DataFile3.dat");
-show("./datafiles/DataFile4.dat");
-show("./datafiles/DataFile5.dat");
-show("./datafiles/DataFile6.dat");
-show("./datafiles/DataFile7.dat");
-show("./datafiles/DataFile8.dat");
-show("./datafiles/DataFile9.dat");
-show("./datafiles/DataFile10.dat");
+show("./data/DataFile.dat");
+show("./data/DataFile0.dat");
+show("./data/DataFile1.dat");
+show("./data/DataFile2.dat");
+show("./data/DataFile3.dat");
+show("./data/DataFile4.dat");
+show("./data/DataFile5.dat");
+show("./data/DataFile6.dat");
+show("./data/DataFile7.dat");
+show("./data/DataFile8.dat");
+show("./data/DataFile9.dat");
+show("./data/DataFile10.dat");
 
 ?>
 

@@ -2,23 +2,24 @@
 <html>
 <head>
   <title>Przejście do kolejnego etapu</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
-  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
-  <meta http-equiv="Cache-Control" content="post-check=0, pre-check=0">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Przejście do kolejnego etapu">
-  <meta name="keywords" content="programowanie, strony internetowe, C++, Java Script, HTML, Php">
-  <meta name="author" content="AZetKa studio">
-  <link rel="stylesheet" type="text/css" href="../_css_/badania.css">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate" />
+  <meta http-equiv="Cache-Control" content="post-check=0, pre-check=0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Przejście do kolejnego etapu" />
+  <meta name="keywords" content="programowanie, strony internetowe, C++, Java Script, HTML, Php" />
+  <meta name="author" content="AZetKa studio" />
+  <link rel="stylesheet" type="text/css" href="../css/badania.css" />
 </head>
 <body>
 <div class='question-text'>
 
 <?php
 $intv_num = -1;
-$file_dir = "../Example.tst/_dat_/";
+$next_srv = "Example.tst";
+$file_dir = "../$next_srv/data/";
 $file_name = "intvnums_table.txt";
 $waitingstr  = "waiting____________";
 
@@ -120,7 +121,7 @@ if (array_key_exists('user_id', $_GET) &&
       flock($file, LOCK_UN);
       fclose($file);
       if ($intv_num_status != 1) {
-        $link = "http://localhost/public_html/surveys/Example.tst/?uid=$user_id&ino=$intv_num";
+        $link = "http://" . $_SERVER['SERVER_NAME'] . "/$next_srv/?uid=$user_id&ino=$intv_num";
         echo "<p>Aby kontynuować badanie, przechodząc do testu, należy kliknąć poniższy link:</p>";
         echo "<p><a href='$link'>$link</a> </p>";
         echo "<p>wpisująć ''$intv_num' jako numer ankiety.</p>";

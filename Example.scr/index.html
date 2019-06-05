@@ -1,27 +1,27 @@
-<!doctype html>
+﻿<!DOCTYPE html>
 <html>
 <head>
   <title>Badanie ..... ankieta rekrutacyjna</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
-  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
-  <meta http-equiv="Cache-Control" content="post-check=0, pre-check=0">
-  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=10, user-scalable=yes">
-  <meta name="description" content="Badanie .... ankieta rekrutacujna">
-  <meta name="keywords" content="AZetKa ankieta">
-  <meta name="author" content="AZetKa studio">
-  <link rel="shortcut icon" href="../mediafiles/favicon.ico">
-  <link rel="stylesheet" type="text/css" href="../csstyles/badania.css">
-  <link rel="stylesheet" type="text/css" href="./csstyles/badanie.css">
-  <script language="JavaScript" type="text/javascript" src="./jscripts/badanie.js"></script>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate" />
+  <meta http-equiv="Cache-Control" content="post-check=0, pre-check=0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=10, user-scalable=yes" />
+  <meta name="description" content="Badanie .... ankieta rekrutacujna" />
+  <meta name="keywords" content="AZetKa ankieta" />
+  <meta name="author" content="AZetKa studio" />
+  <link rel="shortcut icon" href="../img/favicon.ico" />
+  <link rel="stylesheet" type="text/css" href="../css/badania.css" />
+  <link rel="stylesheet" type="text/css" href="./css/badanie.css" />
+  <script language="JavaScript" type="text/javascript" src="./js/badanie.js" defer></script>
 </head>
 
 <body>
 <div id="top-banner" class="top-banner full-size-banner">
   <div id="top-banner-left" class="tab-col1of5 text-left">&nbsp;</div>
   <div id="top-banner-center" class="tab-col3of5 text-center"><em>Ładowanie badania...</em></div>
-  <div id="top-banner-right" class="tab-col1of5 text-right italic smaller"><img src="../mediafiles/AZetKa_pas.gif" alt="AZetKa" height="14px"></div>
+  <div id="top-banner-right" class="tab-col1of5 text-right italic smaller"><img src="../img/AZetKa_pas.gif" alt="AZetKa" height="14px"></div>
 </div>
 
 
@@ -95,14 +95,14 @@
     <!-- ANKIETA ==================================================================================================== -->
     <!-- ANKIETA ==================================================================================================== -->
     <!-- ANKIETA ==================================================================================================== -->
-    <form name="questForm" action="_php_/zapiszData2disk.php" enctype="text/plan" method="POST"
+    <form name="questForm" action="./php/zapiszData2disk.php" enctype="text/plan" method="POST"
           onsubmit="event.preventDefault(); return finishWithFormData();" target="php-output">
       <div id="all-questions" class="questionnaire">
 
         <!-- NUMER ANKIETY ================================================== -->
         <div class="question_" id="quest-intv_num">
           <div id="survey-name" class="section-text text-center">
-            <b>ANKIETA REKRUTACYJNA</b>
+            <b>ANKIETA PRE-REKRUTACYJNA</b>
           </div>
           <!--div class="question-break"></div-->
           <div class="answer_">
@@ -118,11 +118,12 @@
               </div>
             </div>
           </div>
-          <div class="question-info">
+          <div id="ident-origin-info" class="question-info">
             <br /><br />
             W tej ankiecie identyfikator nadawany jest automatycznie, więc nie można go zmienić.<br />
             Możliwe są inne są inne metody ustalanie identyfikatora, poprzez identyfikator użytkownika, <br />
             lub zwyczajne wpisanie go.
+            <br />ALBO NIE
           </div>
           <input type="text" name="survey_id"  class="no-display">
           <input type="text" name="stage_no"   class="no-display">
@@ -467,7 +468,7 @@
                 <div><input type="radio" name="rI_6" value="1"></div>
               </div>
               <div>
-                <div id="rIitem7">Cecha siudma</div>
+                <div id="rIitem7">Cecha siódma</div>
                 <div><input type="radio" name="rI_7" value="7"></div>
                 <div><input type="radio" name="rI_7" value="6"></div>
                 <div><input type="radio" name="rI_7" value="5"></div>
@@ -621,12 +622,12 @@
           </div>
           <!--div class="question-break"></div-->
           <div id="images-slider-rK" class="images-slider">
-            <img src="./mediafiles/pic01.jpg" onclick="document.questForm.rK[0].checked = true;">
-            <img src="./mediafiles/pic02.jpg" onclick="document.questForm.rK[1].checked = true;">
-            <img src="./mediafiles/pic03.jpg" onclick="document.questForm.rK[2].checked = true;">
-            <img src="./mediafiles/pic04.jpg" onclick="document.questForm.rK[3].checked = true;">
-            <img src="./mediafiles/pic05.jpg" onclick="document.questForm.rK[4].checked = true;">
-            <img src="./mediafiles/pic06.jpg" onclick="document.questForm.rK[5].checked = true;">
+            <img src="./img/pic01.jpg" onclick="document.questForm.rK[0].checked = true;">
+            <img src="./img/pic02.jpg" onclick="document.questForm.rK[1].checked = true;">
+            <img src="./img/pic03.jpg" onclick="document.questForm.rK[2].checked = true;">
+            <img src="./img/pic04.jpg" onclick="document.questForm.rK[3].checked = true;">
+            <img src="./img/pic05.jpg" onclick="document.questForm.rK[4].checked = true;">
+            <img src="./img/pic06.jpg" onclick="document.questForm.rK[5].checked = true;">
           </div>
           <div class="answer_">
             <div class="answer-table answer-table-vert">
@@ -653,7 +654,7 @@
           <div class="film-screen">
             <!--video id="filmik" width="640" height="480" controls preload="none"-->
             <video id="filmik" width="640" height="480" controls>
-              <source src="./mediafiles/filmik.mp4" type="video/mp4" media="(min-width: 450px)">
+              <source src="./img/filmik.mp4" type="video/mp4" media="(min-width: 450px)">
             </video>
           </div>
           <div class="answer_">
@@ -723,8 +724,8 @@
             <span id="wait01-pp">Proszę poinformować naszego ankietera, że jest Pan/i gotów/a na ocenę kolejnego produktu.</span>
           </div>
           <div class="question-info text-center">
-            <span id="wait01-clock"><canvas id="wait01-clockC" width="200px" height="200px"><img src="../mediafiles/zegar.gif" alt="" height="200px"></canvas></span>
-            <span id="wait01-prod"><img src="../mediafiles/szklanka.gif" alt="" height="200px"></span>
+            <span id="wait01-clock"><canvas id="wait01-clockC" width="200px" height="200px"><img src="../img/zegar.gif" alt="" height="200px"></canvas></span>
+            <span id="wait01-prod"><img src="../img/szklanka.gif" alt="" height="200px"></span>
           </div>
           <div id="wait01-pclock" class="question-info text-center">
             <span id="wait01-ptime">Pozostało jeszcze 10 godzin.</span>

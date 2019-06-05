@@ -11,7 +11,7 @@
   <meta name="description" content="Tabela realizacji wywiadów">
   <meta name="keywords" content="programowanie, strony internetowe, C++, Java Script, HTML, Php">
   <meta name="author" content="AZetKa studio">
-  <link rel="stylesheet" type="text/css" href="../csstyles/badania.css">
+  <link rel="stylesheet" type="text/css" href="../css/badania.css">
 </head>
 <body>
 
@@ -55,7 +55,7 @@ function sortTab (&$table, $tab_width, $tab_len, $sort_pos, $sort_dir="asc") {
 }//function sortTab
 
 
-$file_name = "./datafiles/intvnums_autoi.txt";
+$file_name = "./data/intvnums_autoi.txt";
 if (file_exists($file_name)) {
   $file = fopen($file_name, "r");
   if ($file) {
@@ -89,11 +89,19 @@ if (file_exists($file_name)) {
     }//else
     echo "<form name='sort_autoi_form' action='$script' method='post'><input type='text' name='autoi_sortby' value='' hidden>";
     echo "<hr><div class='surveyshow-table'>";
-    echo "  <div onclick=\"submit()\">";
-    echo "    <div><button onclick=\"document.sort_autoi_form.autoi_sortby.value='$l_p_chdir'\">l.p. $l_p_char</button></div>" .
+    echo "  <div onclick='document.sort_autoi_form.submit()'>";
+/*
+    echo "    <div><button onclick=\"document.sort_autoi_form.autoi_sortby.value='$sortby'\">&#8635;</button></div>" .
+         "    <div><button onclick=\"document.sort_autoi_form.autoi_sortby.value='$l_p_chdir'\">l.p. $l_p_char</button></div>" .
          "    <div><button onclick=\"document.sort_autoi_form.autoi_sortby.value='$ino_chdir'\">Numer $ino_char</button></div>" .
          "    <div><button onclick=\"document.sort_autoi_form.autoi_sortby.value='$uid_chdir'\">Użytkownik $uid_char</button></div>" .
          "    <div><button onclick=\"document.sort_autoi_form.autoi_sortby.value='$sta_chdir'\">Status $sta_char</button></div>";
+*/
+    echo "    <div onclick=\"document.sort_autoi_form.autoi_sortby.value='$sortby'\">&#8635;</div>" .
+         "    <div onclick=\"document.sort_autoi_form.autoi_sortby.value='$l_p_chdir'\">l.p. $l_p_char</div>" .
+         "    <div onclick=\"document.sort_autoi_form.autoi_sortby.value='$ino_chdir'\">Numer $ino_char</div>" .
+         "    <div onclick=\"document.sort_autoi_form.autoi_sortby.value='$uid_chdir'\">Użytkownik $uid_char</div>" .
+         "    <div onclick=\"document.sort_autoi_form.autoi_sortby.value='$sta_chdir'\">Status $sta_char</div>";
     echo "  </div>";
 
     $lp = 0;
@@ -131,8 +139,10 @@ if (file_exists($file_name)) {
     if ($sortby === "sta") sortTab($autoi_tab, 4, $autoi_tab_len, 3);
     if ($sortby === "ats") sortTab($autoi_tab, 4, $autoi_tab_len, 3, "desc");
 
-    for ($j = 0; $j < $autoi_tab_len; $j++)
-      echo "<div><div>" . $autoi_tab[$j][0] . "</div><div>" . $autoi_tab[$j][1] ."</div><div>" . $autoi_tab[$j][2] . "</div><div>" . $autoi_tab[$j][3] ."</div></div>";
+    for ($j = 0; $j < $autoi_tab_len; $j++) {
+      $lp = $j + 1;
+      echo "<div><div>$lp</div><div>" . $autoi_tab[$j][0] . "</div><div>" . $autoi_tab[$j][1] ."</div><div>" . $autoi_tab[$j][2] . "</div><div>" . $autoi_tab[$j][3] ."</div></div>";
+    }//for
 
     echo "</div><hr>";
     echo "</form>";
@@ -142,7 +152,7 @@ if (file_exists($file_name)) {
 }//if
 
 
-$file_name = "./datafiles/intvnums_table.txt";
+$file_name = "./data/intvnums_table.txt";
 if (file_exists($file_name)) {
   $file = fopen($file_name, "r");
   if ($file) {
@@ -176,11 +186,12 @@ if (file_exists($file_name)) {
     }//else
     echo "<form name='sort_table_form' action='$script' method='post'><input type='text' name='table_sortby' value='' hidden>";
     echo "<hr><div class='surveyshow-table'>";
-    echo "  <div onclick=\"submit()\">";
-    echo "    <div><button onclick=\"document.sort_table_form.table_sortby.value='$l_p_chdir'\">l.p. $l_p_char</button></div>" .
-         "    <div><button onclick=\"document.sort_table_form.table_sortby.value='$ino_chdir'\">Numer $ino_char</button></div>" .
-         "    <div><button onclick=\"document.sort_table_form.table_sortby.value='$uid_chdir'\">Użytkownik $uid_char</button></div>" .
-         "    <div><button onclick=\"document.sort_table_form.table_sortby.value='$sta_chdir'\">Status $sta_char</button></div>";
+    echo "  <div onclick='document.sort_table_form.submit()'>";
+    echo "    <div onclick=\"document.sort_table_form.autoi_sortby.value='$sortby'\">&#8635;</div>" .
+         "    <div onclick=\"document.sort_table_form.table_sortby.value='$l_p_chdir'\">l.p. $l_p_char</div>" .
+         "    <div onclick=\"document.sort_table_form.table_sortby.value='$ino_chdir'\">Numer $ino_char</div>" .
+         "    <div onclick=\"document.sort_table_form.table_sortby.value='$uid_chdir'\">Użytkownik $uid_char</div>" .
+         "    <div onclick=\"document.sort_table_form.table_sortby.value='$sta_chdir'\">Status $sta_char</div>";
     echo "</div>";
 
     $lp = 0;
@@ -218,8 +229,10 @@ if (file_exists($file_name)) {
     if ($sortby === "sta") sortTab($table_tab, 4, $table_tab_len, 3);
     if ($sortby === "ats") sortTab($table_tab, 4, $table_tab_len, 3, "desc");
 
-    for ($j = 0; $j < $table_tab_len; $j++)
-      echo "<div><div>" . $table_tab[$j][0] . "</div><div>" . $table_tab[$j][1] ."</div><div>" . $table_tab[$j][2] . "</div><div>" . $table_tab[$j][3] ."</div></div>";
+    for ($j = 0; $j < $table_tab_len; $j++) {
+      $lp = $j + 1;
+      echo "<div><div>$lp</div><div>" . $table_tab[$j][0] . "</div><div>" . $table_tab[$j][1] ."</div><div>" . $table_tab[$j][2] . "</div><div>" . $table_tab[$j][3] ."</div></div>";
+    }//for
 
     echo "</div><hr>";
     echo "</form>";
@@ -229,7 +242,7 @@ if (file_exists($file_name)) {
 }//if
 
 
-$file_name = "./datafiles/intvnums_m_tab.txt";
+$file_name = "./data/intvnums_m_tab.txt";
 $stages_num = 7;
 if (file_exists($file_name)) {
   $file = fopen($file_name, "r");
@@ -302,14 +315,15 @@ if (file_exists($file_name)) {
     //echo "sortby = " . $sortby . "<hr />";
     echo "<form name='sort_m_tab_form' action='$script' method='post'><input type='text' name='m_tab_sortby' value='' hidden>";
     echo "<hr><div class='surveyshow-table'>";
-    echo "  <div onclick=\"submit()\">";
-    echo "    <div><button onclick=\"document.sort_m_tab_form.m_tab_sortby.value='$l_p_chdir'\">l.p.&nbsp;$l_p_char</button></div>" .
-         "    <div><button onclick=\"document.sort_m_tab_form.m_tab_sortby.value='$ino_chdir'\">Numer&nbsp;$ino_char</button></div>" .
-         "    <div><button onclick=\"document.sort_m_tab_form.m_tab_sortby.value='$uid_chdir'\">Użytkownik&nbsp;$uid_char</button></div>";
+    echo "  <div onclick='document.sort_m_tab_form.submit()'>";
+    echo "    <div onclick=\"document.sort_m_tab_form.autoi_sortby.value='$sortby'\">&#8635;</div>" .
+         "    <div onclick=\"document.sort_m_tab_form.m_tab_sortby.value='$l_p_chdir'\">l.p.&nbsp;$l_p_char</div>" .
+         "    <div onclick=\"document.sort_m_tab_form.m_tab_sortby.value='$ino_chdir'\">Numer&nbsp;$ino_char</div>" .
+         "    <div onclick=\"document.sort_m_tab_form.m_tab_sortby.value='$uid_chdir'\">Użytkownik&nbsp;$uid_char</div>";
     for ($i = 1; $i <= $stages_num; $i++) {
       $stan_chdir = "sta" . $i . "_chdir";
       $stan_char  = "sta" . $i . "_char";
-      echo "    <div><button onclick=\"document.sort_m_tab_form.m_tab_sortby.value='" . $$stan_chdir . "'\">Etap&nbsp;$i&nbsp;" . $$stan_char . "</button></div>";
+      echo "    <div onclick=\"document.sort_m_tab_form.m_tab_sortby.value='" . $$stan_chdir . "'\">Etap&nbsp;$i&nbsp;" . $$stan_char . "</div>";
     }//for
     echo "</div>";
     $lp = 0;
@@ -371,13 +385,12 @@ if (file_exists($file_name)) {
     if ($sortby === "ats10") sortTab($m_tab_tab, $stages_num + 3, $m_tab_tab_len, 12, "desc");
 
     for ($j = 0; $j < $m_tab_tab_len; $j++) {
-      echo "<div><div>" . $m_tab_tab[$j][0] . "</div><div>" . $m_tab_tab[$j][1] ."</div><div>" . $m_tab_tab[$j][2] . "</div>";
+      $lp = $j + 1;
+      echo "<div><div>$lp</div><div>" . $m_tab_tab[$j][0] . "</div><div>" . $m_tab_tab[$j][1] ."</div><div>" . $m_tab_tab[$j][2] . "</div>";
       for ($i = 0; $i < $stages_num; $i++)
         echo "<div>" . $m_tab_tab[$j][$i + 3] ."</div>";
       echo "</div>";
-
     }//for
-
 
     echo "</div><hr>";
     echo "</form>";
