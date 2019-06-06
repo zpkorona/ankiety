@@ -1,4 +1,5 @@
 /*jshint esversion: 6 */
+/*jslint node: true */
 ﻿"use strict";
 /*global window*/
 /*global document*/
@@ -10,6 +11,10 @@ var generalBackgroundColor = "#f0fff0";
 var pictureFrameColor = "#80d0ff";
 
 var phpIsWorking = true;
+var noPhpIntvNum = 10101;
+var errorReadingINfile = "Błąd odczytu pliku z identyfikatorami, status=";
+var errorNoPHPorINfile = "PHP nie działa lub nie ma pliku";
+var warningPHPisNotWorking = "php is not working => intvNUm = ";
 
 var parSurveyId = -1,
     parStageNo  = -1,
@@ -336,14 +341,17 @@ function saveSurveyLog (extraText) {
 
 function getDateTime (when) {
   let xhr;
-  let currDate = new Date();
-  let n;
-  xhr = new window.XMLHttpRequest();
-  xhr.open("GET", "../php/getDateTime.php?when=" + when, false);
-  xhr.send();
-  if (xhr.status == 200) {
+  if (phpIsWorking) {
+    xhr = new window.XMLHttpRequest();
+    xhr.open("GET", "../php/getDateTime.php?when=" + when, false);
+    xhr.send();
+  }//if
+  if (phpIsWorking && xhr.status == 200) {
     currDateTime = xhr.responseText;
+    window.console.log("getDateTime(" + when + ") => " + currDateTime + "(with php)");
   } else {
+    let currDate = new Date();
+    let n;
     window.console.log("Nie działa php, status=" + xhr.status);
     currDateTime = currDate.getFullYear() + "-";
     n = currDate.getMonth() + 1;
@@ -355,6 +363,7 @@ function getDateTime (when) {
     n = currDate.getMinutes();
     currDateTime += (n < 10? "0" : "") + n + ":";
     n = currDate.getSeconds();
+    window.console.log("getDateTime(" + when + ") => " + currDateTime + "(no php)");
   }//else
 }//getDateTime
 
@@ -386,26 +395,32 @@ function isIntvNumWaiting (tstUserId, tstIntvNum, tstStageNo) {
   let xhr;
   intvNum = -1;
   window.console.log("isIntvNumWaiting(" + tstUserId + ", " + tstIntvNum + ", " + tstStageNo + ")");
-  xhr = new window.XMLHttpRequest();
-  if (intvNumAuto || intvNumGiven) {
-    xhr.open("GET", "../php/isAutoIntvNumWaiting.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum, false);//SYNCHRONICZNIE
+  if (!phpIsWorking) {
+    intvNum = noPhpIntvNum;
+    window.console.log("isINW: " + warningPHPisNotWorking + intvNum);
   } else {
-    if (stagesNum == 1) { //tstStageNo == -1)
-      xhr.open("GET", "../php/isTableIntvNumWaiting.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum, false);//SYNCHRONICZNIE
+    xhr = new window.XMLHttpRequest();
+    if (intvNumAuto || intvNumGiven) {
+      xhr.open("GET", "../php/isAutoIntvNumWaiting.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum, false);//SYNCHRONICZNIE
     } else {
-      xhr.open("GET", "../php/isM_TabIntvNumWaiting.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum + "&stage_no=" + tstStageNo, false);//SYNCHRONICZNIE
+      if (stagesNum == 1) { //tstStageNo == -1)
+        xhr.open("GET", "../php/isTableIntvNumWaiting.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum, false);//SYNCHRONICZNIE
+      } else {
+        xhr.open("GET", "../php/isM_TabIntvNumWaiting.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum + "&stage_no=" + tstStageNo, false);//SYNCHRONICZNIE
+      }//else
     }//else
+    xhr.send();
+    if (xhr.status == 200) {
+      intvNum = xhr.responseText;
+    } else {
+      window.console.error("isINW: " + errorReadingINfile + xhr.status);
+    }//else
+    if (intvNum.indexOf("<?php") != -1 || intvNum.indexOf("Warning:") != -1) {
+      window.console.error("isINW: " + errorNoPHPorINfile);
+      intvNum = -1;
+    }//if
   }//else
-  xhr.send();
-  if (xhr.status == 200) {
-    intvNum = xhr.responseText;
-  } else {
-    window.console.log("Błąd odczytu pliku z identyfikatorami, status=" + xhr.status);
-  }//else
-  window.console.log("intvNum=[" + intvNum + "]");
-  if (intvNum.indexOf("<?php") != -1 || intvNum.indexOf("Warning:") != -1) {//jeśli PHP nie działa lu nie ma pliku
-    intvNum = -1;
-  }//if
+  window.console.log("isINW: intvNum=[" + intvNum + "]");
   return intvNum != -1;
 }//isIntvNumWaiting
 
@@ -414,27 +429,32 @@ function isIntvNumStarted (tstUserId, tstIntvNum, tstStageNo) {
   let xhr;
   intvNum = -1;
   window.console.log("isIntvNumStarted(" + tstUserId + ", " + tstIntvNum + ", " + tstStageNo + ")");
-  xhr = new window.XMLHttpRequest();
-  if (intvNumAuto || intvNumGiven) {
-    xhr.open("GET", "../php/isAutoIntvNumStarted.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum, false);//SYNCHRONICZNIE
+  if (!phpIsWorking) {
+    intvNum = noPhpIntvNum;
+    window.console.log("isINS: " + warningPHPisNotWorking + intvNum);
   } else {
-    if (stagesNum == 1) { //tstStageNo == -1)
-      xhr.open("GET", "../php/isTableIntvNumStarted.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum, false);//SYNCHRONICZNIE
+    xhr = new window.XMLHttpRequest();
+    if (intvNumAuto || intvNumGiven) {
+      xhr.open("GET", "../php/isAutoIntvNumStarted.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum, false);//SYNCHRONICZNIE
     } else {
-      xhr.open("GET", "../php/isM_TabIntvNumStarted.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum + "&stage_no=" + tstStageNo, false);//SYNCHRONICZNIE
+      if (stagesNum == 1) { //tstStageNo == -1)
+        xhr.open("GET", "../php/isTableIntvNumStarted.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum, false);//SYNCHRONICZNIE
+      } else {
+        xhr.open("GET", "../php/isM_TabIntvNumStarted.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum + "&stage_no=" + tstStageNo, false);//SYNCHRONICZNIE
+      }//else
+    }//else
+    xhr.send();
+    if (xhr.status != 200 && xhr.responseText == "ERROR") {
+      window.console.error("isINS: " + errorReadingINfile + xhr.status);
+    } else {
+      intvNum = xhr.responseText;
+      if (intvNum.indexOf("<?php") != -1 || intvNum.indexOf("Warning:") != -1) {
+        window.console.error("isINS: " + errorNoPHPorINfile);
+        intvNum = -1;
+      }//if
     }//else
   }//else
-  xhr.send();
-  if (xhr.status != 200 && xhr.responseText == "ERROR") {
-    window.alert("Błąd odczytu pliku z identyfikatorami, status=" + xhr.status);
-    window.console.log("intvNum=[" + intvNum + "]");
-  } else {
-    intvNum = xhr.responseText;
-    window.console.log("intvNum=[" + intvNum + "]");
-    if (intvNum.indexOf("<?php") != -1 || intvNum.indexOf("Warning:") != -1) {//jeśli PHP nie działa lu nie ma pliku
-      intvNum = -1;
-    }//if
-  }//else
+  window.console.log("isINS: intvNum=[" + intvNum + "]");
   return intvNum != -1;
 }//isIntvNumStarted
 
@@ -443,32 +463,38 @@ function isIntvNumUsable (tstUserId, tstIntvNum, tstStageNo) {
   let xhr;
   intvNum = -1;
   window.console.log("isIntvNumUsable(" + tstUserId + ", " + tstIntvNum + ", " + tstStageNo + ")");
-  xhr = new window.XMLHttpRequest();
-  if (intvNumAuto) {
-    xhr.open("GET", "../php/isAutoIntvNumUsable.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum, false);//SYNCHRONICZNIE
+  if (!phpIsWorking) {
+    intvNum = noPhpIntvNum;
+    window.console.log("isINU: " + warningPHPisNotWorking + intvNum);
   } else {
-    if (intvNumGiven) {
-      xhr.open("GET", "../php/isGivenIntvNumUsable.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum, false);//SYNCHRONICZNIE
+    xhr = new window.XMLHttpRequest();
+    if (intvNumAuto) {
+      xhr.open("GET", "../php/isAutoIntvNumUsable.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum, false);//SYNCHRONICZNIE
     } else {
-      if (intvNumTable) {
-        if (stagesNum == 1) {//tstStageNo == -1)
-          xhr.open("GET", "../php/isTableIntvNumUsable.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum, false);//SYNCHRONICZNIE
-        } else {
-          xhr.open("GET", "../php/isM_TabIntvNumUsable.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum + "&stage_no=" + tstStageNo, false);//SYNCHRONICZNIE
-        }//else
-      }//if
+      if (intvNumGiven) {
+        xhr.open("GET", "../php/isGivenIntvNumUsable.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum, false);//SYNCHRONICZNIE
+      } else {
+        if (intvNumTable) {
+          if (stagesNum == 1) {//tstStageNo == -1)
+            xhr.open("GET", "../php/isTableIntvNumUsable.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum, false);//SYNCHRONICZNIE
+          } else {
+            xhr.open("GET", "../php/isM_TabIntvNumUsable.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum + "&stage_no=" + tstStageNo, false);//SYNCHRONICZNIE
+          }//else
+        }//if
+      }//else
     }//else
+    xhr.send();
+    if (xhr.status == 200) {
+      intvNum = xhr.responseText;
+    } else {
+      window.console.error("isINU: " + errorReadingINfile + xhr.status);
+    }//else
+    if (intvNum.indexOf("<?php") != -1 || intvNum.indexOf("Warning:") != -1) {
+      window.console.error("isINU: " + errorNoPHPorINfile);
+      intvNum = -1;
+    }//if
   }//else
-  xhr.send();
-  if (xhr.status == 200) {
-    intvNum = xhr.responseText;
-  } else {
-    window.console.log("Błąd odczytu pliku z identyfikatorami, status=" + xhr.status);
-  }//else
-  window.console.log("intvNum=[" + intvNum + "]");
-  if (intvNum.indexOf("<?php") != -1 || intvNum.indexOf("Warning:") != -1) { //jeśli PHP nie działa lu nie ma pliku
-    intvNum = -1;
-  }//if
+  window.console.log("isINU: intvNum=[" + intvNum + "]");
   return intvNum != -1;
 }//isIntvNumUsable
 
@@ -477,26 +503,32 @@ function useIntvNum (tstUserId, tstIntvNum, tstStageNo) {
   let xhr;
   intvNum = -1;
   window.console.log("useIntvNum(" + tstUserId + ", " + tstIntvNum + ", " + tstStageNo + ")");
-  xhr = new window.XMLHttpRequest();
-  if (intvNumAuto || intvNumGiven) {
-    xhr.open("GET", "../php/useAutoIntvNum.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum, false);//SYNCHRONICZNIE
+  if (!phpIsWorking) {
+    intvNum = noPhpIntvNum;
+    window.console.log("useIN: " + warningPHPisNotWorking + intvNum);
   } else {
-    if (stagesNum == 1) {//tstStageNo == -1)
-      xhr.open("GET", "../php/useTableIntvNum.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum, false);//SYNCHRONICZNIE
+    xhr = new window.XMLHttpRequest();
+    if (intvNumAuto || intvNumGiven) {
+      xhr.open("GET", "../php/useAutoIntvNum.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum, false);//SYNCHRONICZNIE
     } else {
-      xhr.open("GET", "../php/useM_TabIntvNum.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum + "&stage_no=" + tstStageNo, false);//SYNCHRONICZNIE
+      if (stagesNum == 1) {//tstStageNo == -1)
+        xhr.open("GET", "../php/useTableIntvNum.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum, false);//SYNCHRONICZNIE
+      } else {
+        xhr.open("GET", "../php/useM_TabIntvNum.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum + "&stage_no=" + tstStageNo, false);//SYNCHRONICZNIE
+      }//else
     }//else
+    xhr.send();
+    if (xhr.status == 200) {
+      intvNum = xhr.responseText;
+    } else {
+      window.console.error("useIN: " + errorReadingINfile + xhr.status);
+    }//else
+    if (intvNum.indexOf("<?php") != -1 || intvNum.indexOf("Warning:") != -1) {
+      window.console.error("useIN: " + errorNoPHPorINfile);
+      intvNum = -1;
+    }//if
   }//else
-  xhr.send();
-  if (xhr.status == 200) {
-    intvNum = xhr.responseText;
-  } else {
-    window.console.log("Błąd odczytu pliku z identyfikatorami, status=" + xhr.status);
-  }//else
-  window.console.log("useIN::intvNum=[" + intvNum + "]");
-  if (intvNum.indexOf("<?php") != -1 || intvNum.indexOf("Warning:") != -1) {//jeśli PHP nie działa lu nie ma pliku
-    intvNum = -1;
-  }//if
+  window.console.log("useIN: intvNum=[" + intvNum + "]");
   return intvNum != -1;
 }//useIntvNum
 
@@ -505,26 +537,32 @@ function getIntvNum (tstUserId, tstIntvNum, tstStageNo) {
   let xhr;
   intvNum = -1;
   window.console.log("getIntvNum(" + tstUserId + ", " + tstIntvNum + ", " + tstStageNo + ")");
-  xhr = new window.XMLHttpRequest();
-  if (intvNumAuto || intvNumGiven) {
-    xhr.open("GET", "../php/getAutoIntvNum.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum, false);//SYNCHRONICZNIE
+  if (!phpIsWorking) {
+    intvNum = noPhpIntvNum;
+    window.console.log("getIN: " + warningPHPisNotWorking + intvNum);
   } else {
-    if (stagesNum == 1) { //tstStageNo == -1)
-      xhr.open("GET", "../php/getTableIntvNum.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum, false);//SYNCHRONICZNIE
+    xhr = new window.XMLHttpRequest();
+    if (intvNumAuto || intvNumGiven) {
+      xhr.open("GET", "../php/getAutoIntvNum.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum, false);//SYNCHRONICZNIE
     } else {
-      xhr.open("GET", "../php/getM_TabIntvNum.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum + "&stage_no=" + tstStageNo, false);//SYNCHRONICZNIE
+      if (stagesNum == 1) { //tstStageNo == -1)
+        xhr.open("GET", "../php/getTableIntvNum.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum, false);//SYNCHRONICZNIE
+      } else {
+        xhr.open("GET", "../php/getM_TabIntvNum.php?survey_id=" + surveyId + "&user_id=" + tstUserId + "&int_no=" + tstIntvNum + "&stage_no=" + tstStageNo, false);//SYNCHRONICZNIE
+      }//else
     }//else
+    xhr.send();
+    if (xhr.status == 200) {
+      intvNum = xhr.responseText;
+    } else {
+      window.console.error("getIN: " + errorReadingINfile + xhr.status);
+    }//else
+    if (intvNum.indexOf("<?php") != -1 || intvNum.indexOf("Warning:") != -1) {
+      window.console.error("getIN: " + errorNoPHPorINfile);
+      intvNum = -1;
+    }//if
   }//else
-  xhr.send();
-  if (xhr.status == 200) {
-    intvNum = xhr.responseText;
-  } else {
-    window.console.log("Błąd odczytu pliku z identyfikatorami, status=" + xhr.status);
-  }//else
-  window.console.log("intvNum=[" + intvNum + "]");
-  if (intvNum.indexOf("<?php") != -1 || intvNum.indexOf("Warning:") != -1) {//jeśli PHP nie działa lu nie ma pliku
-    intvNum = -1;
-  }//if
+  window.console.log("getIN: intvNum=[" + intvNum + "]");
   return intvNum != -1;
 }//getIntvNum
 
@@ -2164,8 +2202,8 @@ function phpCheck () {
   xhr = new window.XMLHttpRequest();
   xhr.onreadystatechange = function() {
     if (this.readyState == 4) {// && this.status == 200
-      window.console.log("phpCheck: response:" + this.responseText + ", status:" + this.statusText);
       phpIsWorking = this.responseText.indexOf("<?php") != 0;
+      window.console.log("phpCheck: phpIsWorking=" + phpIsWorking + ", response:" + this.responseText + ", status:" + this.statusText);
     }//if
   };//function()
   xhr.open("GET", "../php/phpCheck.php");
