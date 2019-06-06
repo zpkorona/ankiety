@@ -228,7 +228,7 @@ function getSurveysInfoFromXML () {
       XMLurl;
   window.console.log("getSurveysInfoFromXML");
   xhr = new window.XMLHttpRequest();
-  xhr.open("GET", "./xml/badanie_TS.xml", false);//SYNCHRONICZNIE
+  xhr.open("GET", "./xml/badanie.xml", false);//SYNCHRONICZNIE
   xhr.send();
   if (xhr.status != 200) {
     window.console.log("Nie ma pliku badania.xml, status=" + xhr.status);
@@ -352,7 +352,7 @@ function getDateTime (when) {
   } else {
     let currDate = new Date();
     let n;
-    window.console.log("Nie działa php, status=" + xhr.status);
+    window.console.log(warningPHPisNotWorking);
     currDateTime = currDate.getFullYear() + "-";
     n = currDate.getMonth() + 1;
     currDateTime += (n < 10? "0" : "") + n + "-";

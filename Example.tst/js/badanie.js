@@ -352,7 +352,7 @@ function getDateTime (when) {
   } else {
     let currDate = new Date();
     let n;
-    window.console.log("Nie działa php, status=" + xhr.status);
+    window.console.log(warningPHPisNotWorking);
     currDateTime = currDate.getFullYear() + "-";
     n = currDate.getMonth() + 1;
     currDateTime += (n < 10? "0" : "") + n + "-";
