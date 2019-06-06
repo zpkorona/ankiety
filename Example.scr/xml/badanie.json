@@ -1,8 +1,8 @@
 ﻿{"surveys":[
   { "id":"Example.scr",
     "stages":"1",
-    "client":"Almares",
-    "subject":"Przykładowa ankieta",
+    "client":"Client Name",
+    "subject":"Test AUTO SHOW",
     "zakres":[1,200,1001,2000,3001],
     "intv_number":"AUTO SHOW",
     "users":["gość%guest",

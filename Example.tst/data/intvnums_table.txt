@@ -11,3 +11,4 @@ intv_num=10&user_id=AlmWawa~~&status=waiting____________
 intv_num=11&user_id=AlmKrak02&status=started____________
 intv_num=12&user_id=AlmKrak~~&status=waiting____________
 intv_num=15&user_id=gość&status=waiting____________
+intv_num=122&user_id=Gość&status=waiting____________

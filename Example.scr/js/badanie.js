@@ -14,10 +14,10 @@ var phpIsWorking = true;
 var noPhpIntvNum = 10101;
 var errorReadingINfile = "Błąd odczytu pliku z identyfikatorami, status=";
 var errorNoPHPorINfile = "PHP nie działa lub nie ma pliku";
-var warningPHPisNotWorking = "php is not working => intvNUm = ";
+var warningPHPisNotWorking = "php is not working => intvNum = ";
 
 var parSurveyId = -1,
-    parStageNo  = -1,
+    parStageNum = -1,
     parUserId   = -1,
     parIntvNum  = -1;
 
@@ -25,9 +25,9 @@ var respondentOk = true;
 
 var surveyId     = -1,
     stagesNum    = 1,
-    stageNo      = -1,
+    stageNum     = -1,
     userId       = -1,
-    anonymoususerId = "gość",
+    anonymoususerIds = ["gość", "Gość"],
     intvNum      = -1,
     clientName   = "",
     subjectTxt   = "",
@@ -40,7 +40,7 @@ var surveyId     = -1,
 
 var cookiesTab    = ["0"],
     ckSurveyId    = -1,
-    ckStageNo     = -1,
+    ckStageNum    = -1,
     ckUserId      = -1,
     ckIntvNum     = -1,
     ckStartTime   = -1,
@@ -169,7 +169,7 @@ function unhideAllQuestions () {
 //GETTING STARTUP INFORMATION =========================================================
 function getInfoFromParams () {
   let params;
-  window.console.log("getInfoFromParams::search.len=" + window.location.search.length);
+  window.console.log("getInfoFromParams: search.len=" + window.location.search.length);
   parSurveyId = window.location.href.substring(0, window.location.href.lastIndexOf("/"));
   parSurveyId = parSurveyId.substring(parSurveyId.lastIndexOf("/") + 1, parSurveyId.length);
   if (window.location.search.length < 4) {
@@ -178,7 +178,7 @@ function getInfoFromParams () {
     params = window.location.search.substring(1, window.location.search.length).split("&");
     for (var i = 0; i < params.length; i++) {
       if (params[i].indexOf("sno=") != -1) {
-        parStageNo = decodeURI(params[i].substring(params[i].indexOf("=") + 1, params[i].length));
+        parStageNum = decodeURI(params[i].substring(params[i].indexOf("=") + 1, params[i].length));
       }//if
       if (params[i].indexOf("uid=") != -1) {
         parUserId = decodeURI(params[i].substring(params[i].indexOf("=") + 1, params[i].length));
@@ -187,8 +187,8 @@ function getInfoFromParams () {
         parIntvNum = decodeURI(params[i].substring(params[i].indexOf("=") + 1, params[i].length));
       }//if
     }//for
-    if (parStageNo != -1) {
-      parStageNo = parStageNo.trim();
+    if (parStageNum != -1) {
+      parStageNum = parStageNum.trim();
     }//if
     if (parUserId != -1) {
       parUserId = parUserId.trim();
@@ -200,7 +200,7 @@ function getInfoFromParams () {
       parIntvNum = parIntvNum.trim();
     }//if
   }//else
-  window.console.log("parSurveyId=[" + parSurveyId + "]" + "\nparStageNo=[" + parStageNo + "]" + "\nparUserId=[" + parUserId + "]" + "\nparIntvNum=[" + parIntvNum + "]");
+  window.console.log("parSurveyId=" + parSurveyId + "\nparStageNo=" + parStageNum + "\nparUserId=" + parUserId + "\nparIntvNum=" + parIntvNum );
   return parSurveyId;
 }//getInfoFromParams
 
@@ -228,14 +228,14 @@ function getSurveysInfoFromXML () {
       XMLurl;
   window.console.log("getSurveysInfoFromXML");
   xhr = new window.XMLHttpRequest();
-  xhr.open("GET", "./xml/badanie.xml", false);//SYNCHRONICZNIE
+  xhr.open("GET", "./xml/badanie_TS.xml", false);//SYNCHRONICZNIE
   xhr.send();
   if (xhr.status != 200) {
     window.console.log("Nie ma pliku badania.xml, status=" + xhr.status);
     window.alert("Nie ma pliku badania.xml, status=" + xhr.status);
   } else {
     elemTab = xhr.responseXML.getElementsByTagName("SURVEY");
-    window.console.log("elemTab.len=" + elemTab.length + ", " + elemTab[0].getElementsByTagName("ID")[0].childNodes[0].nodeValue);
+    window.console.log("surveys num=" + elemTab.length + ", survey+" + elemTab[0].getElementsByTagName("ID")[0].childNodes[0].nodeValue);
     survey = -1;
     if (parSurveyId != -1) {
       for (i = 0; i < elemTab.length; i++) {
@@ -249,15 +249,15 @@ function getSurveysInfoFromXML () {
       elemTab = survey.getElementsByTagName("STAGES");
       stagesNum = elemTab.length == 0 ? 1 : elemTab[0].childNodes[0].nodeValue;
       if (1 < stagesNum) {
-        if (1 <= parStageNo && parStageNo <= stagesNum) {
-          stageNo = parStageNo;
+        if (1 <= parStageNum && parStageNum <= stagesNum) {
+          stageNum = parStageNum;
         } else {
-          stageNo = parStageNo = 1;
+          stageNum = parStageNum = 1;
         }//else
       } else {
         stagesNum = 1;
-        parStageNo = -1;
-        stageNo = -1;
+        parStageNum = -1;
+        stageNum = -1;
       }//else
       elemTab = survey.getElementsByTagName("CLIENT");
       clientName = elemTab.length == 0 ? "CLIENT" : elemTab[0].childNodes[0].nodeValue;
@@ -281,8 +281,8 @@ function getSurveysInfoFromXML () {
       }//if
       if (intvNumAuto || intvNumGiven) {
         stagesNum = 1;
-        parStageNo = -1;
-        stageNo = -1;
+        parStageNum = -1;
+        stageNum = -1;
       }//if
       intvNumShow = intvNumType.indexOf("SHOW") != -1;
       intvNumShow = intvNumType.indexOf("HIDE") == -1;
@@ -290,10 +290,12 @@ function getSurveysInfoFromXML () {
         document.getElementById("intv_num-range").style.display = "none";
       }//if
       elemTab = survey.getElementsByTagName("USER_ID");
-      window.console.log("sId=[" + surveyId + "]" + "\nsNum=[" + stagesNum + "]" + "\nsNo=[" + stageNo + "]" +
-                         "\nclient=[" + clientName + "]" + "\nsubject=[" + subjectTxt + "]" + "\nfrst=[" + firstIntvNum + "]" + ", last=[" + lastIntvNum + "]" +
-                         "\niNGiven=[" + intvNumGiven + "]" + "\niNAuto=[" + intvNumAuto + "]" + "\niNTable=[" + intvNumTable + "]" + "\niNShow=[" + intvNumShow + "]" +
-                         "\nelemTab.len=[" + elemTab.length + "]");
+      window.console.log("suId=" + surveyId + "\nstNum=" + stagesNum + ", stNo=" + stageNum +
+                         "\nclient=" + clientName +
+                         "\nsubject=" + subjectTxt +
+                         "\nfrst=" + firstIntvNum + ", last=" + lastIntvNum +
+                         "\nGiven=" + intvNumGiven + ", Auto=" + intvNumAuto + ", Table=" + intvNumTable + ", Show=" + intvNumShow +
+                         "\nusers=" + elemTab.length + ", user0=" + elemTab[0].childNodes[0].nodeValue);
       if (parUserId == -1 && (intvNumAuto || intvNumGiven)) { //nie ma użytkownika w parametrach
         if (elemTab.length == 0) {
           gotUser = "empty";
@@ -301,7 +303,7 @@ function getSurveysInfoFromXML () {
         } else {
           gotUser = elemTab[0].childNodes[0].nodeValue;
           userId = gotUser.substring(0, gotUser.indexOf("%")).trim();
-          if (userId != anonymoususerId) {
+          if (anonymoususerIds.indexOf(userId) == -1) {
             gotUser = "no anonymoususerId";
             userId = -1;
           }//if
@@ -318,7 +320,7 @@ function getSurveysInfoFromXML () {
           }//if
         }//for po wszystkich użytkownikach dla danego badania
       }//else
-      window.console.log("parUserId=[" + parUserId + "]" + "\nuserId=[" + userId + "]");
+      window.console.log("parUserId=" + parUserId + "=> userId=" + userId);
     }//if
   }//else
 }//getSurveysInfoFromXML
@@ -326,14 +328,14 @@ function getSurveysInfoFromXML () {
 
 function saveSurveyLog (extraText) {
   let xhr, txt;
-  window.console.log("saveSurveyLog: survey_id" + parSurveyId + ", stage_no=" + parStageNo + ", user_id=" + parUserId + ", int_no=" + parIntvNum);
+  window.console.log("saveSurveyLog: survey_id" + parSurveyId + ", stage_no=" + parStageNum + ", user_id=" + parUserId + ", int_no=" + parIntvNum);
   xhr = new window.XMLHttpRequest();
   xhr.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       txt = this.responseText;
     }//if
   };//function()
-  xhr.open("GET", "../php/zapiszSurveyLog.php?survey_id=" + parSurveyId + "&stage_no=" + parStageNo + "&user_id=" + parUserId + "&int_no=" + parIntvNum +
+  xhr.open("GET", "../php/zapiszSurveyLog.php?survey_id=" + parSurveyId + "&stage_no=" + parStageNum + "&user_id=" + parUserId + "&int_no=" + parIntvNum +
                                              "&agent=" + "agent" + "&extra=" + extraText, true);
   xhr.send();
 }//saveSurveyLog
@@ -393,7 +395,7 @@ function setLastCookies () {
 //IDENTYFIKATOR =======================================================================
 function isIntvNumWaiting (tstUserId, tstIntvNum, tstStageNo) {
   let xhr;
-  intvNum = -1;
+  let intvNum = -1;
   window.console.log("isIntvNumWaiting(" + tstUserId + ", " + tstIntvNum + ", " + tstStageNo + ")");
   if (!phpIsWorking) {
     intvNum = noPhpIntvNum;
@@ -420,14 +422,14 @@ function isIntvNumWaiting (tstUserId, tstIntvNum, tstStageNo) {
       intvNum = -1;
     }//if
   }//else
-  window.console.log("isINW: intvNum=[" + intvNum + "]");
-  return intvNum != -1;
+  window.console.log("isINW: intvNum=" + intvNum);
+  return intvNum;
 }//isIntvNumWaiting
 
 
 function isIntvNumStarted (tstUserId, tstIntvNum, tstStageNo) {
   let xhr;
-  intvNum = -1;
+  let intvNum = -1;
   window.console.log("isIntvNumStarted(" + tstUserId + ", " + tstIntvNum + ", " + tstStageNo + ")");
   if (!phpIsWorking) {
     intvNum = noPhpIntvNum;
@@ -454,14 +456,14 @@ function isIntvNumStarted (tstUserId, tstIntvNum, tstStageNo) {
       }//if
     }//else
   }//else
-  window.console.log("isINS: intvNum=[" + intvNum + "]");
-  return intvNum != -1;
+  window.console.log("isINS: intvNum=" + intvNum);
+  return intvNum;
 }//isIntvNumStarted
 
 
 function isIntvNumUsable (tstUserId, tstIntvNum, tstStageNo) {
   let xhr;
-  intvNum = -1;
+  let intvNum = -1;
   window.console.log("isIntvNumUsable(" + tstUserId + ", " + tstIntvNum + ", " + tstStageNo + ")");
   if (!phpIsWorking) {
     intvNum = noPhpIntvNum;
@@ -494,14 +496,14 @@ function isIntvNumUsable (tstUserId, tstIntvNum, tstStageNo) {
       intvNum = -1;
     }//if
   }//else
-  window.console.log("isINU: intvNum=[" + intvNum + "]");
-  return intvNum != -1;
+  window.console.log("isINU: intvNum=" + intvNum);
+  return intvNum;
 }//isIntvNumUsable
 
 
 function useIntvNum (tstUserId, tstIntvNum, tstStageNo) {
   let xhr;
-  intvNum = -1;
+  let intvNum = -1;
   window.console.log("useIntvNum(" + tstUserId + ", " + tstIntvNum + ", " + tstStageNo + ")");
   if (!phpIsWorking) {
     intvNum = noPhpIntvNum;
@@ -528,14 +530,14 @@ function useIntvNum (tstUserId, tstIntvNum, tstStageNo) {
       intvNum = -1;
     }//if
   }//else
-  window.console.log("useIN: intvNum=[" + intvNum + "]");
-  return intvNum != -1;
+  window.console.log("useIN: intvNum=" + intvNum);
+  return intvNum;
 }//useIntvNum
 
 
 function getIntvNum (tstUserId, tstIntvNum, tstStageNo) {
   let xhr;
-  intvNum = -1;
+  let intvNum = -1;
   window.console.log("getIntvNum(" + tstUserId + ", " + tstIntvNum + ", " + tstStageNo + ")");
   if (!phpIsWorking) {
     intvNum = noPhpIntvNum;
@@ -562,47 +564,48 @@ function getIntvNum (tstUserId, tstIntvNum, tstStageNo) {
       intvNum = -1;
     }//if
   }//else
-  window.console.log("getIN: intvNum=[" + intvNum + "]");
-  return intvNum != -1;
+  window.console.log("getIN: intvNum=" + intvNum);
+  return intvNum;
 }//getIntvNum
 
 
 function assignIntvNum (tstIntvNum) {
-  window.console.log("assignIntvNum(" + tstIntvNum + "): intvNumAuto=" + intvNumAuto + ", intvNumGiven=" + intvNumGiven + ", intvNumTable=" + intvNumTable + ", userId=" + userId + ", tstIntvNum=" + tstIntvNum + ", intvNumShow=" + intvNumShow);
+  let intvNum = -1;
+  window.console.log("assignIntvNum(" + tstIntvNum + "): Auto=" + intvNumAuto + ", Given=" + intvNumGiven + ", Table=" + intvNumTable + ", uId=" + userId + ", tstINum=" + tstIntvNum + ", intvNumShow=" + intvNumShow);
   if (intvNumAuto ||                                        //JEŻELI IDENTYFIKATOR NADAWANY AUTOMATYCZNIE LUB
       intvNumGiven && (tstIntvNum != -1 || !intvNumShow) || // ZOSTAŁ PODANY LUB
       intvNumTable && (tstIntvNum != -1 || !intvNumShow)) { // Z TABELI
     window.console.log("assignIN_if");
-    if (tempFileExists(tstIntvNum) && isIntvNumStarted(userId, tstIntvNum, stageNo) && restoreFromTempFile() ||
-        isIntvNumUsable(userId, tstIntvNum, stageNo)) {//sprawdza tstIntvNum >--> ustawia intvNum
+    if (tempFileExists(tstIntvNum) && (intvNum = isIntvNumStarted(userId, tstIntvNum, stageNum)) != -1 && restoreFromTempFile(intvNum) ||
+        (intvNum = isIntvNumUsable(userId, tstIntvNum, stageNum)) != -1) {//sprawdza tstIntvNum >--> ustawia intvNum
       document.questForm.intv_num.readOnly = true;
     } else {
       intvNum = -1;//pozostałość po sprawdzaniu zakresu
       intvNumShow = false;
     }//else
-    window.console.log("assignIN_if::intvNum=" + intvNum);
+    window.console.log("assignIN_if: intvNum=" + intvNum);
   } else {//if (intvNumGiven || intvNumTable && tstIntvNum == -1 && intvNumShow) {{//JEŻELI IDENTYFIKATOR NADAWANY JAKO PARAMETR
     window.console.log("assignIN_else");
     if (tstIntvNum == -1) {//nie ma numeru
       intvNumShow = true;//poprosić użytkownika o wpisanie
     } else {
-      if (isIntvNumWaiting(userId, tstIntvNum, stageNo)) {
+      if ((intvNum = isIntvNumWaiting(userId, tstIntvNum, stageNum)) != -1) {
         document.questForm.intv_num.readOnly = true;
       } else {
         intvNum = -1;
         intvNumShow = true;
       }//else
     }//else
-    window.console.log("assignIN_else::intvNum=" + intvNum);
+    window.console.log("assignIN_else: intvNum=" + intvNum);
   }//else
-  return intvNum != -1 || intvNumShow;
+  return intvNum;
 }//assignIntvNum
 
 
 function setUpIntvNum (txt) {
   window.console.log("setUpIntvNum(" + txt + ")");
-  if (assignIntvNum(parIntvNum)) { //udało się ustalić numer lub ma być wpisany ręcznie
-    window.console.log("setUpIN:intvNum=" + intvNum);
+  if ((intvNum = assignIntvNum(parIntvNum)) != -1 || intvNumShow) { //udało się ustalić numer lub ma być wpisany ręcznie
+    window.console.log("setUpIN: intvNum=" + intvNum);
     if (intvNum != -1) {//jeśli jest ustalony numer i jest w zakresie
       document.questForm.intv_num.value = intvNum;
     } else {
@@ -610,7 +613,7 @@ function setUpIntvNum (txt) {
     }//else
     document.getElementById("next-button").style.visibility = "visible";
     document.getElementById("position-info").style.visibility = "visible";
-    window.console.log("setUpIN:intvNumShow=" + intvNumShow);
+    window.console.log("setUpIN: intvNumShow=" + intvNumShow);
     currQuest = 0;
     if (!intvNumShow) {
       document.getElementById("log-in-div").style.display = "none";
@@ -834,7 +837,7 @@ function saveVariable (variable, value, openQest) {
         window.console.log("saveVar: " + variable + " -> " + this.responseText);
       }//if
     };//function()
-  xhr.open("GET", "../php/zapiszTempValue.php?int_no=" + intvNum + "&survey_id=" + surveyId + "&stage_no=" + stageNo + "&user_id=" + userId +
+  xhr.open("GET", "../php/zapiszTempValue.php?int_no=" + intvNum + "&survey_id=" + surveyId + "&stage_no=" + stageNum + "&user_id=" + userId +
                     "&var=" + variable + "&val=" + value + "&opq=" + openQest, true);
   xhr.send();
 }//saveVariable
@@ -848,7 +851,7 @@ function tempFileExists (tstIntvNum) {
     window.console.log("tFE: " + warningPHPisNotWorking + intvNum);
   } else {
     xhr = new window.XMLHttpRequest();
-    xhr.open("GET", "../php/tempFileExists.php?int_no=" + tstIntvNum + "&survey_id=" + surveyId + "&stage_no=" + stageNo + "&user_id=" + userId, false);//SYNCHRONICZNIE
+    xhr.open("GET", "../php/tempFileExists.php?int_no=" + tstIntvNum + "&survey_id=" + surveyId + "&stage_no=" + stageNum + "&user_id=" + userId, false);//SYNCHRONICZNIE
     xhr.send();
     if (xhr.status == 200) {
       t = xhr.responseText == tstIntvNum;
@@ -861,7 +864,7 @@ function tempFileExists (tstIntvNum) {
 }//tempFileExists
 
 
-function restoreFromTempFile () {
+function restoreFromTempFile (intvNum) {
   let xhr;
   let restoredJson;
   let restoredTab;
@@ -870,18 +873,18 @@ function restoreFromTempFile () {
   let restoredCnt;
   let i;
   restoredIntv = false;
-  window.console.log("restoreFromTempFile()");
+  window.console.log("restoreFromTempFile(" + intvNum + "):" + surveyId + "_(" + intvNum + ")" + userId);
   if (!phpIsWorking) {
     window.console.log("rFTF: warning PHP is notnworking");
   } else {
     xhr = new window.XMLHttpRequest();
-    xhr.open("GET", "./php/restoreFromTempFile.php?int_no=" + intvNum + "&survey_id=" + surveyId + "&stage_no=" + stageNo + "&user_id=" + userId, false);//SYNCHRONICZNIE
+    xhr.open("GET", "./php/restoreFromTempFile.php?int_no=" + intvNum + "&survey_id=" + surveyId + "&stage_no=" + stageNum + "&user_id=" + userId, false);//SYNCHRONICZNIE
     xhr.send();
     if (xhr.status == 200) {
       restoredJson = xhr.responseText;
     } else {
       restoredJson = "";
-      window.console.log("Błąd odczytu TempFile, status=" + xhr.status);
+      window.console.log("rFTF: Błąd odczytu TempFile, status=" + xhr.status);
     }//else
     window.console.log("rJson=" + restoredJson);
     if (restoredJson != "") {
@@ -1062,9 +1065,9 @@ function saveStartData () {
   ckExpiresText = ";expires=" + expDate.toUTCString();
   window.console.log("saveStartData: " + ckExpiresText);
   document.questForm.survey_id.value    = surveyId;
-  document.questForm.stage_no.value     = stageNo;
+  document.questForm.stage_no.value     = stageNum;
   document.questForm.user_id.value      = userId;
-  getDateTime("saveStartData_" + intvNum);
+  getDateTime("saveStartData for " + intvNum);
   document.questForm.start_time.value   = currDateTime;//.toLocaleString();
   document.questForm.end_time.value     = "started_";
   document.questForm.duration.value     = 0;
@@ -1173,7 +1176,7 @@ function gotoFirstEmptyQuestion () {
 
 function setIntvNumComplete (tstUserId, tstIntvNum, tstStageNo) {
   let xhr;
-  intvNum = -1;
+  let intvNum = -1;
   window.console.log("setIntvNumComplete(" + tstUserId + "," + tstIntvNum + "," + tstStageNo + ")");
   if (!phpIsWorking) {
     intvNum = noPhpIntvNum;
@@ -1183,7 +1186,7 @@ function setIntvNumComplete (tstUserId, tstIntvNum, tstStageNo) {
     xhr.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
           intvNum = this.responseText;
-          window.console.log("setINC: intvNum=[" + intvNum + "]");
+          window.console.log("setINC: intvNum=" + intvNum);
         }//if
       };//function()
     if (intvNumAuto || intvNumGiven) {
@@ -1239,7 +1242,7 @@ function submitFormData () {
   document.getElementById("cookies-removing-info").style.display = "none";//visibility = "hidden";
   document.getElementById("all-done-end").style.visibility = "hidden";
 //  document.getElementById("all-done-next").style.visibility = "hidden";
-  getDateTime("submitFormData_" + intvNum);
+  getDateTime("submitFormData for " + intvNum);
   document.questForm.end_time.value = currDateTime;//.toLocaleString();
   //document.questForm.duration.value = (Date.parse(document.questForm.end_time.value) - Date.parse(document.questForm.start_time.value)) / 1000;
   document.questForm.duration.value = durationSec(document.questForm.start_time.value, document.questForm.end_time.value);
@@ -1256,8 +1259,7 @@ function submitFormData () {
 //  document.getElementById("data-saved-next").focus();
   window.setTimeout(cleanData, 3000);
 
-  window.console.log("setIntvNumComplete:");
-  setIntvNumComplete(userId, intvNum, stageNo);
+  setIntvNumComplete(userId, intvNum, stageNum);
 
   return false;
 }//submitFormData
@@ -1382,7 +1384,7 @@ var scenariaTab = [[10, 11, 12, 13],  // I J K L
 var useScenariaTab = true;   // mają być zmiany kolejności pytań
 var rotateScenario = true;  // maja być rotacje wewnątrz scenariuszy
 function arrangeQsOrdTab () {
-  window.console.log("arrangeQsOrdTab() " + intvNum + ", " + useScenariaTab + ", " + rotateScenario);
+  window.console.log("arrangeQsOrdTab() for " + intvNum + ", " + useScenariaTab + ", " + rotateScenario);
   if (useScenariaTab) {
     let scenario = (intvNum - 1) % scenariaTab.length, //WYBÓR WIERSZA W TABELI scenariaTab -- intvNum,//powinno być jak jest dla każdego
         firstItem = Math.floor((intvNum - 1) / scenariaTab.length) % scenariaTab[scenario].length; //pierwszy w rotacji wybranego wiersza tabeli scenariaTab
@@ -1446,7 +1448,7 @@ function createRotationsTable () {
 function findRotation () {
   let i;
   let rlen = rotations.length;
-  window.console.log("findRotation: [" + intvNum + "]");
+  window.console.log("findRotation(" + intvNum + ")");
   for (i = 0; i < rlen && rotations[i][0] != intvNum; i++);
   document.questForm.tp1_ord.value = 1;
 //  document.questForm.tp2_ord.value = 2;
@@ -1663,19 +1665,19 @@ function verifyInt_num (qId, fldName) {
   let isOk = true;
   let tstIntvNum;
   window.console.log("verInt_num(" + qId + ":" + fldName + ")\nino=" + field.value + ", ronly=" + field.readOnly);
-  //window.console.log("useIN(" + intvNumAuto + "," + userId + "," + field.value + "," + stageNo + ")");
+  //window.console.log("useIN(" + intvNumAuto + "," + userId + "," + field.value + "," + stageNum + ")");
   if (field.readOnly) {
-    isOk = restoredIntv || useIntvNum(userId, field.value, stageNo);
+    isOk = restoredIntv || (intvNum = useIntvNum(userId, field.value, stageNum)) != -1;
   } else {
     tstIntvNum = decodeURI(field.value);
-    window.console.log("[" + tstIntvNum + "]");
+    window.console.log("tstIntvNum=" + tstIntvNum);
     field.value = tstIntvNum;
     //tstIntvNum = parseInt(field.value);
     //window.console.log(tstIntvNum);
     if (tstIntvNum && intvNumIsInRange(tstIntvNum, false, 1, 200, 1001, 2000, 3001)) {
       if (intvNumGiven) {
-        if (!useIntvNum(userId, tstIntvNum, stageNo)) {
-          if (isIntvNumStarted(userId, tstIntvNum, stageNo) &&
+        if ((intvNum = useIntvNum(userId, tstIntvNum, stageNum)) == -1) {
+          if ((intvNum = isIntvNumStarted(userId, tstIntvNum, stageNum)) != -1 &&
               (!tempFileExists(tstIntvNum) ||
                !window.confirm("Ankieta o tym identyfikatorze została już rozpoczęta i jakieś jej dane zachowane są na serwerze.\n" +
                                "Czy chcesz kontynować tę ankietę po wczytaniu danych?"))) {
@@ -1684,7 +1686,7 @@ function verifyInt_num (qId, fldName) {
         }//if
         isOk = intvNum != -1;
       } else {
-        getIntvNum(userId, tstIntvNum, stageNo);
+        intvNum = getIntvNum(userId, tstIntvNum, stageNum);
       }//else
       if (intvNum == -1) {//udało się ustalić numer ankiety w zdanym zakresie
         isOk = false;
@@ -1696,12 +1698,12 @@ function verifyInt_num (qId, fldName) {
 //  window.alert("isOk=" + isOk + ", restoredIntv=" + restoredIntv);
   if (isOk) {
     document.getElementById("intv-num-info").innerHTML = intvNum;
-    if (stageNo) {
-      document.getElementById("test-prod-info").innerHTML = stageNo;
+    if (stageNum) {
+      document.getElementById("test-prod-info").innerHTML = stageNum;
     }//if
     arrangeQuestions();
     if (/*!restoredIntv &&*/ tempFileExists(intvNum)) {
-      restoreFromTempFile();
+      restoreFromTempFile(intvNum);
     }//if
     saveStartData();
     document.getElementById(qId).style.display = "none";
@@ -2347,34 +2349,34 @@ function loadQuestsElements () {
 //quest-intv_num
 //function prepareInt_num () {}
 //function verifyInt_num () {}
-function intvNumIsInRange (iNum, withRotations, ...ranges) {
-  window.console.log("intvNumIsInRange(" + iNum + "," + withRotations + "," + ranges.length);
+function intvNumIsInRange (tstIntvNum, withRotations, ...ranges) {
+  window.console.log("intvNumIsInRange(" + tstIntvNum + "," + withRotations + "," + ranges.length);
   let isOk = false;
   let i;
   if (withRotations == undefined || withRotations) {
     let rlen = rotations.length;
-    for (i = 0; i < rlen && rotations[i][0] != iNum; i++);
+    for (i = 0; i < rlen && rotations[i][0] != tstIntvNum; i++);
     isOk = i < rlen;
     window.console.log("iNiR rotat: " + isOk);
   } else {
     if (ranges.length) {
       if (ranges.length == 1 && Array.isArray(ranges[0])) {
         for (i = 0; !isOk && i < ranges[0].length; i++) {
-          if (ranges[0][i++] <= iNum) {
-            isOk = i == ranges[0].length || iNum <= ranges[0][i];
+          if (ranges[0][i++] <= tstIntvNum) {
+            isOk = i == ranges[0].length || tstIntvNum <= ranges[0][i];
           }//if
         }//for
         window.console.log("iNiR array: " + isOk);
       } else {
         for (i = 0; !isOk && i < ranges.length; i++) {
-          if (ranges[i++] <= iNum) {
-            isOk = i == ranges.length || iNum <= ranges[i];
+          if (ranges[i++] <= tstIntvNum) {
+            isOk = i == ranges.length || tstIntvNum <= ranges[i];
           }//if
         }//for
         window.console.log("iNiR list: " + isOk);
       }//else
     } else {
-      isOk = 1 <= iNum && iNum <= 110 || 1001 <= iNum && iNum <= 1110;
+      isOk = 1 <= tstIntvNum && tstIntvNum <= 110 || 1001 <= tstIntvNum && tstIntvNum <= 1110;
       window.console.log("iNiR explic: " + isOk);
     }//else
   }//else
@@ -2698,7 +2700,7 @@ function initAll () {
                                                            "lub zwyczajne wpisanie go.";
 
   saveSurveyLog("initAll");
-  getDateTime("initAll_" + parIntvNum);
+  getDateTime("initAll for " + parIntvNum);
 
   //firstIntvNum, lastIntvNum,   intvNumType,   intvNumAuto, intvNumTable, intvNumGiven, intvNumShow
   if (surveyId == -1) {
@@ -2706,8 +2708,8 @@ function initAll () {
     return 1;
   }//if
   document.getElementById("survey-id-info").innerHTML = surveyId;
-  if (stageNo != -1)
-    document.getElementById("survey-id-info").innerHTML += "." + stageNo;
+  if (stageNum != -1)
+    document.getElementById("survey-id-info").innerHTML += "." + stageNum;
   if (userId == -1) {
     errorAlert("Błąd: Brak identyfikatora użytkownika.", "");
     return 2;
@@ -2738,21 +2740,21 @@ function initAll () {
       ckValue = cookiesTab[i].substr(cookiesTab[i].indexOf("=")+1, cookiesTab[i].length);
       switch (ckName) {
         case "SurveyId":   ckSurveyId  = ckValue; break;
-        case "StageNo":    ckStageNo   = ckValue; break;
+        case "StageNo":    ckStageNum  = ckValue; break;
         case "UserId" :    ckUserId    = ckValue; break;
         case "IntvNum" :   ckIntvNum   = ckValue; break;
         case "StartTime" : ckStartTime = ckValue; break;
         case "EndTime" :   ckEndTime   = ckValue; break;
       }//switch
     }//for od ciasteczek
-    window.console.log("ckSId=" + ckSurveyId + ", sId=" + surveyId + ", ckSNo=" + ckStageNo + ", sNo=" + stageNo + ", ckUserId=" + ckUserId + ", userId=" + userId + ", ");
+    window.console.log("ckSId=" + ckSurveyId + ", sId=" + surveyId + ", ckSNo=" + ckStageNum + ", sNo=" + stageNum + ", ckUserId=" + ckUserId + ", userId=" + userId + ", ");
     window.console.log("parIntvNum=" + parIntvNum + ", ckIntvNum=" + ckIntvNum + ", ckStartTime=" + ckStartTime + ", ckEndTime=" + ckEndTime + ".");
     if (ckSurveyId != -1 && ckSurveyId == surveyId &&
-        ckStageNo == stageNo &&
+        ckStageNum == stageNum &&
         ckUserId == userId &&
         ckIntvNum != -1 && (parIntvNum == -1 || ckIntvNum == parIntvNum) &&
         ckStartTime != -1 && ckStartTime != "" && ckEndTime == "started_") { //SĄ JAKIEŚ DANE W CIASTECZKACH Z NIESKOŃCZONEGO WYWIADU
-      if (isIntvNumStarted(ckUserId, ckIntvNum, ckStageNo)) {//I WYWIAD JEST started
+      if ((intvNum = isIntvNumStarted(ckUserId, ckIntvNum, ckStageNum)) != -1) {//I WYWIAD JEST started
         document.getElementById("restore-progress").style.display = "none";  //zapytanie czy z niego skorzystać
         document.getElementById("ask-restore-intv").style.display = "block";
         document.getElementById("restore-interview").focus();

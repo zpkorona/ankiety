@@ -10,9 +10,11 @@ intv_num=9&user_id=AlmWawa04&status=2018-06-04 15:49:58
 intv_num=10&user_id=AlmWawa01&status=2018-06-04 15:50:33
 intv_num=11&user_id=AlmKrak01&status=2018-06-04 15:50:52
 intv_num=12&user_id=AlmKrak02&status=2018-06-04 15:51:15
-intv_num=99&user_id=Gość&status=waiting____________
+intv_num=99&user_id=Gość&status=started____________
 intv_num=13&user_id=gość&status=2019-06-05 09:50:27
 intv_num=14&user_id=gość&status=waiting____________
 intv_num=15&user_id=gość&status=2019-06-05 14:31:51
 intv_num=16&user_id=gość&status=started____________
 intv_num=17&user_id=gość&status=waiting____________
+intv_num=122&user_id=Gość&status=2019-06-06 17:12:08
+intv_num=144&user_id=Gość&status=waiting____________
