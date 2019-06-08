@@ -6,7 +6,7 @@ intv_num=5&user_id=xyz5&status=started____________
 intv_num=10&user_id=xyz10&status=2017-04-13 17:48:07
 intv_num=11&user_id=xyz11&status=started____________
 intv_num=12&user_id=xyz12&status=2017-06-24 17:21:59
-intv_num=13&user_id=xyz13&status=waiting____________
+intv_num=13&user_id=xyz13&status=started____________
 intv_num=14&user_id=xyz14&status=started____________
 intv_num=15&user_id=xyz15&status=waiting____________
 intv_num=22&user_id=#NN#&status=2017-06-16 19:55:45

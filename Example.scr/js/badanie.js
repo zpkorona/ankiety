@@ -53,11 +53,16 @@ var startDataIsSet = false;
 var currDateTime = "2017-04-01 01-01-01";
 
 
+//=====================================================================================
 //QESTIONNAIRE  =======================================================================
-
 var prevQuest = 0,
     currQuest = 0,
     nextQuest = 0;
+var qsOrdTab = [0];  //created by function
+
+//-------------------------------------------------------------------------------------
+//ZMIANA - POCZĄTEK BLOKU ZMIAN 1/6 Example.scr
+
 var questsTab = [["quest-intv_num",  "intv_num",  prepareInt_num,         verifyInt_num],
                  ["quest-intro0",    "intro0",    prepareQuest_intro0,    verifyQuest_intro0],   //ZMIANA v
                  ["quest-rA",        "rA",        prepare__,              verifyQuest_rA],
@@ -76,7 +81,6 @@ var questsTab = [["quest-intv_num",  "intv_num",  prepareInt_num,         verify
                  ["quest-rN",        "rN",        prepareQuest_rN,        verifyQuest_rN],
                  ["quest-wait01",    "wait01",    prepareWaitPage,        verifyWaitPage],
                  ["quest-rZ",        "rC",        prepare__,              verifyQuestSingle]];//ZMIANA ^
-var qsOrdTab = [0];  //ZMIANA
 
 var useScenariaTab = true;   // mają być zmiany kolejności pytań
 var rotateScenario = true;  // maja być rotacje wewnątrz scenariuszy
@@ -123,7 +127,11 @@ var rJ_arrTab = [[1, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1],
                  [2, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]];
 var rJ_arrLine = [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
 
+//ZMIANA - KONIEC BLOKU ZMIAN 1/6 Example.scr
+//-------------------------------------------------------------------------------------
 
+
+//=====================================================================================
 //GENERAL UTILS =======================================================================
 
 var mouseX = 0,
@@ -164,6 +172,7 @@ function errorAlert (text1, text2, color) {
 }//function errorAlert
 
 
+//=====================================================================================
 //PHP UTILS ===========================================================================
 
 function phpCheck () {
@@ -222,6 +231,7 @@ function saveSurveyLog (extraText) {
 }//saveSurveyLog
 
 
+//=====================================================================================
 //FIELDS ENHANCEMENTS =================================================================
 
 function senseClick (e) {
@@ -265,7 +275,9 @@ function makeDivInputsToggleVisible () {
 }//function makeDivInputsToggleVisible
 
 
+//=====================================================================================
 //QUESTIONAIRE VISIBILITY =============================================================
+
 function displayOffQuestsElements () {
   let objs,
       i;
@@ -302,6 +314,7 @@ function unhideAllQuestions () {
 }//unhideAllQuestions
 
 
+//=====================================================================================
 //GETTING STARTUP INFORMATION =========================================================
 
 function getInfoFromParams () {
@@ -364,7 +377,7 @@ function getSurveysInfoFromXML () {
       XMLurl;
   window.console.log("getSurveysInfoFromXML");
   xhr = new window.XMLHttpRequest();
-  xhr.open("GET", "./xml/badanie_AS.xml", false);//SYNCHRONICZNIE
+  xhr.open("GET", "./xml/badanie_GS.xml", false);//SYNCHRONICZNIE
   xhr.send();
   if (xhr.status != 200) {
     window.console.log("Nie ma pliku badania.xml, status=" + xhr.status);
@@ -465,7 +478,8 @@ function getSurveysInfoFromJson () {
 }//getSurveysInfoFromJson
 
 
-//COOKIES MANAGEMNT =============================================================
+//=====================================================================================
+//COOKIES MANAGEMNT ===================================================================
 
 function cookiesConfirmed () {
   document.getElementById("cookies-confirm").style.display = "none";
@@ -577,7 +591,9 @@ function tempFileExists (tstIntvNum) {
 }//tempFileExists
 
 
+//=====================================================================================
 //IDENTIFIER MANAGEMENT ===============================================================
+
 function isIntvNumWaiting (tstUserId, tstIntvNum, tstStageNo) {
   let xhr;
   let intvNum = -1;
@@ -839,16 +855,151 @@ function setIntvNumComplete (tstUserId, tstIntvNum, tstStageNo) {
 }//setIntvNumComplete
 
 
+//=====================================================================================
 //RESTORE DATA - SURVEY DEPENDENT =====================================================
-function restoreFromDataTab (dataTab) {
 
-}//restoreFromDataTab
+function setFieldValue (fldName, fldValue, fromTempFile=false) {
+  let i;
+  switch (fldName) {
+    case "SurveyId":  document.questForm.survey_id.value  = fldValue; break;
+    case "StageNo":   document.questForm.stage_no.value   = fldValue; break;
+    case "UserId":    document.questForm.user_id.value    = fldValue; break;
+    case "IntvNum":   document.questForm.intv_num.value   = fldValue; break;
+    case "StartTime": document.questForm.start_time.value = fldValue; break;
+    case "EndTime":   document.questForm.end_time.value   = fldValue; break;
+    case "Duration":  document.questForm.duration.value   = fldValue; break;
+//=====================================================================================
+//ZMIANA - POCZĄTEK BLOKU ZMIAN 2/6 Example.scr
+//-------------------------------------------------------------------------------------
+    //TEXT/VALUE
+    case "nazwa pola z ustaloną wartością - tekstowego lub innego": //ZMIANA
+    case "rAt16": //ZMIANA
+    case "rG":    //ZMIANA
+    case "rH":    //ZMIANA
+      document.questForm[fldName].value = fldValue;
+      window.console.log(fldName + "=>" + document.questForm[fldName].value);
+      break;
+
+    //RADIO
+    case "nazwa pola typu RADIO":    //ZMIANA
+    case "rC":    //ZMIANA
+    case "rD":    //ZMIANA
+    case "rE":    //ZMIANA
+    case "rI_1":  //ZMIANA
+    case "rI_2":  //ZMIANA
+    case "rI_3":  //ZMIANA
+    case "rI_4":  //ZMIANA
+    case "rI_5":  //ZMIANA
+    case "rI_6":  //ZMIANA
+    case "rI_7":  //ZMIANA
+    case "rI_8":  //ZMIANA
+    case "rI_9":  //ZMIANA
+    case "rI_10": //ZMIANA
+    case "rI_11": //ZMIANA
+    case "rI_12": //ZMIANA
+    case "rK":    //ZMIANA
+    case "rL":    //ZMIANA
+    case "rZ":    //ZMIANA
+      document.questForm[fldName].value = fldValue;
+      for (i = 0; i < document.questForm[fldName].length; i++) {
+        if (document.questForm[fldName][i].value == fldValue) {
+          document.questForm[fldName][i].checked = true;
+        }//if
+      }//for
+      window.console.log(fldName + "=>" + document.questForm[fldName].value);
+      break;
+
+    //RANGE
+    case "nazwa pola typu RANGE":    //ZMIANA
+    case "rF":    //ZMIANA
+    case "rJ_1":  //ZMIANA
+    case "rJ_2":  //ZMIANA
+    case "rJ_3":  //ZMIANA
+    case "rJ_4":  //ZMIANA
+    case "rJ_5":  //ZMIANA
+    case "rJ_6":  //ZMIANA
+    case "rJ_7":  //ZMIANA
+    case "rJ_8":  //ZMIANA
+    case "rJ_9":  //ZMIANA
+    case "rJ_10": //ZMIANA
+    case "rJ_11": //ZMIANA
+    case "rJ_12": //ZMIANA
+      document.questForm[fldName].value = fldValue;
+      window.console.log(fldName + "=>" + document.questForm[fldName].value);
+      break;
+
+    //CHECK
+    case "nazwy pól typu CHECK":    //ZMIANA
+    case "rA_1":  //ZMIANA
+    case "rA_2":  //ZMIANA
+    case "rA_3":  //ZMIANA
+    case "rA_4":  //ZMIANA
+    case "rA_5":  //ZMIANA
+    case "rA_6":  //ZMIANA
+    case "rA_7":  //ZMIANA
+    case "rA_8":  //ZMIANA
+    case "rA_9":  //ZMIANA
+    case "rA_10": //ZMIANA
+    case "rA_11": //ZMIANA
+    case "rA_12": //ZMIANA
+    case "rA_13": //ZMIANA
+    case "rA_14": //ZMIANA
+    case "rA_15": //ZMIANA
+    case "rA_16": //ZMIANA
+    case "rB_1":  //ZMIANA
+    case "rB_2":  //ZMIANA
+    case "rB_3":  //ZMIANA
+    case "rB_4":  //ZMIANA
+    case "rB_5":  //ZMIANA
+    case "rB_6":  //ZMIANA
+    case "rB_7":  //ZMIANA
+    case "rB_8":  //ZMIANA
+    case "rB_9":  //ZMIANA
+    case "rB_10": //ZMIANA
+    case "rB_11": //ZMIANA
+    case "rB_12": //ZMIANA
+    case "rB_13": //ZMIANA
+    case "rB_14": //ZMIANA
+    case "rB_15": //ZMIANA
+    case "rB_16": //ZMIANA
+      if (fromTempFile) restoredIntv = true;     //<<---PRZY PIERWSZYM ZNACZĄCYM PYTANIU
+      document.questForm[fldName].checked = fldValue == "true";
+      window.console.log(fldName + "=>" + document.questForm[fldName].checked);
+      break;
+
+    //SELECT
+    case "nazwa pola typu SELECT":    //ZMIANA
+    case "rM_1":  //ZMIANA
+    case "rM_2":  //ZMIANA
+    case "rM_3":  //ZMIANA
+    case "rM_4":  //ZMIANA
+    case "rM_5":  //ZMIANA
+    case "rM_6":  //ZMIANA
+    case "rM_7":  //ZMIANA
+    case "rM_8":  //ZMIANA
+    case "rM_9":  //ZMIANA
+    case "rM_10": //ZMIANA
+    case "rM_11": //ZMIANA
+    case "rM_12": //ZMIANA
+      fldName = "rM";
+    case "rN":  //ZMIANA
+      if (fldValue != "") {
+        for (i = 0; i < document.questForm[fldName].length; i++) {
+          if (document.questForm[fldName][i].value == fldValue) {
+            document.questForm[fldName][i].selected = true;
+            window.console.log(fldName + "." + document.questForm[fldName][i].value + "=" + document.questForm[fldName][i].selected);
+          }//if
+        }//for
+      }//if
+      break;
+//-------------------------------------------------------------------------------------
+//ZMIANA - KONIEC BLOKU ZMIAN 2/6 Example.scr
+//=====================================================================================
+  }//switch
+}//setFieldValue
 
 function restoreFromCookies () {
-  let fldName = "";
-  let fldValue = "";
   let cookiesCnt;
-  let i;
   window.console.log("restoreFromCookies()");
   document.questForm.reset();
   document.getElementById("restore-progress").style.display = "block";
@@ -856,143 +1007,8 @@ function restoreFromCookies () {
   document.getElementById("restore-progress").value = 0;
   for (cookiesCnt = 0; cookiesCnt < cookiesTab.length; cookiesCnt++) {
     document.getElementById("restore-progress").value = cookiesCnt;
-    fldName = cookiesTab[cookiesCnt].substr(0, cookiesTab[cookiesCnt].indexOf("="));
-    fldValue = cookiesTab[cookiesCnt].substr(cookiesTab[cookiesCnt].indexOf("=")+1, cookiesTab[cookiesCnt].length);
-    switch (fldName) {
-      case "SurveyId":  document.questForm.survey_id.value  = fldValue; break;
-      case "StageNo":   document.questForm.stage_no.value   = fldValue; break;
-      case "UserId":    document.questForm.user_id.value    = fldValue; break;
-      case "IntvNum":   document.questForm.intv_num.value   = fldValue; break;
-      case "StartTime": document.questForm.start_time.value = fldValue; break;
-      case "EndTime":   document.questForm.end_time.value   = fldValue; break;
-      case "Duration":  document.questForm.duration.value   = fldValue; break;
-//=====================================================================================
-//ZMIANA - POCZĄTEK BLOKU ZMIAN 1/6 Example.scr
-//-------------------------------------------------------------------------------------
-      //TEXT/VALUE
-      case "nazwa pola z ustaloną wartością - tekstowego lub innego": //ZMIANA
-      case "rAt16": //ZMIANA
-      case "rG":    //ZMIANA
-      case "rH":    //ZMIANA
-        document.questForm[fldName].value = fldValue;
-        window.console.log(fldName + "=>" + document.questForm[fldName].value);
-        break;
-
-      //RADIO
-      case "nazwa pola typu RADIO":    //ZMIANA
-      case "rC":    //ZMIANA
-      case "rD":    //ZMIANA
-      case "rE":    //ZMIANA
-      case "rI_1":  //ZMIANA
-      case "rI_2":  //ZMIANA
-      case "rI_3":  //ZMIANA
-      case "rI_4":  //ZMIANA
-      case "rI_5":  //ZMIANA
-      case "rI_6":  //ZMIANA
-      case "rI_7":  //ZMIANA
-      case "rI_8":  //ZMIANA
-      case "rI_9":  //ZMIANA
-      case "rI_10": //ZMIANA
-      case "rI_11": //ZMIANA
-      case "rI_12": //ZMIANA
-      case "rK":    //ZMIANA
-      case "rL":    //ZMIANA
-      case "rZ":    //ZMIANA
-        document.questForm[fldName].value = fldValue;
-        for (i = 0; i < document.questForm[fldName].length; i++) {
-          if (document.questForm[fldName][i].value == fldValue) {
-            document.questForm[fldName][i].checked = true;
-          }//if
-        }//for
-        window.console.log(fldName + "=>" + document.questForm[fldName].value);
-        break;
-
-      //RANGE
-      case "nazwa pola typu RANGE":    //ZMIANA
-      case "rF":    //ZMIANA
-      case "rJ_1":  //ZMIANA
-      case "rJ_2":  //ZMIANA
-      case "rJ_3":  //ZMIANA
-      case "rJ_4":  //ZMIANA
-      case "rJ_5":  //ZMIANA
-      case "rJ_6":  //ZMIANA
-      case "rJ_7":  //ZMIANA
-      case "rJ_8":  //ZMIANA
-      case "rJ_9":  //ZMIANA
-      case "rJ_10": //ZMIANA
-      case "rJ_11": //ZMIANA
-      case "rJ_12": //ZMIANA
-        document.questForm[fldName].value = fldValue;
-        window.console.log(fldName + "=>" + document.questForm[fldName].value);
-        break;
-
-      //CHECK
-      case "nazwy pól typu CHECK":    //ZMIANA
-      case "rA_1":  //ZMIANA
-      case "rA_2":  //ZMIANA
-      case "rA_3":  //ZMIANA
-      case "rA_4":  //ZMIANA
-      case "rA_5":  //ZMIANA
-      case "rA_6":  //ZMIANA
-      case "rA_7":  //ZMIANA
-      case "rA_8":  //ZMIANA
-      case "rA_9":  //ZMIANA
-      case "rA_10": //ZMIANA
-      case "rA_11": //ZMIANA
-      case "rA_12": //ZMIANA
-      case "rA_13": //ZMIANA
-      case "rA_14": //ZMIANA
-      case "rA_15": //ZMIANA
-      case "rA_16": //ZMIANA
-      case "rB_1":  //ZMIANA
-      case "rB_2":  //ZMIANA
-      case "rB_3":  //ZMIANA
-      case "rB_4":  //ZMIANA
-      case "rB_5":  //ZMIANA
-      case "rB_6":  //ZMIANA
-      case "rB_7":  //ZMIANA
-      case "rB_8":  //ZMIANA
-      case "rB_9":  //ZMIANA
-      case "rB_10": //ZMIANA
-      case "rB_11": //ZMIANA
-      case "rB_12": //ZMIANA
-      case "rB_13": //ZMIANA
-      case "rB_14": //ZMIANA
-      case "rB_15": //ZMIANA
-      case "rB_16": //ZMIANA
-        document.questForm[fldName].checked = fldValue == "true";
-        window.console.log(fldName + "=>" + document.questForm[fldName].checked);
-        break;
-
-      //SELECT
-      case "nazwa pola typu SELECT":    //ZMIANA
-      case "rM_1":  //ZMIANA
-      case "rM_2":  //ZMIANA
-      case "rM_3":  //ZMIANA
-      case "rM_4":  //ZMIANA
-      case "rM_5":  //ZMIANA
-      case "rM_6":  //ZMIANA
-      case "rM_7":  //ZMIANA
-      case "rM_8":  //ZMIANA
-      case "rM_9":  //ZMIANA
-      case "rM_10": //ZMIANA
-      case "rM_11": //ZMIANA
-      case "rM_12": //ZMIANA
-        fldName = "rM";
-      case "rN":  //ZMIANA
-        if (fldValue != "") {
-          for (i = 0; i < document.questForm[fldName].length; i++) {
-            if (document.questForm[fldName][i].value == fldValue) {
-              document.questForm[fldName][i].selected = true;
-              window.console.log(fldName + "." + document.questForm[fldName][i].value + "=" + document.questForm[fldName][i].selected);
-            }//if
-          }//for
-        }//if
-        break;
-//-------------------------------------------------------------------------------------
-//ZMIANA - KONIEC BLOKU ZMIAN 1/6 Example.scr
-//=====================================================================================
-    }//switch
+    setFieldValue(cookiesTab[cookiesCnt].substr(0, cookiesTab[cookiesCnt].indexOf("=")),
+                  cookiesTab[cookiesCnt].substr(cookiesTab[cookiesCnt].indexOf("=")+1, cookiesTab[cookiesCnt].length));
   }//for od ciasteczek
 //window.alert("restoreFromCookies()-koniec");
   document.getElementById("ask-restore-intv").style.display = "none";
@@ -1016,8 +1032,6 @@ function restoreFromTempFile (intvNum) {
   let xhr;
   let restoredJson;
   let restoredTab;
-  let fldName;
-  let fldValue;
   let restoredCnt;
   let i;
   restoredIntv = false;
@@ -1041,150 +1055,10 @@ function restoreFromTempFile (intvNum) {
     //  document.getElementById("restore-progress").max = restoredTab.length - 3;
     //  document.getElementById("restore-progress").value = 0;
       restoredCnt = 0;
-      for (fldName in restoredTab) {
+      for (let fldName in restoredTab) {
         restoredCnt++;
     //    document.getElementById("restore-progress").value = restoredCnt;
-        fldValue = restoredTab[fldName];
-        switch (fldName) {
-          case "SurveyId":  document.questForm.survey_id.value  = fldValue; break;
-          case "StageNo":   document.questForm.stage_no.value   = fldValue; break;
-          case "UserId":    document.questForm.user_id.value    = fldValue; break;
-          case "IntvNum":   document.questForm.intv_num.value   = fldValue; break;
-          case "StartTime": document.questForm.start_time.value = fldValue; break;
-          case "EndTime":   document.questForm.end_time.value   = fldValue; break;
-          case "Duration":  document.questForm.duration.value   = fldValue; break;
-//=====================================================================================
-//ZMIANA - POCZĄTEK BLOKU ZMIAN 2/6 Example.scr
-//-------------------------------------------------------------------------------------
-          //TEXT/VALUE
-          case "nazwa pola typu TEXT/VALUE":    //ZMIANA
-          case "rAt16": //ZMIANA
-          case "rG":    //ZMIANA
-          case "rH":    //ZMIANA
-            restoredIntv = true;     //<<---PRZY PIERWSZYM ZNACZĄCYM PYTANIU
-            document.questForm[fldName].value = fldValue;
-            window.console.log(fldName + "=>" + document.questForm[fldName].value);
-            break;
-
-          //RADIO
-          case "nazwa pola typu RADIO":    //ZMIANA
-          case "rC":    //ZMIANA
-          case "rD":    //ZMIANA
-          case "rE":    //ZMIANA
-          case "rI_1":  //ZMIANA
-          case "rI_2":  //ZMIANA
-          case "rI_3":  //ZMIANA
-          case "rI_4":  //ZMIANA
-          case "rI_5":  //ZMIANA
-          case "rI_6":  //ZMIANA
-          case "rI_7":  //ZMIANA
-          case "rI_8":  //ZMIANA
-          case "rI_9":  //ZMIANA
-          case "rI_10": //ZMIANA
-          case "rI_11": //ZMIANA
-          case "rI_12": //ZMIANA
-          case "rK":    //ZMIANA
-          case "rL":    //ZMIANA
-          case "rZ":    //ZMIANA
-            restoredIntv = true;     //<<---PRZY PIERWSZYM ZNACZĄCYM PYTANIU
-            document.questForm[fldName].value = fldValue;
-            for (i = 0; i < document.questForm[fldName].length; i++) {
-              if (document.questForm[fldName][i].value == fldValue) {
-                document.questForm[fldName][i].checked = true;
-              }//if
-            }//for
-            window.console.log(fldName + "=>" + document.questForm[fldName].value);
-            break;
-
-          //RANGE
-          case "nazwa pola typu RANGE":    //ZMIANA
-          case "rF":    //ZMIANA
-          case "rJ_1":  //ZMIANA
-          case "rJ_2":  //ZMIANA
-          case "rJ_3":  //ZMIANA
-          case "rJ_4":  //ZMIANA
-          case "rJ_5":  //ZMIANA
-          case "rJ_6":  //ZMIANA
-          case "rJ_7":  //ZMIANA
-          case "rJ_8":  //ZMIANA
-          case "rJ_9":  //ZMIANA
-          case "rJ_10": //ZMIANA
-          case "rJ_11": //ZMIANA
-          case "rJ_12": //ZMIANA
-            restoredIntv = true;     //<<---PRZY PIERWSZYM ZNACZĄCYM PYTANIU
-            document.questForm[fldName].value = fldValue;
-            window.console.log(fldName + "=>" + document.questForm[fldName].value);
-            break;
-
-          //CHECK
-          case "nazwy pól typu CHECK":    //ZMIANA
-          case "rA_1":  //ZMIANA
-          case "rA_2":  //ZMIANA
-          case "rA_3":  //ZMIANA
-          case "rA_4":  //ZMIANA
-          case "rA_5":  //ZMIANA
-          case "rA_6":  //ZMIANA
-          case "rA_7":  //ZMIANA
-          case "rA_8":  //ZMIANA
-          case "rA_9":  //ZMIANA
-          case "rA_10": //ZMIANA
-          case "rA_11": //ZMIANA
-          case "rA_12": //ZMIANA
-          case "rA_13": //ZMIANA
-          case "rA_14": //ZMIANA
-          case "rA_15": //ZMIANA
-          case "rA_16": //ZMIANA
-          case "rB_1":  //ZMIANA
-          case "rB_2":  //ZMIANA
-          case "rB_3":  //ZMIANA
-          case "rB_4":  //ZMIANA
-          case "rB_5":  //ZMIANA
-          case "rB_6":  //ZMIANA
-          case "rB_7":  //ZMIANA
-          case "rB_8":  //ZMIANA
-          case "rB_9":  //ZMIANA
-          case "rB_10": //ZMIANA
-          case "rB_11": //ZMIANA
-          case "rB_12": //ZMIANA
-          case "rB_13": //ZMIANA
-          case "rB_14": //ZMIANA
-          case "rB_15": //ZMIANA
-          case "rB_16": //ZMIANA
-            restoredIntv = true;     //<<---PRZY PIERWSZYM ZNACZĄCYM PYTANIU
-            document.questForm[fldName].checked = fldValue == "true";
-            window.console.log(fldName + "=>" + document.questForm[fldName].checked);
-            break;
-
-          //SELECT
-          case "nazwa pola typu SELECT":    //ZMIANA
-          case "rM_1":  //ZMIANA
-          case "rM_2":  //ZMIANA
-          case "rM_3":  //ZMIANA
-          case "rM_4":  //ZMIANA
-          case "rM_5":  //ZMIANA
-          case "rM_6":  //ZMIANA
-          case "rM_7":  //ZMIANA
-          case "rM_8":  //ZMIANA
-          case "rM_9":  //ZMIANA
-          case "rM_10": //ZMIANA
-          case "rM_11": //ZMIANA
-          case "rM_12": //ZMIANA
-            fldName = "rM";
-          case "rN":  //ZMIANA
-            if (fldValue != "") {
-              for (i = 0; i < document.questForm[fldName].length; i++) {
-                if (document.questForm[fldName][i].value == fldValue) {
-                  document.questForm[fldName][i].selected = true;
-                  window.console.log(fldName + "." + document.questForm[fldName][i].value + "=>" + document.questForm[fldName][i].selected);
-                }//if
-              }//for
-            }//if
-            break;
-
-//-------------------------------------------------------------------------------------
-//ZMIANA - KONIEC BLOKU ZMIAN 2/6 Example.scr
-//=====================================================================================
-        }//switch
+        setFieldValue(fldName, restoredTab[fldName], true);
       }//for
     //window.alert("restoreFromTempFile()-koniec");
     //document.getElementById("ask-restore-intv").style.display = "none";
