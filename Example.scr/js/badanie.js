@@ -297,6 +297,8 @@ function displayOnAllQuestions () {
 }//displayOnAllQuestions
 
 function hideSomeInterviewElements () {
+  document.getElementById("restore-fc-progress").style.display = "none";  //zapytanie czy z niego skorzystać
+  document.getElementById("restore-ft-progress").style.display = "none";  //zapytanie czy z niego skorzystać
   document.getElementById("prev-button").style.visibility = "hidden";
   document.getElementById("fill-button").style.visibility = "hidden";
   document.getElementById("next-button").style.visibility = "hidden";
@@ -999,18 +1001,18 @@ function setFieldValue (fldName, fldValue, fromTempFile=false) {
 }//setFieldValue
 
 function restoreFromCookies () {
-  let cookiesCnt;
   window.console.log("restoreFromCookies()");
   document.questForm.reset();
-  document.getElementById("restore-progress").style.display = "block";
-  document.getElementById("restore-progress").max = cookiesTab.length - 3;
-  document.getElementById("restore-progress").value = 0;
-  for (cookiesCnt = 0; cookiesCnt < cookiesTab.length; cookiesCnt++) {
-    document.getElementById("restore-progress").value = cookiesCnt;
-    setFieldValue(cookiesTab[cookiesCnt].substr(0, cookiesTab[cookiesCnt].indexOf("=")),
-                  cookiesTab[cookiesCnt].substr(cookiesTab[cookiesCnt].indexOf("=")+1, cookiesTab[cookiesCnt].length));
+  document.getElementById("restore-fc-progress").style.display = "block";
+  document.getElementById("restore-fc-progress").max = cookiesTab.length;// - 3;
+  document.getElementById("restore-fc-progress").value = 0;
+  for (let restoredCnt = 0; restoredCnt < cookiesTab.length; restoredCnt++) {
+    document.getElementById("restore-fc-progress").value = restoredCnt + 1;
+    setFieldValue(cookiesTab[restoredCnt].substr(0, cookiesTab[restoredCnt].indexOf("=")),
+                  cookiesTab[restoredCnt].substr(cookiesTab[restoredCnt].indexOf("=")+1));//, cookiesTab[restoredCnt].length));
   }//for od ciasteczek
-//window.alert("restoreFromCookies()-koniec");
+  //window.alert("wczytane");
+  document.getElementById("restore-fc-progress").style.display = "none";
   document.getElementById("ask-restore-intv").style.display = "none";
 //showInterview
   restoredIntv = true;
@@ -1031,9 +1033,7 @@ function restoreFromCookies () {
 function restoreFromTempFile (intvNum) {
   let xhr;
   let restoredJson;
-  let restoredTab;
-  let restoredCnt;
-  let i;
+  let restoredObj;
   restoredIntv = false;
   window.console.log("restoreFromTempFile(" + intvNum + "):" + surveyId + "_(" + intvNum + ")" + userId);
   if (!phpIsWorking) {
@@ -1050,18 +1050,18 @@ function restoreFromTempFile (intvNum) {
     }//else
     window.console.log("rJson=" + restoredJson);
     if (restoredJson != "") {
-      restoredTab = JSON.parse(restoredJson);
-    //  document.getElementById("restore-progress").style.display = "block";
-    //  document.getElementById("restore-progress").max = restoredTab.length - 3;
-    //  document.getElementById("restore-progress").value = 0;
-      restoredCnt = 0;
-      for (let fldName in restoredTab) {
-        restoredCnt++;
-    //    document.getElementById("restore-progress").value = restoredCnt;
-        setFieldValue(fldName, restoredTab[fldName], true);
+      restoredObj = JSON.parse(restoredJson);
+      document.getElementById("restore-ft-progress").style.display = "block";
+      document.getElementById("restore-ft-progress").max = Object.keys(restoredObj).length;// - 3;
+      document.getElementById("restore-ft-progress").value = 0;
+      let restoredCnt = 0;
+      for (let fldName in restoredObj) {
+        document.getElementById("restore-ft-progress").value = ++restoredCnt;
+        setFieldValue(fldName, restoredObj[fldName], true);
       }//for
-    //window.alert("restoreFromTempFile()-koniec");
-    //document.getElementById("ask-restore-intv").style.display = "none";
+    //window.alert("wczytane");
+    document.getElementById("restore-ft-progress").style.display = "none";
+    document.getElementById("ask-restore-intv").style.display = "none";
     //document.getElementById("intv-num-info").innerHTML = intvNum
     }//if
   }//else
@@ -2597,7 +2597,6 @@ function initAll () {
         ckIntvNum != -1 && (parIntvNum == -1 || ckIntvNum == parIntvNum) &&
         ckStartTime != -1 && ckStartTime != "" && ckEndTime == "started_") { //SĄ JAKIEŚ DANE W CIASTECZKACH Z NIESKOŃCZONEGO WYWIADU
       if ((intvNum = isIntvNumStarted(ckUserId, ckIntvNum, ckStageNum)) != -1) {//I WYWIAD JEST started
-        document.getElementById("restore-progress").style.display = "none";  //zapytanie czy z niego skorzystać
         document.getElementById("ask-restore-intv").style.display = "block";
         document.getElementById("restore-interview").focus();
       } else {//TO NIE TEN WYWIAD

@@ -63,11 +63,9 @@
           Czy usunąć te dane o rozpocząć nową ankietę? Nie będzie powrotu do poprzedniej ankiety.
         </p>
       </div>
-      <!--div class="question-break"></div-->
-      <div>
-        <progress id="restore-progress" class="restore-progress" value="1" max="300"></progress>
+      <div class="restore-progress">
+        <progress id="restore-fc-progress" value="1" max="300"></progress>
       </div>
-      <!--div class="question-break"></div-->
       <div id="restore-buttons" class="buttons-place">
         <button class="nav-button" id="restore-interview" onclick="restoreFromCookies()" value="old">Poprzednia ankieta</button>
         <button class="nav-button" id="new-interview" onclick="newInterview()" value="new">Nowa ankieta</button>
@@ -124,6 +122,9 @@
             Możliwe są inne są inne metody ustalanie identyfikatora, poprzez identyfikator użytkownika, <br />
             lub zwyczajne wpisanie go.
             <br />ALBO NIE
+          </div>
+          <div class="restore-progress">
+            <progress id="restore-ft-progress" value="1" max="300"></progress>
           </div>
           <input type="text" name="survey_id"  class="no-display">
           <input type="text" name="stage_no"   class="no-display">

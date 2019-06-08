@@ -597,8 +597,12 @@ form {
 }
 
 .restore-progress {
+  width: 100%;
+}
+.restore-progress > progress {
   height: 1rem;
-  width: 50%;
+  margin: auto;
+  width: 60%;
 }
 
 .monitor-div {
