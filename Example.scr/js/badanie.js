@@ -80,7 +80,7 @@ var questsTab = [["quest-intv_num",  "intv_num",  prepareInt_num,         verify
                  ["quest-rM",        "rM",        prepare__,              verifyQuest_rM],
                  ["quest-rN",        "rN",        prepareQuest_rN,        verifyQuest_rN],
                  ["quest-wait01",    "wait01",    prepareWaitPage,        verifyWaitPage],
-                 ["quest-rZ",        "rC",        prepare__,              verifyQuestSingle]];//ZMIANA ^
+                 ["quest-rZ",        "rZ",        prepare__,              verifyQuestSingle]];//ZMIANA ^
 
 var useScenariaTab = true;   // mają być zmiany kolejności pytań
 var rotateScenario = true;  // maja być rotacje wewnątrz scenariuszy
@@ -90,24 +90,27 @@ var scenariaTab = [[10, 11, 12, 13],  // I J K L
                    [11, 13, 10, 12]]; // J L I K
 
 var useRotations = false;
+var rotatsFromFile = false;
+var rotatsGenerate = false;
+var productsNum = 1;
 var rotatsTab = [[1001, "p001"],
                  [1100, "p100"]];
 
 //              index, value, name
 var rI_orgTab = [["1",  99, "Cecha_rI 1"],
-                ["2",  99, "Cecha_rI 2"],
-                ["3",  99, "Cecha_rI 3"],
-                ["4",  99, "Cecha_rI 4"],
-                ["5",  99, "Cecha_rI 5"],
-                ["6",  99, "Cecha_rI 6"],
-                ["7",  99, "Cecha_rI 7"],
-                ["8",  99, "Cecha_rI 8"],
-                ["9",  99, "Cecha_rI 9"],
-                ["10", 99, "Cecha_rI 10"],
-                ["11", 99, "Cecha_rI 11"],
-                ["12", 99, "Cecha_rI 12"]];
+                 ["2",  99, "Cecha_rI 2"],
+                 ["3",  99, "Cecha_rI 3"],
+                 ["4",  99, "Cecha_rI 4"],
+                 ["5",  99, "Cecha_rI 5"],
+                 ["6",  99, "Cecha_rI 6"],
+                 ["7",  99, "Cecha_rI 7"],
+                 ["8",  99, "Cecha_rI 8"],
+                 ["9",  99, "Cecha_rI 9"],
+                 ["10", 99, "Cecha_rI 10"],
+                 ["11", 99, "Cecha_rI 11"],
+                 ["12", 99, "Cecha_rI 12"]];
 var rI_arrTab = [[1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-                [2, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]];
+                 [2, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]];
 var rI_arrLine = [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
 
 //              index, value, name
@@ -539,7 +542,7 @@ function removeCookies () {
 //window.alert("removeCookies");
   cookiesTab = document.cookie.split(";");
   window.console.log("cookies=[" + cookiesTab + "]\ncookiesTab.length=" + cookiesTab.length);
-  for (var i = 0; i < cookiesTab.length; i++) {
+  for (let i = 0; i < cookiesTab.length; i++) {
     cookiesTab[i] = cookiesTab[i].trim();
     ckName = cookiesTab[i].substr(0, cookiesTab[i].indexOf("="));
     switch (ckName) {
@@ -556,7 +559,9 @@ function removeCookies () {
 }//removeCookies
 
 
+//=====================================================================================
 //TEMPORARY DATA MANAGEMENT ===========================================================
+
 function saveVariable (variable, value, openQest) {
   let xhr;
   if (openQest === undefined) openQest = false;
@@ -1070,6 +1075,7 @@ function restoreFromTempFile (intvNum) {
 }//restoreFromTempFile
 
 
+//=====================================================================================
 //QUESTIONS SWITCHING =================================================================
 
 function makePause (qqq) {
@@ -1081,7 +1087,7 @@ function checkIntvIdEnter (e) {
     gotoNextQuestion();
 }//checkIntvIdEnter
 
-function gotoNextQuestion () {
+function gotoNextQuestion () {//called from index.html
   window.console.log("gotoNQ::" + currQuest + "::");//->" + questsTab[qsOrdTab[currQuest]][0] + ":" + questsTab[qsOrdTab[currQuest]][1]);
   secondLength = standardSecondLength;
   if (questsTab[qsOrdTab[currQuest]][3](questsTab[qsOrdTab[currQuest]][0], questsTab[qsOrdTab[currQuest]][1])) {//funkcja sprawdzająca przeszła
@@ -1109,7 +1115,7 @@ function gotoNextQuestion () {
   }//if
 }//gotoNextQuestion
 
-function gotoPrevQuestion () {
+function gotoPrevQuestion () {//called from index.html
   window.console.log("gotoPrevQuestion: " + currQuest + "->" + questsTab[qsOrdTab[currQuest]][0] + ":" + questsTab[qsOrdTab[currQuest]][1]);
   secondLength = 0;
   if (1 < currQuest) {
@@ -1141,6 +1147,7 @@ function gotoFirstEmptyQuestion () {
 }//gotoFirstEmptyQuestion
 
 
+//=====================================================================================
 //SAVING QUESTIONAIRE DATA ============================================================
 
 function durationSec (startStr, endStr) {//2017-04-28 23:36:11
@@ -1163,14 +1170,15 @@ function submitFormData () {
   //respondentOk = document.questForm.r13[0].checked || document.questForm.r13[1].checked;  //ZMIANA
 
 //=====================================================================================
-//ZMIANA - POCZĄTEK BLOKU ZMIAN 4/6 Example.scr
+//ZMIANA - POCZĄTEK BLOKU ZMIAN 3/6 Example.scr
 //-------------------------------------------------------------------------------------
-  rearrange_rI_data(); //ZMIANA
-  rearrange_rJ_data(); //ZMIANA
-  window.console.log("po rearrage");
+  rearrangeMSQdata("rI_", rI_arrTab, rI_orgTab, rI_arrLine);
+  rearrangeMSQdata("rJ_", rJ_arrTab, rJ_orgTab, rJ_arrLine);
 //-------------------------------------------------------------------------------------
-//ZMIANA - KONIEC BLOKU ZMIAN 4/6 Example.scr
+//ZMIANA - KONIEC BLOKU ZMIAN 3/6 Example.scr
 //=====================================================================================
+
+  window.console.log("po rearrage");
 
   document.getElementById("finish-quest-info").style.display = "block";
 
@@ -1222,10 +1230,12 @@ function cleanData () {
 
 //  document.getElementById("cookies-removing-info").style.display = "block";//.visibility = "visible";
 //window.alert("cleanData::submitFormData:removeCookies");
-  setCookie("LastVisit", Date());
-  setCookie("LastSurvey", surveyId);
-  setCookie("LastUser", userId);
+
+  //setCookie("LastVisit", Date());
+  //setCookie("LastSurvey", surveyId);
+  //setCookie("LastUser", userId);
   removeCookies();
+  setLastCookies();
 
   document.body.style.cursor = "auto";
   window.setTimeout(endInterview, 1000);
@@ -1235,7 +1245,7 @@ function cleanData () {
 }//cleanData
 
 
-
+//=====================================================================================
 //INTERVIEW SWITCHING==================================================================
 
 function endInterview () {
@@ -1291,6 +1301,7 @@ function goToBadania () {
 }//goToBadania
 
 
+//=====================================================================================
 //QUESTIONNAIRE SETUP ================================================================
 
 function createQuestionOrderTable () {
@@ -1343,181 +1354,137 @@ function applyOrdQsScenario (scenario, firstItem) {
 }//function applyOrdQsScenario
 
 function createRotationsTable () {
-  window.console.log("createRotationsTable");
-  //wczytanie za pomocą ajaxa pliku csv do tabeli rotations
-
-  //wygenerowanie TABELI
-  let i = 0;
-  for (let j = 1001; j <= 1200; i++, j++) {
-    rotatsTab[i] = [j, "957"];
-    //    rotatsTab[i][0] = j;
-    //    rotatsTab[i][1] = "957";
-  }//for
-  window.console.log(`i=${i}`);
-  for (let j = 2001; j <= 2200; i++, j++) {
-    rotatsTab[i] = [j, "318"];
-    //    rotatsTab[i][0] = j;
-    //    rotatsTab[i][1] = "318";
-  }//for
+  window.console.log("createRotationsTable(useRotations=" + useRotations + ")");
+  if (useRotations) {
+    if (rotatsFromFile) { //wczytanie za pomocą ajaxa pliku tab-delimited csv do tabeli rotatsTab
+    } else {
+      if (rotatsGenerate) { //wygenerowanie TABELI
+        let i = 0;
+        for (let j = 1001; j <= 1200; i++, j++) {
+          rotatsTab[i] = [j, "957"];
+          //    rotatsTab[i][0] = j;
+          //    rotatsTab[i][1] = "957";
+        }//for
+        window.console.log(`i=${i}`);
+        for (let j = 2001; j <= 2200; i++, j++) {
+          rotatsTab[i] = [j, "318"];
+          //    rotatsTab[i][0] = j;
+          //    rotatsTab[i][1] = "318";
+        }//for
+      }//if
+    }//else
+  }//if
 }//createRotationsTable
 
-function findRotation () {
-  let i;
+function findRotation (intvNum) {
+  let i = 0;
   let rlen = rotatsTab.length;
+  let txt = "";
   window.console.log("findRotation(" + intvNum + ")");
-  for (i = 0; i < rlen && rotatsTab[i][0] != intvNum; i++);
-  document.questForm.tp1_ord.value = 1;
-  //  document.questForm.tp2_ord.value = 2;
-  if (i < rlen) {
-    document.questForm.tp1_name.value = rotatsTab[i][1];
-    //    document.questForm.tp2_name.value = rotatsTab[i][2];
-  } else {
-    if (rlen && 0 < intvNum) {
+  if (useRotations) {
+    for (i = 0; i < rlen && rotatsTab[i][0] != intvNum; i++);
+    if (rlen && i == rlen && 0 < intvNum) {
       i = (intvNum - 1) % rlen;
-      document.questForm.tp1_name.value = rotatsTab[i][1];
-      //      document.questForm.tp2_name.value = rotatsTab[i][1];
+    }//if
+    if (i < rlen) {
+      for (let j = 1; j <= productsNum; j++) {
+        document.questForm["tp" + j + "_ord"].value = j;
+        document.questForm["tp" + j + "_name"].value = rotatsTab[i][j];
+        txt += rotatsTab[i][j] + ", ";
+      }//for
     } else {
-      document.questForm.tp1_name.value = "pierwszy";
-      //      document.questForm.tp2_name.value = "drugi";
+      for (let j = 1; j <= productsNum; j++) {
+        document.questForm["tp" + j + "_ord"].value = j;
+        document.questForm["tp" + j + "_name"].value = "prod_" + j;
+        txt += rotatsTab[i][j] + ", ";
+      }//for
     }//esle
+    window.console.log("rotats: " + txt);
   }//if
-  window.console.log("rotatsTab[" + i + "]:" + document.questForm.tp1_name.value);// + "," + document.questForm.tp2_name.value);
-  //  window.console.log("," + document.questForm.tp2_name.value);
-  window.console.log("::" + document.questForm.tp1_ord.value);// + "," + document.questForm.tp2_ord.value);
-  //  window.console.log("," + document.questForm.tp2_ord.value);
   return i < rlen;
 }//findRotation
 
-function make_rI_arrLine () {
-  let arrTabLen = rI_arrTab.length;
+function makeMSQarrLine (arrTab, orgTabLen, arrLine) {
+  let arrTabLen = arrTab.length;
   let arrTabKey = (intvNum - 1) % arrTabLen + 1;//intvNum,//powinno być jak jest dla każdego
-  let arrTabRow = 0;                               //index wiersza w tabeli rI_arrTab
-  let orgTabLen = rI_orgTab.length;
-  let firstItem = Math.floor((intvNum - 1) / arrTabLen) % orgTabLen; //pierwszy w rotacji wybranego wiersza tabeli rI_arrTab
-  let i;                                        //WYBÓR WIERSZA w tabeli rI_arrTab
-  window.console.log("make_rI_arrLine\n arrTabKey=" + arrTabKey + ", firstItem=" + (firstItem+1) + ":");
-  for (i = 0; i < arrTabLen && rI_arrTab[i][0] != arrTabKey; i++);//SZUKAJ WIERSZA WEDŁUG arrTabKey - może być intvNum
-  if (i < arrTabLen && rI_arrTab[i][0] == arrTabKey) {             //jeśli odnaleziony
+  let arrTabRow = 0;                               //index wiersza w tabeli rrTab
+  let firstItem = Math.floor((intvNum - 1) / arrTabLen) % orgTabLen; //pierwszy w rotacji wybranego wiersza tabeli arrTab
+  let i;                                        //WYBÓR WIERSZA w tabeli arrTab
+  window.console.log("makeMSQarrLine\n arrTabKey=" + arrTabKey + ", firstItem=" + (firstItem+1) + ":");
+  for (i = 0; i < arrTabLen && arrTab[i][0] != arrTabKey; i++);//SZUKAJ WIERSZA WEDŁUG arrTabKey - może być intvNum
+  if (i < arrTabLen && arrTab[i][0] == arrTabKey) {             //jeśli odnaleziony
     arrTabRow = i;
   }//if
-  for (i = 1; i <= orgTabLen - firstItem; i++) {//ZAPISYWANIE rI_arrLine UWZGLĘDNIAJĄC OBRACANIE WYBRANEGO WIERSZA
-    rI_arrLine[i] = rI_arrTab[arrTabRow][i + firstItem];
+  for (i = 1; i <= orgTabLen - firstItem; i++) {//ZAPISYWANIE arrLine UWZGLĘDNIAJĄC OBRACANIE WYBRANEGO WIERSZA
+    arrLine[i] = arrTab[arrTabRow][i + firstItem];
   }//for
   for (; i <= orgTabLen; i++) {//OBRÓĆ DLA WYBRANEGO WIERSZA autokręcioła jeżeli ma być
-    rI_arrLine[i] = rI_arrTab[arrTabRow][i + firstItem - orgTabLen];
+    arrLine[i] = arrTab[arrTabRow][i + firstItem - orgTabLen];
   }//for
-  //for (i = 1; i <= orgTabLen; i++) window.console.log(rI_arrLine[i] + ",");
-  window.console.log(rI_arrLine);
-}//make_rI_arrLine
+  window.console.log(arrLine);
+}//makeMSQarrLine
 
-function arrange_rI_items () {
-  let orgTabLen = rI_orgTab.length;
-  let i;
-  window.console.log("arrange_rI_items");
-  make_rI_arrLine();
-  for (i = 0; i < orgTabLen; i++) {
-    document.getElementById("rIitem" + rI_orgTab[i][0]).innerHTML = rI_orgTab[rI_arrLine[i + 1] - 1][2];
+function arrangeMSQitems (fld, arrTab, orgTab, arrLine) {
+  let orgTabLen = orgTab.length;
+  window.console.log("arrangeMSQitems(" + fld + ")");
+  makeMSQarrLine(arrTab, orgTabLen, arrLine);
+  for (let i = 0; i < orgTabLen; i++) {
+    document.getElementById(fld + "item" + orgTab[i][0]).innerHTML = orgTab[arrLine[i + 1] - 1][2];
   }//for
-}//arrange_rI_items
+}//arrangeMSQitems
 
-function rearrange_rI_data__ (rI_) {
-  let orgTabLen = rI_orgTab.length;
-  let rI_name;
+function rearrangeMSQdata__ (fld_, orgTab, arrLine) {
+  let orgTabLen = orgTab.length;
+  let fldName;
   let i, j;
-  window.console.log("rearrange_rI_data__(" + rI_ +")");
-  for (i = 0; i < orgTabLen; i++) {    //PRZEPISANIE danych z formularza do tabeli rI_orgTab
-    rI_name = rI_ + rI_orgTab[i][0];
-    for (j = 0; j < document.questForm[rI_name].length; j++) {
-      if (document.questForm[rI_name][j].checked) {
-        rI_orgTab[rI_arrLine[i + 1] - 1][1] = j;
-      }//if
-    }//for
+  window.console.log("rearrangeMSQdata__(" + fld_ +")");
+  for (i = 0; i < orgTabLen; i++) {    //PRZEPISANIE danych z formularza do tabeli orgTab
+    fldName = fld_ + orgTab[i][0];
+    if (document.questForm[fldName].value != undefined) {
+      orgTab[arrLine[i + 1] - 1][1] = document.questForm[fldName].value;
+    } else {
+      for (j = 0; j < document.questForm[fldName].length; j++) {
+        if (document.questForm[fldName][j].checked) {
+          orgTab[arrLine[i + 1] - 1][1] = j;
+        }//if
+      }//for
+    }//else
   }//for
-  for (i = 0; i < orgTabLen; i++) {    //PRZEPISANIE danych z rI_orgTab do formularza
-    rI_name = rI_ + rI_orgTab[i][0];
-    for (j = 0; j < document.questForm[rI_name].length; j++) {
-      document.questForm[rI_name][j].checked = j == rI_orgTab[i][1];
-    }//for
+  for (i = 0; i < orgTabLen; i++) {    //PRZEPISANIE danych z orgTab do formularza
+    document.questForm[fld_ + orgTab[i][0]].value = orgTab[i][1];
+    //fldName = fld_ + orgTab[i][0];
+    //for (j = 0; j < document.questForm[fldName].length; j++) {
+    //  document.questForm[fldName][j].checked = j == orgTab[i][1];
+    //}//for
   }//for
-}//rearrange_rI_data__
+}//rearrangeMSQdata__
 
-function rearranged_rI_index (find) {
-  let orgTabLen = rI_orgTab.length;
+function rearrangeMSQdata (fld_, arrTab, orgTab, arrLine) {
+  window.console.log("rearrangeMSQdata(" + fld_ +")");
+  makeMSQarrLine(arrTab, orgTab.length, arrLine);
+  rearrangeMSQdata__(fld_, orgTab, arrLine);
+  window.console.log(orgTab);
+}//rearrangeMSQdata
+
+function rearrangedMSQindex (find, arrLine, orgTabLen) { //rI_arrLine, orgTabLen = rI_orgTab.length;
   let i;
-  for (i = 1; i <= orgTabLen && rI_arrLine[i] != find; i++);
+  for (i = 1; i <= orgTabLen && arrLine[i] != find; i++);
   return i;
-}//rearranged_rI_index
+}//rearrangedMSQindex
 
-function rearrange_rI_data () {
-  make_rI_arrLine();
-  rearrange_rI_data__("rI_");
-}//rearrange_rI_data
-
-
-function make_rJ_arrLine () {
-  let arrTabLen = rJ_arrTab.length;
-  let arrTabKey = (intvNum - 1) % arrTabLen + 1;//intvNum,//powinno być jak jest dla każdego
-  let arrTabRow = 0;                            //numer wiersza w tabeli rJ_arrTab
-  let orgTabLen = rJ_orgTab.length;
-  let firstItem = Math.floor((intvNum - 1) / arrTabLen) % orgTabLen; //pierwszy w rotacji wybranego wiersza tabeli rI_arrTab
-  let i;                                        //WYBÓR WIERSZA w tabeli rJ_arrTab
-  window.console.log("make_rJ_arrLine\n arrTabKey=" + arrTabKey + ", firstItem=" + (firstItem+1) + ":");
-  for (i = 0; i < arrTabLen && rJ_arrTab[i][0] != arrTabKey; i++);//SZUKAJ WIERSZA WEDŁUG arrTabKey - może być intvNum
-  if (i < arrTabLen && rJ_arrTab[i][0] == arrTabKey) {             //jeśli odnaleziony
-    arrTabRow = i;
-  }//if
-  for (i = 1; i <= orgTabLen - firstItem; i++) {//ZAPISYWANIE rJ_arrLine UWZGLĘDNIAJĄC OBRACANIE WYBRANEGO WIERSZA
-    rJ_arrLine[i] = rJ_arrTab[arrTabRow][i + firstItem];
-  }//for
-  for (; i <= orgTabLen; i++) {//OBRÓĆ DLA WYBRANEGO WIERSZA autokręcioła jeżeli ma być
-    rJ_arrLine[i] = rJ_arrTab[arrTabRow][i + firstItem - orgTabLen];
-  }//for
-  //for (i = 1; i <= orgTabLen; i++) window.console.log(rJ_arrLine[i] + ",");
-  window.console.log(rJ_arrLine);
-}//make_rJ_arrLine
-
-function arrange_rJ_items () {
-  let orgTabLen = rJ_orgTab.length;
-  let i;
-  window.console.log("arrange_rJ_items");
-  make_rJ_arrLine();
-  for (i = 0; i < orgTabLen; i++) {
-    document.getElementById("rJitem" + rJ_orgTab[i][0]).innerHTML = rJ_orgTab[rJ_arrLine[i + 1] - 1][2];
-//    document.getElementById("tp2_q3item" + rJ_orgTab[i][0]).innerHTML = rJ_orgTab[rJ_arrLine[i + 1] - 1][2];
-  }//for
-}//arrange_rJ_items
-
-function rearrange_rJ_data__ (rJ_) {
-  let orgTabLen = rJ_orgTab.length;
-  let i, j;
-  window.console.log("rearrange_rJ_data__(" + rJ_ +")");
-  for (i = 0; i < orgTabLen; i++) {    //PRZEPISANIE danych z formularza do tabeli rJ_orgTab
-    rJ_orgTab[rJ_arrLine[i + 1] - 1][1] = document.questForm[rJ_ + rJ_orgTab[i][0]].value;
-  }//for
-  for (i = 0; i < orgTabLen; i++) {    //PRZEPISANIE danych z rJ_orgTab do formularza
-    document.questForm[rJ_ + rJ_orgTab[i][0]].value = rJ_orgTab[i][1];
-  }//for
-}//rearrange_rJ_data__
-
-function rearranged_rJ_index (find) {
-  let orgTabLen = rJ_orgTab.length;
-  let i;
-  for (i = 1; i <= orgTabLen && rJ_arrLine[i] != find; i++);
-  return i;
-}//rearranged_rJ_index
-
-function rearrange_rJ_data () {
-  make_rJ_arrLine();
-  rearrange_rJ_data__("rJ_");
-//  rearrange_rJ_data__("tp2_q3_");
-}//rearrange_rJ_data
 
 function arrangeQuestions () {
   window.console.log("arrangeQuestions: ");
-  arrange_rI_items(); //ZMIANA
-  arrange_rJ_items(); //ZMIANA
+//=====================================================================================
+//ZMIANA - POCZĄTEK BLOKU ZMIAN 3/6 Example.scr
+//-------------------------------------------------------------------------------------
+  arrangeMSQitems("rI", rI_arrTab, rI_orgTab, rI_arrLine); //ZMIANA
+  arrangeMSQitems("rJ", rJ_arrTab, rJ_orgTab, rJ_arrLine); //ZMIANA
+//-------------------------------------------------------------------------------------
+//ZMIANA - KONIEC BLOKU ZMIAN 3/6 Example.scr
+//=====================================================================================
   arrangeQsOrdTab();
-//  findRotation();
+  findRotation();
 }//arrangeQuestions
 
 
