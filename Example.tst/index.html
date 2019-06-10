@@ -38,7 +38,7 @@
         Nasze ciasteczka nie służą żadnym celom handlowym ani reklamowym.
       </div>
       <div>
-        <button id="cookies-confirm-yes" class="nav-button" onclick="cookiesConfirmed()" value="yes">OK</button>
+        <button id="cookies-confirm-yes" class="nav-button" onclick="cookiesConfirmed(event)" value="yes">OK</button>
       </div>
     </div>
     <!--div class="question-break"></div-->
@@ -63,14 +63,12 @@
           Czy usunąć te dane o rozpocząć nową ankietę? Nie będzie powrotu do poprzedniej ankiety.
         </p>
       </div>
-      <!--div class="question-break"></div-->
-      <div>
-        <progress id="restore-progress" class="restore-progress" value="1" max="300"></progress>
+      <div class="restore-progress">
+        <progress id="restore-fc-progress" value="1" max="300"></progress>
       </div>
-      <!--div class="question-break"></div-->
       <div id="restore-buttons" class="buttons-place">
-        <button class="nav-button" id="restore-interview" onclick="restoreFromCookies()" value="old">Poprzednia ankieta</button>
-        <button class="nav-button" id="new-interview" onclick="newInterview()" value="new">Nowa ankieta</button>
+        <button class="nav-button" id="restore-interview" onclick="restoreFromCookies(event)" value="old">Poprzednia ankieta</button>
+        <button class="nav-button" id="new-interview" onclick="newInterview(event)" value="new">Nowa ankieta</button>
       </div>
     </div>
     <!--div class="question-break"></div-->
@@ -96,7 +94,7 @@
     <!-- ANKIETA ==================================================================================================== -->
     <!-- ANKIETA ==================================================================================================== -->
     <form name="questForm" action="./php/zapiszData2disk.php" enctype="text/plan" method="POST"
-          onsubmit="event.preventDefault(); return finishWithFormData();" target="php-output">
+          onsubmit="event.preventDefault(); return false;" target="php-output">
       <div id="all-questions" class="questionnaire">
 
         <!-- NUMER ANKIETY ================================================== -->
@@ -123,6 +121,9 @@
             W tej ankiecie identyfikator trzeba wpisać, jeśli ankieta rekrutacyjna zastała wypełniona, to uda się wypełnić i tę ankietę.<br />
             Możliwe są inne są inne metody ustalanie identyfikatora, poprzez identyfikator użytkownika, <br />
             lub zwyczajne wpisanie go.
+          </div>
+          <div class="restore-progress">
+            <progress id="restore-ft-progress" value="1" max="300"></progress>
           </div>
           <input type="text" name="survey_id"  class="no-display">
           <input type="text" name="stage_no"   class="no-display">
@@ -180,8 +181,9 @@
           <div class="question-text-indent">
             Pyt.
             Pytanie z poziomą skalą od 0 do 10, np. Jak bardzo podoba się ta nazwa?
-            <br>
-            <span class="fill-info">(proszę zaznaczyć jedną odpowiedź)</span>
+          </div>
+          <div class="fill-info">
+            (proszę zaznaczyć jedną odpowiedź)
           </div>
           <!--div class="question-break"></div-->
           <div class="answer_">
@@ -222,8 +224,9 @@
           <div class="question-text-indent">
             Pyt.
             Pytanie z poziomą skalą od 0 do 10, np. Jak bardzo ta nazwa wyraża jakość produktu?
-            <br>
-            <span class="fill-info">(proszę zaznaczyć jedną odpowiedź)</span>
+          </div>
+          <div class="fill-info">
+            (proszę zaznaczyć jedną odpowiedź)
           </div>
           <!--div class="question-break"></div-->
           <div class="answer_">
@@ -249,8 +252,9 @@
           <div class="question-text-indent">
             Pyt.
             Pytanie z poziomym suwakiem. np. Czy ta nazwa pasuje do produktu?
-            <br />
-            <span class="fill-info hidden">(proszę zaznaczyć JEDNĄ odpowiedź w każdym wierszu)</span>
+          </div>
+          <div class="fill-info">
+            (proszę zaznaczyć JEDNĄ odpowiedź w każdym wierszu)
           </div>
           <!--div class="question-break"></div-->
           <div class="answer_">
@@ -333,8 +337,9 @@
           <div class="question-text-indent">
             Pyt.
             Pytanie z poziomą skalą od 0 do 10, np. Jak bardzo podoba się ta nazwa?
-            <br>
-            <span class="fill-info">(proszę zaznaczyć jedną odpowiedź)</span>
+          </div>
+          <div class="fill-info">
+            (proszę zaznaczyć jedną odpowiedź)
           </div>
           <!--div class="question-break"></div-->
           <div class="answer_">
@@ -375,8 +380,9 @@
           <div class="question-text-indent">
             Pyt.
             Pytanie z poziomą skalą od 0 do 10, np. Jak bardzo ta nazwa wyraża jakość produktu?
-            <br />
-            <span class="fill-info">(proszę zaznaczyć jedną odpowiedź)</span>
+          </div>
+          <div class="fill-info">
+            (proszę zaznaczyć jedną odpowiedź)
           </div>
           <!--div class="question-break"></div-->
           <div class="answer_">
@@ -402,8 +408,9 @@
           <div class="question-text-indent">
             Pyt.
             Pytanie z poziomym suwakiem. np. Czy ta nazwa pasuje do produktu?
-            <br />
-            <span class="fill-info hidden">(proszę zaznaczyć JEDNĄ odpowiedź w każdym wierszu)</span>
+          </div>
+          <div class="fill-info">
+            (proszę zaznaczyć JEDNĄ odpowiedź w każdym wierszu)
           </div>
           <!--div class="question-break"></div-->
           <div class="answer_">
@@ -455,8 +462,9 @@
           <div class="question-text-indent">
             Pyt.7.
             Która nazwa jest lepsza, która będzie bardziej odpowiednia?
-            <br />
-            <span class="fill-info">(proszę zaznaczyć jedną odpowiedź)</span>
+          </div>
+          <div class="fill-info">
+            (proszę zaznaczyć jedną odpowiedź)
           </div>
           <!--div class="question-break"></div-->
           <div class="answer_">
@@ -475,8 +483,9 @@
             Proszę ocenić do której z Nazw bardziej pasuje dana cecha
             <br />
             W pytaniu tym kolejność cech jest inna dla kolejnych respondentów.
-            <br />
-            <span class="fill-info">(proszę zaznaczyć JEDNĄ odpowiedź w każdym wierszu)</span>
+          </div>
+          <div class="fill-info">
+            (proszę zaznaczyć JEDNĄ odpowiedź w każdym wierszu)
           </div>
           <!--div class="question-break"></div-->
           <div class="answer_">
@@ -566,7 +575,7 @@
       </div>
       <!--div class="question-break"></div-->
       <div id="data-saving-progess" class="question-info text-center">
-        <button id="data-saved-next" class="single-button" onclick="cleanData()" value="yes">Dane zostały zapisane.</button>
+        <button id="data-saved-next" class="single-button" onclick="cleanData(event)" value="yes">Dane zostały zapisane.</button>
       </div>
       <!--div class="question-break"></div-->
       <span id="press-text1" style="font-size:80%;font-style:italic">(proszę wcisnąć przycisk)</span>
@@ -584,17 +593,17 @@
       </div>
       <!--div class="question-break"></div-->
       <div id="finish-buttons" class="question-info text-center">
-        <button id="all-done-end" class="nav-button" onclick="endInterview()" value="no">Koniec. Bardzo dziękuję.</button>
-        <!--button class="nav-button" id="all-done-next" onclick="nextInterview()" value="yes">Rozpoczęcie kolejnego wywiadu.</button-->
+        <button id="all-done-end" class="nav-button" onclick="endInterview(event)" value="no">Koniec. Bardzo dziękuję.</button>
+        <!--button class="nav-button" id="all-done-next" onclick="nextInterview(event)" value="yes">Rozpoczęcie kolejnego wywiadu.</button-->
       </div>
     </div>
   </div>
 
 
   <div id="quest-nav-buttons" class="quest-nav-buttons buttons-place">
-    <div id="button-left-tab"><button class="nav-button" id="prev-button" onclick="gotoPrevQuestion()" value="prev">Wstecz</button></div>
-    <div id="button-center-tab"><button class="nav-button" id="fill-button" onclick="showAllQuestions()" value="fill">Załaduj pytania</button></div>
-    <div id="button-right-tab"><button class="nav-button" id="next-button" onclick="gotoNextQuestion()" value="next">Dalej</button></div>
+    <div id="button-left-tab"><button class="nav-button" id="prev-button" onclick="gotoPrevQuestion(event)" value="prev">Wstecz</button></div>
+    <div id="button-center-tab"><button class="nav-button" id="fill-button" onclick="showAllQuestions(event)" value="fill">Załaduj pytania</button></div>
+    <div id="button-right-tab"><button class="nav-button" id="next-button" onclick="gotoNextQuestion(event)" value="next">Dalej</button></div>
   </div>
 </div>
 

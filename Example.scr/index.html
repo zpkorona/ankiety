@@ -38,7 +38,7 @@
         Nasze ciasteczka nie służą żadnym celom handlowym ani reklamowym.
       </div>
       <div>
-        <button id="cookies-confirm-yes" class="nav-button" onclick="cookiesConfirmed()" value="yes">OK</button>
+        <button id="cookies-confirm-yes" class="nav-button" onclick="cookiesConfirmed(event)" value="yes">OK</button>
       </div>
     </div>
     <!--div class="question-break"></div-->
@@ -67,8 +67,8 @@
         <progress id="restore-fc-progress" value="1" max="300"></progress>
       </div>
       <div id="restore-buttons" class="buttons-place">
-        <button class="nav-button" id="restore-interview" onclick="restoreFromCookies()" value="old">Poprzednia ankieta</button>
-        <button class="nav-button" id="new-interview" onclick="newInterview()" value="new">Nowa ankieta</button>
+        <button class="nav-button" id="restore-interview" onclick="restoreFromCookies(event)" value="old">Poprzednia ankieta</button>
+        <button class="nav-button" id="new-interview" onclick="newInterview(event)" value="new">Nowa ankieta</button>
       </div>
     </div>
     <!--div class="question-break"></div-->
@@ -84,7 +84,7 @@
       </div>
       <!--div class="question-break"></div-->
       <!--div id="reload-buttons" class="buttons-place">
-          <button class="nav-button" id="reload-survey" onclick="gotoBadania()" value="no">Powrót</button>
+          <button class="nav-button" id="reload-survey" onclick="gotoBadania(event)" value="no">Powrót</button>
       </div-->
     </div>
     <!--div class="question-break"></div-->
@@ -784,7 +784,7 @@
       </div>
       <!--div class="question-break"></div-->
       <div id="data-saving-progess" class="question-info text-center">
-        <button id="data-saved-next" class="single-button" onclick="cleanData()" value="yes">Dane zostały zapisane.</button>
+        <button id="data-saved-next" class="single-button" onclick="cleanData(event)" value="yes">Dane zostały zapisane.</button>
       </div>
       <!--div class="question-break"></div-->
       <span id="press-text1" style="font-size:80%;font-style:italic">(proszę wcisnąć przycisk)</span>
@@ -802,8 +802,8 @@
       </div>
       <!--div class="question-break"></div-->
       <div id="finish-buttons" class="question-info text-center">
-        <button id="all-done-end" class="nav-button" onclick="endInterview()" value="no">Koniec. Bardzo dziękuję.</button>
-        <!--button class="nav-button" id="all-done-next" onclick="nextInterview()" value="yes">Rozpoczęcie kolejnego wywiadu.</button-->
+        <button id="all-done-end" class="nav-button" onclick="endInterview(event)" value="no">Koniec. Bardzo dziękuję.</button>
+        <!--button class="nav-button" id="all-done-next" onclick="nextInterview(event)" value="yes">Rozpoczęcie kolejnego wywiadu.</button-->
       </div>
     </div>
   </div>

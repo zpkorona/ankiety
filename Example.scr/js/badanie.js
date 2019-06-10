@@ -64,7 +64,7 @@ var prevQuest = 0,
 var qsOrdTab = [0];  //created by function
 
 //-------------------------------------------------------------------------------------
-//ZMIANA - POCZĄTEK BLOKU ZMIAN 1/6 Example.scr
+//ZMIANA - POCZĄTEK BLOKU ZMIAN 1/5 Example.scr
 
 var questsTab = [["quest-intv_num",  "intv_num",  prepareInt_num,         verifyInt_num],
                  ["quest-intro0",    "intro0",    prepareQuest_intro0,    verifyQuest_intro0],   //ZMIANA v
@@ -133,7 +133,7 @@ var rJ_arrTab = [[1, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1],
                  [2, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]];
 var rJ_arrLine = [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
 
-//ZMIANA - KONIEC BLOKU ZMIAN 1/6 Example.scr
+//ZMIANA - KONIEC BLOKU ZMIAN 1/5 Example.scr
 //-------------------------------------------------------------------------------------
 
 
@@ -296,9 +296,9 @@ function displayOffQuestsElements () {
   document.getElementById("all-questions").style.display = "block";
 }//displayOffQuestsElements
 
-function displayOnAllQuestions (event) {
-  if (event != undefined) {
-    event.stopPropagation();
+function displayOnAllQuestions (e) {
+  if (e != undefined) {
+    e.stopPropagation();
   }//if
   let allQuestions = document.getElementsByClassName("question_");
   for (var i = 0; i < allQuestions.length; i++)
@@ -492,7 +492,10 @@ function getSurveysInfoFromJson () {
 //=====================================================================================
 //COOKIES MANAGEMNT ===================================================================
 
-function cookiesConfirmed () {
+function cookiesConfirmed (e) {
+  if (e != undefined) {
+    e.stopPropagation();
+  }//if
   document.getElementById("cookies-confirm").style.display = "none";
 }//cookiesConfirmed
 
@@ -574,10 +577,10 @@ function saveVariable (variable, value, openQest) {
   window.console.log("saveVariable(" + variable + ", '" + value + "', " + openQest + ")");
   xhr = new window.XMLHttpRequest();
   xhr.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        window.console.log("saveVar: " + variable + " -> " + this.responseText);
-      }//if
-    };//function()
+    if (this.readyState == 4 && this.status == 200) {
+      window.console.log("saveVar: " + variable + " -> " + this.responseText);
+    }//if
+  };//function()
   xhr.open("GET", "../php/zapiszTempValue.php?int_no=" + intvNum + "&survey_id=" + surveyId + "&stage_no=" + stageNum + "&user_id=" + userId +
                     "&var=" + variable + "&val=" + value + "&opq=" + openQest, true);
   xhr.send();
@@ -882,7 +885,7 @@ function setFieldValue (fldName, fldValue, fromTempFile=false) {
     case "EndTime":   document.questForm.end_time.value   = fldValue; break;
     case "Duration":  document.questForm.duration.value   = fldValue; break;
 //-------------------------------------------------------------------------------------
-//ZMIANA - POCZĄTEK BLOKU ZMIAN 2/6 Example.scr
+//ZMIANA - POCZĄTEK BLOKU ZMIAN 2/5 Example.scr
     //TEXT/VALUE
     case "nazwa pola z ustaloną wartością - tekstowego lub innego": //ZMIANA
     case "rAt16": //ZMIANA
@@ -1004,12 +1007,15 @@ function setFieldValue (fldName, fldValue, fromTempFile=false) {
         }//for
       }//if
       break;
-//ZMIANA - KONIEC BLOKU ZMIAN 2/6 Example.scr
+//ZMIANA - KONIEC BLOKU ZMIAN 2/5 Example.scr
 //-------------------------------------------------------------------------------------
   }//switch
 }//setFieldValue
 
-function restoreFromCookies () {
+function restoreFromCookies (e) {
+  if (e != undefined) {
+    e.stopPropagation();
+  }//if
   window.console.log("restoreFromCookies()");
   document.questForm.reset();
   document.getElementById("restore-fc-progress").style.display = "block";
@@ -1068,10 +1074,10 @@ function restoreFromTempFile (intvNum) {
         document.getElementById("restore-ft-progress").value = ++restoredCnt;
         setFieldValue(fldName, restoredObj[fldName], true);
       }//for
-    //window.alert("wczytane");
-    document.getElementById("restore-ft-progress").style.display = "none";
-    document.getElementById("ask-restore-intv").style.display = "none";
-    //document.getElementById("intv-num-info").innerHTML = intvNum
+      //window.alert("wczytane");
+      document.getElementById("restore-ft-progress").style.display = "none";
+      document.getElementById("ask-restore-intv").style.display = "none";
+      //document.getElementById("intv-num-info").innerHTML = intvNum
     }//if
   }//else
   window.console.log("rFTF: " + restoredIntv);
@@ -1094,8 +1100,8 @@ function createQuestionOrderTable () {
 function arrangeQsOrdTab () {
   window.console.log("arrangeQsOrdTab() for " + intvNum + ", " + useScenariaTab + ", " + rotateScenario);
   if (useScenariaTab) {
-    let scenario = (intvNum - 1) % scenariaTab.length, //WYBÓR WIERSZA W TABELI scenariaTab -- intvNum,//powinno być jak jest dla każdego
-    firstItem = Math.floor((intvNum - 1) / scenariaTab.length) % scenariaTab[scenario].length; //pierwszy w rotacji wybranego wiersza tabeli scenariaTab
+    let scenario = (intvNum - 1) % scenariaTab.length; //WYBÓR WIERSZA W TABELI scenariaTab -- intvNum,//powinno być jak jest dla każdego
+    let firstItem = Math.floor((intvNum - 1) / scenariaTab.length) % scenariaTab[scenario].length; //pierwszy w rotacji wybranego wiersza tabeli scenariaTab
     applyOrdQsScenario(scenario, rotateScenario? firstItem : 0);
   } //if
   window.console.log(qsOrdTab);
@@ -1250,14 +1256,13 @@ function rearrangedMSQindex (find, arrLine, orgTabLen) { //rI_arrLine, orgTabLen
   return i;
 }//rearrangedMSQindex
 
-
 function arrangeQuestions () {
   window.console.log("arrangeQuestions: ");
 //-------------------------------------------------------------------------------------
-//ZMIANA - POCZĄTEK BLOKU ZMIAN 3/6 Example.scr
-  arrangeMSQitems("rI", rI_arrTab, rI_orgTab, rI_arrLine); //ZMIANA
-  arrangeMSQitems("rJ", rJ_arrTab, rJ_orgTab, rJ_arrLine); //ZMIANA
-//ZMIANA - KONIEC BLOKU ZMIAN 3/6 Example.scr
+//ZMIANA - POCZĄTEK BLOKU ZMIAN 3/5 Example.scr
+  arrangeMSQitems("rI", rI_arrTab, rI_orgTab, rI_arrLine);
+  arrangeMSQitems("rJ", rJ_arrTab, rJ_orgTab, rJ_arrLine);
+//ZMIANA - KONIEC BLOKU ZMIAN 3/5 Example.scr
 //-------------------------------------------------------------------------------------
   arrangeQsOrdTab();
   findRotation();
@@ -1276,9 +1281,9 @@ function checkIntvIdEnter (e) {
     gotoNextQuestion();
 }//checkIntvIdEnter
 
-function gotoNextQuestion (event) {//called from index.html
-  if (event != undefined) {
-    event.stopPropagation();
+function gotoNextQuestion (e) {//called from index.html
+  if (e != undefined) {
+    e.stopPropagation();
   }//if
   window.console.log("gotoNQ::" + currQuest + "::");//->" + questsTab[qsOrdTab[currQuest]][0] + ":" + questsTab[qsOrdTab[currQuest]][1]);
   secondLength = standardSecondLength;
@@ -1307,9 +1312,9 @@ function gotoNextQuestion (event) {//called from index.html
   }//if
 }//gotoNextQuestion
 
-function gotoPrevQuestion (event) {//called from index.html
-  if (event != undefined) {
-    event.stopPropagation();
+function gotoPrevQuestion (e) {//called from index.html
+  if (e != undefined) {
+    e.stopPropagation();
   }//if
   window.console.log("gotoPrevQuestion: " + currQuest + "->" + questsTab[qsOrdTab[currQuest]][0] + ":" + questsTab[qsOrdTab[currQuest]][1]);
   secondLength = 0;
@@ -1948,8 +1953,9 @@ function verifyWaitPage (qId, fldName) {
   return true;
 }//verifyWaitPage
 
+
 //-------------------------------------------------------------------------------------
-//ZMIANA - POCZĄTEK BLOKU ZMIAN 5/6 Example.scr
+//ZMIANA - POCZĄTEK BLOKU ZMIAN 4/5 Example.scr
 
 function loadQuestsElements () {
   let objs;
@@ -1976,17 +1982,17 @@ function loadQuestsElements () {
   document.getElementById("images-slider-rK").onscroll = (function () {
     let counter = 0;
     let scrollMin_rK = 0;
-    return function (event) {
+    return function (e) {
       if (counter == 0) {
-        event.target.scrollLeft = 0;
+        e.target.scrollLeft = 0;
       }//if
-      scrollMin_rK = event.target.scrollWidth - event.target.clientWidth;
+      scrollMin_rK = e.target.scrollWidth - e.target.clientWidth;
       if (50 < scrollMin_rK) {
         scrollMin_rK -= 50;
       }//if
       counter++;
-      window.console.log(counter + ":scrollLeft=" + event.target.scrollLeft + ", scrollWidth=" + event.target.scrollWidth + ", scrollMin_rK=" + scrollMin_rK);
-      if (scrollMin_rK <= event.target.scrollLeft) {
+      window.console.log(counter + ":scrollLeft=" + e.target.scrollLeft + ", scrollWidth=" + e.target.scrollWidth + ", scrollMin_rK=" + scrollMin_rK);
+      if (scrollMin_rK <= e.target.scrollLeft) {
         document.getElementById("prev-button").style.visibility = "visible";
         document.getElementById("next-button").style.visibility = "visible";
         imagesScrolled_rK = true;
@@ -2278,8 +2284,9 @@ function verifyQuest_rN (qId, fldName) {
 //function prepare__ (qId, fldName) {}
 //function verifyQuestSingle () {}
 
-//ZMIANA - KONIEC BLOKU ZMIAN 6/6 Example.scr
+//ZMIANA - KONIEC BLOKU ZMIAN 4/5 Example.scr
 //-------------------------------------------------------------------------------------
+
 
 //=====================================================================================
 //SAVING QUESTIONAIRE DATA ============================================================
@@ -2304,10 +2311,10 @@ function submitFormData () {
   //respondentOk = document.questForm.r13[0].checked || document.questForm.r13[1].checked;  //ZMIANA
 
 //-------------------------------------------------------------------------------------
-//ZMIANA - POCZĄTEK BLOKU ZMIAN 4/6 Example.scr
+//ZMIANA - POCZĄTEK BLOKU ZMIAN 5/5 Example.scr
   rearrangeMSQdata("rI_", rI_arrTab, rI_orgTab, rI_arrLine);
   rearrangeMSQdata("rJ_", rJ_arrTab, rJ_orgTab, rJ_arrLine);
-//ZMIANA - KONIEC BLOKU ZMIAN 4/6 Example.scr
+//ZMIANA - KONIEC BLOKU ZMIAN 5/5 Example.scr
 //-------------------------------------------------------------------------------------
 
   window.console.log("po rearrage");
@@ -2344,7 +2351,10 @@ function submitFormData () {
   return false;
 }//submitFormData
 
-function cleanData () {
+function cleanData (e) {
+  if (e != undefined) {
+    e.stopPropagation();
+  }//if
   window.console.log("cleanData:");
 //  document.getElementById("data-saved-next").style.visibility = "hidden";
 //  document.getElementById("press-text1").style.visibility = "hidden";
@@ -2380,7 +2390,10 @@ function cleanData () {
 //=====================================================================================
 //INTERVIEW SWITCHING==================================================================
 
-function endInterview () {
+function endInterview (e) {
+  if (e != undefined) {
+    e.stopPropagation();
+  }//if
   //goToBadania();
   window.onbeforeunload = null;
   window.console.log("onbeforeunload-OFF");
@@ -2404,18 +2417,24 @@ function endInterview () {
 //  window.location.replace("http://www.almares.com.pl");
 }//endInterview
 
-function nextInterview () {
+function nextInterview (e) {
+  if (e != undefined) {
+    e.stopPropagation();
+  }//if
   let txt = "";
   if (intvNumGiven && intvNumShow ||
-    intvNumAuto && window.confirm("Zostanie rozpoczęty kolejny wywiad.\nZostanie pobrany i zarezerowany kolejny numer ankiety.")) {
-      window.location.href = window.location.href.substring(0, window.location.href.lastIndexOf("/") + 1) +
-      "?uid=" + userId;//"index.html";
+      intvNumAuto && window.confirm("Zostanie rozpoczęty kolejny wywiad.\nZostanie pobrany i zarezerowany kolejny numer ankiety.")) {
+    window.location.href = window.location.href.substring(0, window.location.href.lastIndexOf("/") + 1) +
+                           "?uid=" + userId;//"index.html";
   } else { //intvNumTable || intvNumGiven && !intvNumShow)
     goToBadania();
   }//else
 }//nextInterview
 
-function newInterview () {
+function newInterview (e) {
+  if (e != undefined) {
+    e.stopPropagation();
+  }//if
   window.console.log("newInterview()");
   removeCookies();
   document.questForm.reset();
@@ -2425,7 +2444,10 @@ function newInterview () {
   setUpIntvNum("newInterview");
 }//newInterview
 
-function goToBadania () {
+function goToBadania (e) {
+  if (e != undefined) {
+    e.stopPropagation();
+  }//if
   let txt = window.location.href;
   txt = txt.substring(0, txt.lastIndexOf("/"));
   txt = txt.substring(0, txt.lastIndexOf("/") + 1);// + "?sid=" + surveyId;//"index.html";
