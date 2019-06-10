@@ -319,14 +319,14 @@ form {
 .question-text {
   font-size: 105%;
   min-width: 80%;
-  padding: 1.5rem 3rem ;
+  padding: 1.5rem 3rem 1.5rem;
 /*  text-align: left;*/
 /*  text-indent: -1rem;*/
 }
 .question-text-indent {
   font-size: 105%;
   min-width: 80%;
-  padding: 1.5rem 3rem ;
+  padding: 1.5rem 3rem 1.5rem;
   text-align: left;
   text-indent: -2rem;
 }
@@ -351,6 +351,8 @@ form {
 .fill-info {
 /*  font-size: 90%;*/
   font-style: italic;
+  margin-top: -1rem;
+  padding-bottom: 1.5rem;
 }
 .video-disp {
   max-width: 100%;
@@ -729,7 +731,7 @@ form {
   padding: 0;
 }
 .resultsshow-table > div > div > button {
-  background-color: lightgrey; 
+  background-color: lightgrey;
   font-weight: bold;
   margin: 0;
   padding: 0.2rem;

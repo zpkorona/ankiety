@@ -9,6 +9,9 @@
 var generalBackgroundColor = "#f0fff0";
 //var generalBackgroundColor = "#e6f6ff";//Almares
 var pictureFrameColor = "#80d0ff";
+var successInitColor = "black",
+    successTrueColor = "green",
+    successFalseColor = "red";
 
 var phpIsWorking = true;
 var noPhpIntvNum = 10101;
@@ -293,7 +296,10 @@ function displayOffQuestsElements () {
   document.getElementById("all-questions").style.display = "block";
 }//displayOffQuestsElements
 
-function displayOnAllQuestions () {
+function displayOnAllQuestions (event) {
+  if (event != undefined) {
+    event.stopPropagation();
+  }//if
   let allQuestions = document.getElementsByClassName("question_");
   for (var i = 0; i < allQuestions.length; i++)
     allQuestions[i].style.display = "flex";
@@ -875,9 +881,8 @@ function setFieldValue (fldName, fldValue, fromTempFile=false) {
     case "StartTime": document.questForm.start_time.value = fldValue; break;
     case "EndTime":   document.questForm.end_time.value   = fldValue; break;
     case "Duration":  document.questForm.duration.value   = fldValue; break;
-//=====================================================================================
-//ZMIANA - POCZĄTEK BLOKU ZMIAN 2/6 Example.scr
 //-------------------------------------------------------------------------------------
+//ZMIANA - POCZĄTEK BLOKU ZMIAN 2/6 Example.scr
     //TEXT/VALUE
     case "nazwa pola z ustaloną wartością - tekstowego lub innego": //ZMIANA
     case "rAt16": //ZMIANA
@@ -999,9 +1004,8 @@ function setFieldValue (fldName, fldValue, fromTempFile=false) {
         }//for
       }//if
       break;
-//-------------------------------------------------------------------------------------
 //ZMIANA - KONIEC BLOKU ZMIAN 2/6 Example.scr
-//=====================================================================================
+//-------------------------------------------------------------------------------------
   }//switch
 }//setFieldValue
 
@@ -1073,232 +1077,6 @@ function restoreFromTempFile (intvNum) {
   window.console.log("rFTF: " + restoredIntv);
   return restoredIntv;
 }//restoreFromTempFile
-
-
-//=====================================================================================
-//QUESTIONS SWITCHING =================================================================
-
-function makePause (qqq) {
-}//makePause
-
-function checkIntvIdEnter (e) {
-  if (!e) e = window.event;
-  if ((e.keyCode? e.keyCode : e.which) == 13)
-    gotoNextQuestion();
-}//checkIntvIdEnter
-
-function gotoNextQuestion () {//called from index.html
-  window.console.log("gotoNQ::" + currQuest + "::");//->" + questsTab[qsOrdTab[currQuest]][0] + ":" + questsTab[qsOrdTab[currQuest]][1]);
-  secondLength = standardSecondLength;
-  if (questsTab[qsOrdTab[currQuest]][3](questsTab[qsOrdTab[currQuest]][0], questsTab[qsOrdTab[currQuest]][1])) {//funkcja sprawdzająca przeszła
-    if (currQuest < qsOrdTab.length - 1) {//jeśli nie jest to ostanie pytanie
-      //document.getElementById(questsTab[qsOrdTab[currQuest]][0]).style.display = "none";
-      currQuest++;
-      questsTab[qsOrdTab[currQuest]][2](questsTab[qsOrdTab[currQuest]][0], questsTab[qsOrdTab[currQuest]][1]);
-      //document.getElementById(questsTab[qsOrdTab[currQuest]][0]).style.display = "flex";
-      document.getElementById("quest-progress").value = currQuest + 1;//(intvNumShow? 1 : 0);
-      document.getElementById("question-no").innerHTML = document.getElementById("quest-progress").value;
-      if (document.getElementById(questsTab[qsOrdTab[currQuest]][0]).hidden) {
-        gotoNextQuestion();
-      } else {
-        if (document.getElementById(questsTab[qsOrdTab[currQuest]][0]).classList.contains("pause_")) {
-          makePause(questsTab[qsOrdTab[currQuest]][0]);
-        }//if
-      }//else
-    } else {
-      //document.getElementById(questsTab[qsOrdTab[currQuest]][0]).style.display = "none";
-      document.getElementById("prev-button").style.visibility = "hidden";
-      document.getElementById("next-button").style.visibility = "hidden";
-      document.getElementById("position-info").style.visibility = "hidden";
-      submitFormData();
-    }//else
-  }//if
-}//gotoNextQuestion
-
-function gotoPrevQuestion () {//called from index.html
-  window.console.log("gotoPrevQuestion: " + currQuest + "->" + questsTab[qsOrdTab[currQuest]][0] + ":" + questsTab[qsOrdTab[currQuest]][1]);
-  secondLength = 0;
-  if (1 < currQuest) {
-    document.getElementById(questsTab[qsOrdTab[currQuest]][0]).style.display = "none";
-    currQuest--;
-    questsTab[qsOrdTab[currQuest]][2](questsTab[qsOrdTab[currQuest]][0], questsTab[qsOrdTab[currQuest]][1]);
-    //document.getElementById(questsTab[qsOrdTab[currQuest]][0]).style.display = "flex";
-    document.getElementById("quest-progress").value = currQuest + 1;//(intvNumShow? 1 : 0);
-    document.getElementById("question-no").innerHTML = document.getElementById("quest-progress").value;
-    if (document.getElementById(questsTab[qsOrdTab[currQuest]][0]).hidden) {
-      gotoPrevQuestion();
-    }//if
-  } else {
-    window.alert("To jest pierwsze pytanie, niczego wcześniej nie ma.");
-  }//else
-}//gotoPrevQuestion
-
-function gotoFirstEmptyQuestion () {
-  window.console.log("gotoFE::" + currQuest + "::");//->" + questsTab[qsOrdTab[currQuest]][0] + ":" + questsTab[qsOrdTab[currQuest]][1]);
-  if (questsTab[qsOrdTab[currQuest]][3](questsTab[qsOrdTab[currQuest]][0], questsTab[qsOrdTab[currQuest]][1])) {//funkcja sprawdzająca przeszła
-    if (currQuest < qsOrdTab.length - 1) {//jeśli nie jest to ostanie pytanie
-      currQuest++;
-      questsTab[qsOrdTab[currQuest]][2](questsTab[qsOrdTab[currQuest]][0], questsTab[qsOrdTab[currQuest]][1]);
-      document.getElementById("quest-progress").value = currQuest + 1;//(intvNumShow? 1 : 0);
-      document.getElementById("question-no").innerHTML = document.getElementById("quest-progress").value;
-      gotoFirstEmptyQuestion();
-    }//if
-  }//if
-}//gotoFirstEmptyQuestion
-
-
-//=====================================================================================
-//SAVING QUESTIONAIRE DATA ============================================================
-
-function durationSec (startStr, endStr) {//2017-04-28 23:36:11
-  let startDate = new Date(startStr.substr(0, 4), startStr.substr(5, 2)-1, startStr.substr(8, 2),
-                           startStr.substr(11, 2), startStr.substr(14, 2), startStr.substr(17, 2));
-  let endDate   = new Date(endStr.substr(0, 4), endStr.substr(5, 2)-1, endStr.substr(8, 2),
-                           endStr.substr(11, 2), endStr.substr(14, 2), endStr.substr(17, 2));
-  return (endDate.getTime() - startDate.getTime()) / 1000;
-}//durationSec
-
-var savingInterval = 0;
-function submitFormData () {
-  let dd = new Date();
-  window.console.log("submitFormData:");
-  document.body.style.cursor = "progress";
-
-  window.onbeforeunload = function() {return "jeszcze zapisuję";};
-  window.console.log("onbeforeunload-ON");
-
-  //respondentOk = document.questForm.r13[0].checked || document.questForm.r13[1].checked;  //ZMIANA
-
-//=====================================================================================
-//ZMIANA - POCZĄTEK BLOKU ZMIAN 3/6 Example.scr
-//-------------------------------------------------------------------------------------
-  rearrangeMSQdata("rI_", rI_arrTab, rI_orgTab, rI_arrLine);
-  rearrangeMSQdata("rJ_", rJ_arrTab, rJ_orgTab, rJ_arrLine);
-//-------------------------------------------------------------------------------------
-//ZMIANA - KONIEC BLOKU ZMIAN 3/6 Example.scr
-//=====================================================================================
-
-  window.console.log("po rearrage");
-
-  document.getElementById("finish-quest-info").style.display = "block";
-
-  document.getElementById("data-submit-info").style.visibility = "hidden";
-  document.getElementById("data-saved-next").style.visibility = "hidden";
-  document.getElementById("press-text1").style.display = "none";
-  document.getElementById("data-saved").style.visibility = "hidden";
-  document.getElementById("data-removing-info").style.display = "none";//visibility = "hidden";
-  document.getElementById("cookies-removing-info").style.display = "none";//visibility = "hidden";
-  document.getElementById("all-done-end").style.visibility = "hidden";
-//  document.getElementById("all-done-next").style.visibility = "hidden";
-  getDateTime("submitFormData for " + intvNum);
-  document.questForm.end_time.value = currDateTime;//.toLocaleString();
-  //document.questForm.duration.value = (Date.parse(document.questForm.end_time.value) - Date.parse(document.questForm.start_time.value)) / 1000;
-  document.questForm.duration.value = durationSec(document.questForm.start_time.value, document.questForm.end_time.value);
-  document.getElementById("data-submit-info").style.visibility = "visible";
-//window.alert("submitFormData:submit");
-
-  window.console.log("questForm.submit");
-  document.questForm.submit();
-
-  document.getElementById("data-saving-progess").innerHTML = ".";
-  savingInterval = window.setInterval(function(){document.getElementById("data-saving-progess").innerHTML += ".";}, 100);
-//  document.getElementById("press-text1").style.display = "block";
-//  document.getElementById("data-saved-next").style.visibility = "visible";
-//  document.getElementById("data-saved-next").focus();
-  window.setTimeout(cleanData, 3000);
-
-  setIntvNumComplete(userId, intvNum, stageNum);
-
-  return false;
-}//submitFormData
-
-function cleanData () {
-  window.console.log("cleanData:");
-//  document.getElementById("data-saved-next").style.visibility = "hidden";
-//  document.getElementById("press-text1").style.visibility = "hidden";
-  if (savingInterval != 0) {
-    window.clearInterval(savingInterval);
-    savingInterval = 0;
-  }//if
-  document.getElementById("data-saved").style.visibility = "visible";
-
-//  document.getElementById("data-removing-info").style.display = "block";//visibility = "visible";
-//window.alert("cleanData::submitFormData:reset");
-
-  window.console.log("questForm.reset");
-  document.questForm.reset();
-
-//  document.getElementById("cookies-removing-info").style.display = "block";//.visibility = "visible";
-//window.alert("cleanData::submitFormData:removeCookies");
-
-  //setCookie("LastVisit", Date());
-  //setCookie("LastSurvey", surveyId);
-  //setCookie("LastUser", userId);
-  removeCookies();
-  setLastCookies();
-
-  document.body.style.cursor = "auto";
-  window.setTimeout(endInterview, 1000);
-//  document.getElementById("all-done-end").style.visibility = "visible";
-//  document.getElementById("all-done-next").style.visibility = "visible";
-//  document.getElementById("all-done-end").focus();
-}//cleanData
-
-
-//=====================================================================================
-//INTERVIEW SWITCHING==================================================================
-
-function endInterview () {
-  //goToBadania();
-  window.onbeforeunload = null;
-  window.console.log("onbeforeunload-OFF");
-
-  let txt = window.location.href;
-  txt = txt.substring(0, txt.lastIndexOf("/") + 1);
-  if (intvNumGiven && intvNumShow) {
-//    txt += "?uid=" + userId;
-    txt += "next.php?user_id=" + userId + "&int_no=" + intvNum;//"index.html";
-  } else {//intvNumTable || intvNumGiven && !intvNumShow)
-    if (respondentOk) {
-      txt += "../thx.html";// + "?sid=" + surveyId;//"index.html";
-    } else {
-      txt += "../thx_.html";// + "?sid=" + surveyId;//"index.html";
-    }//else
-  }//else
-  window.location.replace(txt);
-//  window.location.replace("http://badania.azetkaankiety.pl");
-//  window.location.replace("http://www.azetkaankiety.pl");
-//  window.location.replace("http://www.azkstrony.pl");
-//  window.location.replace("http://www.almares.com.pl");
-}//endInterview
-
-function nextInterview () {
-  let txt = "";
-  if (intvNumGiven && intvNumShow ||
-    intvNumAuto && window.confirm("Zostanie rozpoczęty kolejny wywiad.\nZostanie pobrany i zarezerowany kolejny numer ankiety.")) {
-      window.location.href = window.location.href.substring(0, window.location.href.lastIndexOf("/") + 1) +
-      "?uid=" + userId;//"index.html";
-  } else { //intvNumTable || intvNumGiven && !intvNumShow)
-    goToBadania();
-  }//else
-}//nextInterview
-
-function newInterview () {
-  window.console.log("newInterview()");
-  removeCookies();
-  document.questForm.reset();
-  setLastCookies();
-  document.getElementById("ask-restore-intv").style.display = "none";
-  intvNum = -1;
-  setUpIntvNum("newInterview");
-}//newInterview
-
-function goToBadania () {
-  let txt = window.location.href;
-  txt = txt.substring(0, txt.lastIndexOf("/"));
-  txt = txt.substring(0, txt.lastIndexOf("/") + 1);// + "?sid=" + surveyId;//"index.html";
-  window.location.replace(txt);
-}//goToBadania
 
 
 //=====================================================================================
@@ -1475,20 +1253,104 @@ function rearrangedMSQindex (find, arrLine, orgTabLen) { //rI_arrLine, orgTabLen
 
 function arrangeQuestions () {
   window.console.log("arrangeQuestions: ");
-//=====================================================================================
-//ZMIANA - POCZĄTEK BLOKU ZMIAN 3/6 Example.scr
 //-------------------------------------------------------------------------------------
+//ZMIANA - POCZĄTEK BLOKU ZMIAN 3/6 Example.scr
   arrangeMSQitems("rI", rI_arrTab, rI_orgTab, rI_arrLine); //ZMIANA
   arrangeMSQitems("rJ", rJ_arrTab, rJ_orgTab, rJ_arrLine); //ZMIANA
-//-------------------------------------------------------------------------------------
 //ZMIANA - KONIEC BLOKU ZMIAN 3/6 Example.scr
-//=====================================================================================
+//-------------------------------------------------------------------------------------
   arrangeQsOrdTab();
   findRotation();
 }//arrangeQuestions
 
 
-//QUESTION PREPARTION/VARIFICATION FUNCTIONS =====================================================
+//=====================================================================================
+//QUESTIONS SWITCHING =================================================================
+
+function makePause (qqq) {
+}//makePause
+
+function checkIntvIdEnter (e) {
+  if (!e) e = window.event;
+  if ((e.keyCode? e.keyCode : e.which) == 13)
+    gotoNextQuestion();
+}//checkIntvIdEnter
+
+function gotoNextQuestion (event) {//called from index.html
+  if (event != undefined) {
+    event.stopPropagation();
+  }//if
+  window.console.log("gotoNQ::" + currQuest + "::");//->" + questsTab[qsOrdTab[currQuest]][0] + ":" + questsTab[qsOrdTab[currQuest]][1]);
+  secondLength = standardSecondLength;
+  if (questsTab[qsOrdTab[currQuest]][3](questsTab[qsOrdTab[currQuest]][0], questsTab[qsOrdTab[currQuest]][1])) {//funkcja sprawdzająca przeszła
+    if (currQuest < qsOrdTab.length - 1) {//jeśli nie jest to ostanie pytanie
+      //document.getElementById(questsTab[qsOrdTab[currQuest]][0]).style.display = "none";
+      currQuest++;
+      questsTab[qsOrdTab[currQuest]][2](questsTab[qsOrdTab[currQuest]][0], questsTab[qsOrdTab[currQuest]][1]);
+      //document.getElementById(questsTab[qsOrdTab[currQuest]][0]).style.display = "flex";
+      document.getElementById("quest-progress").value = currQuest + 1;//(intvNumShow? 1 : 0);
+      document.getElementById("question-no").innerHTML = document.getElementById("quest-progress").value;
+      if (document.getElementById(questsTab[qsOrdTab[currQuest]][0]).hidden) {
+        gotoNextQuestion();
+      } else {
+        if (document.getElementById(questsTab[qsOrdTab[currQuest]][0]).classList.contains("pause_")) {
+          makePause(questsTab[qsOrdTab[currQuest]][0]);
+        }//if
+      }//else
+    } else {
+      //document.getElementById(questsTab[qsOrdTab[currQuest]][0]).style.display = "none";
+      document.getElementById("prev-button").style.visibility = "hidden";
+      document.getElementById("next-button").style.visibility = "hidden";
+      document.getElementById("position-info").style.visibility = "hidden";
+      submitFormData();
+    }//else
+  }//if
+}//gotoNextQuestion
+
+function gotoPrevQuestion (event) {//called from index.html
+  if (event != undefined) {
+    event.stopPropagation();
+  }//if
+  window.console.log("gotoPrevQuestion: " + currQuest + "->" + questsTab[qsOrdTab[currQuest]][0] + ":" + questsTab[qsOrdTab[currQuest]][1]);
+  secondLength = 0;
+  if (1 < currQuest) {
+    document.getElementById(questsTab[qsOrdTab[currQuest]][0]).style.display = "none";
+    currQuest--;
+    questsTab[qsOrdTab[currQuest]][2](questsTab[qsOrdTab[currQuest]][0], questsTab[qsOrdTab[currQuest]][1]);
+    //document.getElementById(questsTab[qsOrdTab[currQuest]][0]).style.display = "flex";
+    document.getElementById("quest-progress").value = currQuest + 1;//(intvNumShow? 1 : 0);
+    document.getElementById("question-no").innerHTML = document.getElementById("quest-progress").value;
+    if (document.getElementById(questsTab[qsOrdTab[currQuest]][0]).hidden) {
+      gotoPrevQuestion();
+    }//if
+  } else {
+    window.alert("To jest pierwsze pytanie, niczego wcześniej nie ma.");
+  }//else
+}//gotoPrevQuestion
+
+function gotoFirstEmptyQuestion () {
+  window.console.log("gotoFE::" + currQuest + "::");//->" + questsTab[qsOrdTab[currQuest]][0] + ":" + questsTab[qsOrdTab[currQuest]][1]);
+  if (questsTab[qsOrdTab[currQuest]][3](questsTab[qsOrdTab[currQuest]][0], questsTab[qsOrdTab[currQuest]][1])) {//funkcja sprawdzająca przeszła
+    if (currQuest < qsOrdTab.length - 1) {//jeśli nie jest to ostanie pytanie
+      currQuest++;
+      questsTab[qsOrdTab[currQuest]][2](questsTab[qsOrdTab[currQuest]][0], questsTab[qsOrdTab[currQuest]][1]);
+      document.getElementById("quest-progress").value = currQuest + 1;//(intvNumShow? 1 : 0);
+      document.getElementById("question-no").innerHTML = document.getElementById("quest-progress").value;
+      gotoFirstEmptyQuestion();
+    }//if
+  }//if
+}//gotoFirstEmptyQuestion
+
+
+//=====================================================================================
+//QUESTIONS PREPARATION AND VERIFICATION ==============================================
+
+function setFillInfo (qId, success) {
+  let objs = document.getElementById(qId).getElementsByClassName("fill-info");
+  for (var i = 0; i < objs.length; i++) {
+    objs[i].style.color = success == undefined? successInitColor : success? successTrueColor : successFalseColor;
+  }//for
+}//setFillInfo
 
 function prepareInt_num (qId, fldName) {
   window.console.log("pre(" + qId + ":" + fldName + ")");
@@ -1503,6 +1365,40 @@ function prepareInt_num (qId, fldName) {
   }//else
   return true;
 }//prepareInt_num
+
+function intvNumIsInRange (tstIntvNum, withRotations, ...ranges) {
+  window.console.log("intvNumIsInRange(" + tstIntvNum + "," + withRotations + "," + ranges.length);
+  let isOk = false;
+  let i;
+  if (withRotations == undefined || withRotations) {
+    let rlen = rotatsTab.length;
+    for (i = 0; i < rlen && rotatsTab[i][0] != tstIntvNum; i++);
+    isOk = i < rlen;
+    window.console.log("iNiR rotat: " + isOk);
+  } else {
+    if (ranges.length) {
+      if (ranges.length == 1 && Array.isArray(ranges[0])) {
+        for (i = 0; !isOk && i < ranges[0].length; i++) {
+          if (ranges[0][i++] <= tstIntvNum) {
+            isOk = i == ranges[0].length || tstIntvNum <= ranges[0][i];
+          }//if
+        }//for
+        window.console.log("iNiR array: " + isOk);
+      } else {
+        for (i = 0; !isOk && i < ranges.length; i++) {
+          if (ranges[i++] <= tstIntvNum) {
+            isOk = i == ranges.length || tstIntvNum <= ranges[i];
+          }//if
+        }//for
+        window.console.log("iNiR list: " + isOk);
+      }//else
+    } else {
+      isOk = 1 <= tstIntvNum && tstIntvNum <= 110 || 1001 <= tstIntvNum && tstIntvNum <= 1110;
+      window.console.log("iNiR explic: " + isOk);
+    }//else
+  }//else
+  return isOk;
+}//function intvNumIsInRange
 
 function verifyInt_num (qId, fldName) {
   let field = document.questForm[fldName];
@@ -1571,18 +1467,11 @@ function verifyInt_num (qId, fldName) {
   return isOk;
 }//verifyInt_num
 
-function setFillInfo (qId, colour) {
-  let objs = document.getElementById(qId).getElementsByClassName("fill-info");
-  for (var i = 0; i < objs.length; i++) {
-    objs[i].style.color = colour;
-  }//for
-}//setFillInfo
-
 function prepare__ (qId, fldName) {
   window.console.log("prepare__(" + qId + ":" + fldName + ")");
   if (!document.getElementById(qId).hidden) {
     document.getElementById(qId).style.display = "flex";
-    setFillInfo (qId, "black");
+    setFillInfo (qId);
   }//if
   return true;
 }//prepare__
@@ -1593,27 +1482,36 @@ function verify__ (qId, fldName) {
   return true;
 }//verify__
 
-function verifyNumber (qId, fldName, checkRange = false, minValue = 0, maxValue = 0) {
-  window.console.log("ver(" + qId + ":" + fldName + ")");
+function verifyNumber (qId, fldName, ...ranges) {
+  window.console.log("verNum(" + qId + ":" + fldName + ")");
   let field = document.questForm[fldName];
-  let isOk = true;
+  let isOk = false;
   let number = parseInt(field.value);
-  if (number && (!checkRange || minValue <= number && number <= maxValue)) {
+  let i;
+  if (number) {
+    if (ranges.length) {
+      if (ranges.length == 1 && Array.isArray(ranges[0])) {
+        ranges = ranges[0];
+      }//if
+      window.console.log("verN array: " + ranges);
+      for (i = 0; !isOk && i < ranges.length; i++) {
+        if (ranges[i++] <= number) {
+          isOk = i == ranges.length || number <= ranges[i];
+        }//if
+      }//for
+      window.console.log("verN list: " + isOk);
+    } else {
+      isOk = true;
+    }//else
+  }//if
+  if (isOk) {
     saveVariable(fldName, field.value);
     setCookie(fldName, field.value);
-    setFillInfo (qId, "green");
     document.getElementById(qId).style.display = "none";
-    //if (number < 33) {
-    //  document.questForm.rB[1].checked = true;
-    //}//if
-    //else {
-    //  document.questForm.rB[2].checked = true;
-    //}//else
   } else {
     field.value = "";
-    setFillInfo (qId, "red");
-    isOk = false;
   }//else
+  setFillInfo (qId, isOk);
   window.console.log(isOk);
   return isOk;
 }//verifyNumber
@@ -1637,11 +1535,9 @@ function verifyQuestSingle (qId, fldName) {
     saveVariable(fldName, field.value);
     setCookie(fldName, field.value);
     window.console.log("=>'" + field.value + "'");
-    setFillInfo (qId, "green");
     document.getElementById(qId).style.display = "none";
-  } else {
-    setFillInfo (qId, "red");
-  }//else
+  }//if
+  setFillInfo (qId, isOk);
   return isOk;
 }//verifyQuestSingle
 
@@ -1671,11 +1567,9 @@ function verifyQuestSingleN (qId, fldName, length) {
       setCookie(fldName + j, field.value);
       window.console.log("[" + j + "]=>'" + field.value + "'");
     }//for
-    setFillInfo (qId, "green");
     document.getElementById(qId).style.display = "none";
-  } else {
-    setFillInfo (qId, "red");
-  }//else
+  }//if
+  setFillInfo (qId, isOk);
   return isOk;
 }//verifyQuestSingleN
 
@@ -1687,7 +1581,7 @@ function verifyQuestRange (qId, fldName) {
     saveVariable(fldName, field.value);
     setCookie(fldName, field.value);
     window.console.log("=>'" + field.value + "'");
-    setFillInfo (qId, "green");
+    setFillInfo (qId, true);
     document.getElementById(qId).style.display = "none";
   }//if isOk
   return true;
@@ -1705,7 +1599,7 @@ function verifyQuestRangeN (qId, fldName, length) {
       setCookie(fldName + j, field.value);
       window.console.log("[" + j + "]=>'" + field.value + "'");
     }//for
-    setFillInfo (qId, "green");
+    setFillInfo (qId, true);
     document.getElementById(qId).style.display = "none";
   }//if
   return true;
@@ -1724,14 +1618,11 @@ function verifyQuestOpen (qId, fldName) {
   if (isOk) {
     saveVariable(fldName, field.value, true);
     setCookie(fldName, field.value);
-    setFillInfo (qId, "green");
     document.getElementById(qId).style.display = "none";
-  } else {
-    setFillInfo (qId, "red");
-  }//else
+  }//if
+  setFillInfo (qId, isOk);
   return isOk;
 }//verifyQuestOpen
-
 
 function verifyQuestMultiN (qId, fldName, length) {
   let isOk = false;
@@ -1756,11 +1647,9 @@ function verifyQuestMultiN (qId, fldName, length) {
         setCookie(fldName + "_" + i, "false");
       }//else
     }//for
-    setFillInfo (qId, "green");
     document.getElementById(qId).style.display = "none";
-  } else {
-    setFillInfo (qId, "red");
-  }//else
+  }//if
+  setFillInfo (qId, isOk);
 //window.alert(isOk);
   return isOk;
 }//verifyQuestMultiN
@@ -1799,11 +1688,9 @@ function verifyQuestMultiNoth (qId, fldName, length, othNo) {
       saveVariable(fldName + "t" + othNo, document.questForm[fldName + "t" + othNo].value, true);
       setCookie(fldName + "t" + othNo, document.questForm[fldName + "t" + othNo].value);
     }//if
-    setFillInfo (qId, "green");
     document.getElementById(qId).style.display = "none";
-  } else {
-    setFillInfo (qId, "red");
-  }//else
+  }//if
+  setFillInfo (qId, isOk);
   //window.alert(isOk);
   return isOk;
 }//verifyQuestMultiNoth
@@ -1837,11 +1724,9 @@ function verifyQuestMultiN_O (qId, fldName, length) {
         setCookie(fldName + "_" + i, "false");
       }//else
     }//for
-    setFillInfo (qId, "green");
     document.getElementById(qId).style.display = "none";
-  } else {
-    setFillInfo (qId, "red");
-  }//else
+  }//if
+  setFillInfo (qId, isOk);
 //window.alert(isOk);
   return isOk;
 }//verifyQuestMultiN_O
@@ -2063,41 +1948,26 @@ function verifyWaitPage (qId, fldName) {
   return true;
 }//verifyWaitPage
 
-
-//=====================================================================================
-//ZMIANA - POCZĄTEK BLOKU ZMIAN 6/6 Example.scr
 //-------------------------------------------------------------------------------------
-
+//ZMIANA - POCZĄTEK BLOKU ZMIAN 5/6 Example.scr
 
 function loadQuestsElements () {
   let objs;
   let i;
   window.console.log("loadQuestsElements");
-  //"quest-intv_num",  "intv_num",
-
-  //"quest-intro0",    "intro0",
-
-  //"quest-rA",        "rA",
-
-  //"quest-rB",        "rB",
-
-  //"quest-rC",        "rC",
-
-  //"quest-rD",        "rD",
-
-  //"quest-rE",        "rE",
-
-  //"quest-rF",        "rF",
-
-  //"quest-rG",        "rG",
-
-  //"quest-rH",        "rH",
-
-  //"quest-rI",        "rI",
-
-  //"quest-rJ",        "rJ",
-
-  //"quest-rK",        "rK",
+  //"quest-intv_num",  "intv_num", -------------------------------------
+  //"quest-intro0",    "intro0", -------------------------------------
+  //"quest-rA",        "rA", -------------------------------------
+  //"quest-rB",        "rB", -------------------------------------
+  //"quest-rC",        "rC", -------------------------------------
+  //"quest-rD",        "rD", -------------------------------------
+  //"quest-rE",        "rE", -------------------------------------
+  //"quest-rF",        "rF", -------------------------------------
+  //"quest-rG",        "rG", -------------------------------------
+  //"quest-rH",        "rH", -------------------------------------
+  //"quest-rI",        "rI", -------------------------------------
+  //"quest-rJ",        "rJ", -------------------------------------
+  //"quest-rK",        "rK", -------------------------------------
   window.console.log("load rK");
   objs = document.getElementById("quest-rK").getElementsByTagName("img");
   for (i = 0; i < objs.length; i++) {
@@ -2123,15 +1993,14 @@ function loadQuestsElements () {
       }//if
     };//function
   })();//function
-
-  //"quest-rL",        "rL",
+  //"quest-rL",        "rL", -------------------------------------
   window.console.log("load rL");
   objs = document.getElementById("quest-rL").getElementsByTagName("source");
   for (i = 0; i < objs.length; i++) {
     objs[i].src = objs[i].src.replace("__pics__", "_pics_");
   }//for
   document.getElementById("filmik").load();//hmmmmm
-
+  //"quest-rM",        "rM", -------------------------------------
   let rM_rN_Tab = [["rMNnazwa1", "rMNNazwa1"],
                    ["rMNnazwa2", "rMNNazwa2"],
                    ["rMNnazwa3", "rMNNazwa3"],
@@ -2144,7 +2013,6 @@ function loadQuestsElements () {
                    ["rMNnazwa10", "rMNNazwa10"],
                    ["rMNnazwa11", "rMNNazwa11"],
                    ["rMNnazwa12", "rMNNazwa12"]];
-  //"quest-rM",        "rM",
   window.console.log("load rM");
   let selObj = document.getElementById("rM"),
       optObj;
@@ -2157,8 +2025,7 @@ function loadQuestsElements () {
     optObj.innerHTML = rM_rN_Tab[i][1];
     selObj.appendChild(optObj);
   }//for
-
-  //"quest-rN",        "rN",
+  //"quest-rN",        "rN", -------------------------------------
   window.console.log("load rN");
   selObj = document.getElementById("rN");
   while (selObj.length) {
@@ -2170,51 +2037,13 @@ function loadQuestsElements () {
     optObj.innerHTML = rM_rN_Tab[i][1];
     selObj.appendChild(optObj);
   }//for
-
-//"quest-wait01",    "wait01",
-
-//"quest-rZ",        "rC",
-
+//"quest-wait01",    "wait01", -------------------------------------
+//"quest-rZ",        "rC", -------------------------------------
 }//function loadQuestsElements
-
 
 //quest-intv_num
 //function prepareInt_num () {}
 //function verifyInt_num () {}
-function intvNumIsInRange (tstIntvNum, withRotations, ...ranges) {
-  window.console.log("intvNumIsInRange(" + tstIntvNum + "," + withRotations + "," + ranges.length);
-  let isOk = false;
-  let i;
-  if (withRotations == undefined || withRotations) {
-    let rlen = rotatsTab.length;
-    for (i = 0; i < rlen && rotatsTab[i][0] != tstIntvNum; i++);
-    isOk = i < rlen;
-    window.console.log("iNiR rotat: " + isOk);
-  } else {
-    if (ranges.length) {
-      if (ranges.length == 1 && Array.isArray(ranges[0])) {
-        for (i = 0; !isOk && i < ranges[0].length; i++) {
-          if (ranges[0][i++] <= tstIntvNum) {
-            isOk = i == ranges[0].length || tstIntvNum <= ranges[0][i];
-          }//if
-        }//for
-        window.console.log("iNiR array: " + isOk);
-      } else {
-        for (i = 0; !isOk && i < ranges.length; i++) {
-          if (ranges[i++] <= tstIntvNum) {
-            isOk = i == ranges.length || tstIntvNum <= ranges[i];
-          }//if
-        }//for
-        window.console.log("iNiR list: " + isOk);
-      }//else
-    } else {
-      isOk = 1 <= tstIntvNum && tstIntvNum <= 110 || 1001 <= tstIntvNum && tstIntvNum <= 1110;
-      window.console.log("iNiR explic: " + isOk);
-    }//else
-  }//else
-  return isOk;
-}//function intvNumIsInRange
-
 
 //"quest-intro0",     "intro0",
 function prepareQuest_intro0 (qId, fldName) {
@@ -2232,14 +2061,12 @@ function verifyQuest_intro0 (qId, fldName) {
   return true;
 }//function verifyQuest_intro0
 
-
 //quest-rA
 //function prepare__ (qId, fldName) {}
 function verifyQuest_rA (qId, fldName) {
   window.console.log("verifyQuest_rA(" + qId + ":" + fldName + ")");
   return verifyQuestMultiNoth(qId, fldName, 16, 16);
 }//verifyQuest_rA
-
 
 //quest-rB
 function prepareQuest_rB (qId, fldName) {
@@ -2259,7 +2086,6 @@ function verifyQuest_rB (qId, fldName) {
   return verifyQuestMultiN (qId, fldName, 16);
 }//verifyQuest_rB
 
-
 //quest-rC
 function prepareQuest_rC (qId, fldName) {
   for (var i = 1; i <= 16; i++) {
@@ -2278,21 +2104,17 @@ function verifyQuest_rC (qId, fldName) {
   return verifyQuestSingle(qId, fldName);
 }//verifyQuest_rC
 
-
 //quest-rD
 //function prepare__ (qId, fldName) {}
 //function verifyQuestSingle (qId, fldName) {}
-
 
 //quest-rE
 //function prepare__ (qId, fldName) {}
 //function verifyQuestSingle (qId, fldName) {}
 
-
 //quest-rF
 //function prepare__ (qId, fldName) {}
 //function verifyQuestRange (qId, fldName) {}
-
 
 //quest-rG
 function prepareQuest_rG (qId, fldName) {
@@ -2301,7 +2123,6 @@ function prepareQuest_rG (qId, fldName) {
 }//prepareQuest_rG
 //function verifyQuestOpen (qId, fldName) {}
 
-
 //quest-rH
 function prepareQuest_rH (qId, fldName) {
   document.getElementById(qId).hidden = 0 < document.questForm.rF.value;
@@ -2309,20 +2130,17 @@ function prepareQuest_rH (qId, fldName) {
 }//prepareQuest_rH
 //function verifyQuestOpen (qId, fldName) {}
 
-
 //quest-rI
 //function prepare__ () {}
 function verifyQuest_rI (qId, fldName) {
   return verifyQuestSingleN (qId, fldName, 12);
 }//verifyQuest_rI
 
-
 //quest-rJ
 //function prepare__ () {}
 function verifyQuest_rJ (qId, fldName) {
   return verifyQuestRangeN (qId, fldName, 12);
 }//verifyQuest_rJ
-
 
 //quest-rK
 var imagesScrolled_rK = false;
@@ -2338,7 +2156,7 @@ function prepareQuest_rK (qId, fldName) {
       document.getElementById("next-button").style.visibility = "hidden";
     }//else
     document.getElementById(qId).style.display = "flex";
-    setFillInfo(qId, "black");
+    setFillInfo(qId);
   }//if
   return true;
 }//prepareQuest_rK
@@ -2351,7 +2169,6 @@ function verifyQuest_rK (qId, fldName) {
   }//if
   return imagesScrolled_rK;
 }//verifyQuest_rK
-
 
 //quest-rL
 var moviePlayed_rL = false;
@@ -2378,7 +2195,7 @@ function prepareQuest_rL (qId, fldName) {
         movieLength*1000);
     }//else
     document.getElementById(qId).style.display = "flex";
-    setFillInfo (qId, "black");
+    setFillInfo (qId);
   }//if
   return true;
 }//prepareQuest_rL
@@ -2393,7 +2210,6 @@ function verifyQuest_rL (qId, fldName) {
   moviePlayed_rL = verifyQuestSingle(qId, fldName);
   return moviePlayed_rL;
 }//verifyQuest_rL
-
 
 //quest-rM
 // prepare__ (qId, fldName);
@@ -2417,11 +2233,9 @@ function verifyQuest_rM (qId, fldName) {
         window.console.log("=>'" + field[i].value + "'");
       }//if
     }//for
-    setFillInfo (qId, "green");
     document.getElementById(qId).style.display = "none";
-  } else {
-    setFillInfo (qId, "red");
-  }//else
+  }//if
+  setFillInfo (qId, isOk);
   return isOk;
 }//verifyQuest_rM
 
@@ -2452,29 +2266,175 @@ function verifyQuest_rN (qId, fldName) {
     setCookie(fldName, field[i].value);
     saveVariable(fldName, field[i].value);
     window.console.log("=>'" + field[i].value + "'");
-    setFillInfo (qId, "green");
     document.getElementById(qId).style.display = "none";
-  } else {
-    setFillInfo (qId, "red");
-  }//else
+  }//if
+  setFillInfo (qId, isOk);
   return isOk;
 }//verifyQuest_rN
 
-
 //"quest-wait01",    "wait01",
-
 
 //quest-rZ
 //function prepare__ (qId, fldName) {}
 //function verifyQuestSingle () {}
 
+//ZMIANA - KONIEC BLOKU ZMIAN 6/6 Example.scr
+//-------------------------------------------------------------------------------------
+
+//=====================================================================================
+//SAVING QUESTIONAIRE DATA ============================================================
+
+function durationSec (startStr, endStr) {//2017-04-28 23:36:11
+  let startDate = new Date(startStr.substr(0, 4), startStr.substr(5, 2)-1, startStr.substr(8, 2),
+                           startStr.substr(11, 2), startStr.substr(14, 2), startStr.substr(17, 2));
+  let endDate   = new Date(endStr.substr(0, 4), endStr.substr(5, 2)-1, endStr.substr(8, 2),
+                           endStr.substr(11, 2), endStr.substr(14, 2), endStr.substr(17, 2));
+  return (endDate.getTime() - startDate.getTime()) / 1000;
+}//durationSec
+
+var savingInterval = 0;
+function submitFormData () {
+  let dd = new Date();
+  window.console.log("submitFormData:");
+  document.body.style.cursor = "progress";
+
+  window.onbeforeunload = function() {return "jeszcze zapisuję";};
+  window.console.log("onbeforeunload-ON");
+
+  //respondentOk = document.questForm.r13[0].checked || document.questForm.r13[1].checked;  //ZMIANA
 
 //-------------------------------------------------------------------------------------
-//ZMIANA - KONIEC BLOKU ZMIAN 6/6 Example.scr
+//ZMIANA - POCZĄTEK BLOKU ZMIAN 4/6 Example.scr
+  rearrangeMSQdata("rI_", rI_arrTab, rI_orgTab, rI_arrLine);
+  rearrangeMSQdata("rJ_", rJ_arrTab, rJ_orgTab, rJ_arrLine);
+//ZMIANA - KONIEC BLOKU ZMIAN 4/6 Example.scr
+//-------------------------------------------------------------------------------------
+
+  window.console.log("po rearrage");
+
+  document.getElementById("finish-quest-info").style.display = "block";
+
+  document.getElementById("data-submit-info").style.visibility = "hidden";
+  document.getElementById("data-saved-next").style.visibility = "hidden";
+  document.getElementById("press-text1").style.display = "none";
+  document.getElementById("data-saved").style.visibility = "hidden";
+  document.getElementById("data-removing-info").style.display = "none";//visibility = "hidden";
+  document.getElementById("cookies-removing-info").style.display = "none";//visibility = "hidden";
+  document.getElementById("all-done-end").style.visibility = "hidden";
+//  document.getElementById("all-done-next").style.visibility = "hidden";
+  getDateTime("submitFormData for " + intvNum);
+  document.questForm.end_time.value = currDateTime;//.toLocaleString();
+  //document.questForm.duration.value = (Date.parse(document.questForm.end_time.value) - Date.parse(document.questForm.start_time.value)) / 1000;
+  document.questForm.duration.value = durationSec(document.questForm.start_time.value, document.questForm.end_time.value);
+  document.getElementById("data-submit-info").style.visibility = "visible";
+//window.alert("submitFormData:submit");
+
+  window.console.log("questForm.submit");
+  document.questForm.submit();
+
+  document.getElementById("data-saving-progess").innerHTML = ".";
+  savingInterval = window.setInterval(function(){document.getElementById("data-saving-progess").innerHTML += ".";}, 100);
+//  document.getElementById("press-text1").style.display = "block";
+//  document.getElementById("data-saved-next").style.visibility = "visible";
+//  document.getElementById("data-saved-next").focus();
+  window.setTimeout(cleanData, 3000);
+
+  setIntvNumComplete(userId, intvNum, stageNum);
+
+  return false;
+}//submitFormData
+
+function cleanData () {
+  window.console.log("cleanData:");
+//  document.getElementById("data-saved-next").style.visibility = "hidden";
+//  document.getElementById("press-text1").style.visibility = "hidden";
+  if (savingInterval != 0) {
+    window.clearInterval(savingInterval);
+    savingInterval = 0;
+  }//if
+  document.getElementById("data-saved").style.visibility = "visible";
+
+//  document.getElementById("data-removing-info").style.display = "block";//visibility = "visible";
+//window.alert("cleanData::submitFormData:reset");
+
+  window.console.log("questForm.reset");
+  document.questForm.reset();
+
+//  document.getElementById("cookies-removing-info").style.display = "block";//.visibility = "visible";
+//window.alert("cleanData::submitFormData:removeCookies");
+
+  //setCookie("LastVisit", Date());
+  //setCookie("LastSurvey", surveyId);
+  //setCookie("LastUser", userId);
+  removeCookies();
+  setLastCookies();
+
+  document.body.style.cursor = "auto";
+  window.setTimeout(endInterview, 1000);
+//  document.getElementById("all-done-end").style.visibility = "visible";
+//  document.getElementById("all-done-next").style.visibility = "visible";
+//  document.getElementById("all-done-end").focus();
+}//cleanData
+
+
 //=====================================================================================
+//INTERVIEW SWITCHING==================================================================
+
+function endInterview () {
+  //goToBadania();
+  window.onbeforeunload = null;
+  window.console.log("onbeforeunload-OFF");
+
+  let txt = window.location.href;
+  txt = txt.substring(0, txt.lastIndexOf("/") + 1);
+  if (intvNumGiven && intvNumShow) {
+//    txt += "?uid=" + userId;
+    txt += "next.php?user_id=" + userId + "&int_no=" + intvNum;//"index.html";
+  } else {//intvNumTable || intvNumGiven && !intvNumShow)
+    if (respondentOk) {
+      txt += "../thx.html";// + "?sid=" + surveyId;//"index.html";
+    } else {
+      txt += "../thx_.html";// + "?sid=" + surveyId;//"index.html";
+    }//else
+  }//else
+  window.location.replace(txt);
+//  window.location.replace("http://badania.azetkaankiety.pl");
+//  window.location.replace("http://www.azetkaankiety.pl");
+//  window.location.replace("http://www.azkstrony.pl");
+//  window.location.replace("http://www.almares.com.pl");
+}//endInterview
+
+function nextInterview () {
+  let txt = "";
+  if (intvNumGiven && intvNumShow ||
+    intvNumAuto && window.confirm("Zostanie rozpoczęty kolejny wywiad.\nZostanie pobrany i zarezerowany kolejny numer ankiety.")) {
+      window.location.href = window.location.href.substring(0, window.location.href.lastIndexOf("/") + 1) +
+      "?uid=" + userId;//"index.html";
+  } else { //intvNumTable || intvNumGiven && !intvNumShow)
+    goToBadania();
+  }//else
+}//nextInterview
+
+function newInterview () {
+  window.console.log("newInterview()");
+  removeCookies();
+  document.questForm.reset();
+  setLastCookies();
+  document.getElementById("ask-restore-intv").style.display = "none";
+  intvNum = -1;
+  setUpIntvNum("newInterview");
+}//newInterview
+
+function goToBadania () {
+  let txt = window.location.href;
+  txt = txt.substring(0, txt.lastIndexOf("/"));
+  txt = txt.substring(0, txt.lastIndexOf("/") + 1);// + "?sid=" + surveyId;//"index.html";
+  window.location.replace(txt);
+}//goToBadania
 
 
-
+//=====================================================================================
+//initALL =============================================================================
 
 function initAll () {
   let ckName = "";

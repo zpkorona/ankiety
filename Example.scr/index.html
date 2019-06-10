@@ -94,7 +94,7 @@
     <!-- ANKIETA ==================================================================================================== -->
     <!-- ANKIETA ==================================================================================================== -->
     <form name="questForm" action="./php/zapiszData2disk.php" enctype="text/plan" method="POST"
-          onsubmit="event.preventDefault(); return finishWithFormData();" target="php-output">
+          onsubmit="event.preventDefault(); return false;" target="php-output">
       <div id="all-questions" class="questionnaire">
 
         <!-- NUMER ANKIETY ================================================== -->
@@ -159,8 +159,9 @@
             Pyt.A.
             Proszę zaznaczyć znane nazwy?<br />
             Jest to pytanie z możliwością wybrania wielu odpowiedzi.
-            <br>
-            <span class="fill-info hidden">(proszę zaznaczyć przynajmniej jedną odpowiedź)</span>
+          </div>
+          <div class="fill-info">
+            (proszę zaznaczyć przynajmniej jedną odpowiedź)
           </div>
           <!--div class="question-break"></div-->
           <div class="answer_">
@@ -193,9 +194,10 @@
             Pyt.B.
             Proszę zaznaczyć widziane nazwy?<br />
             Jest to pytanie z możliwością wybrania wielu odpowiedzi, ale
-             spośród zaznaczonych w poprzednim pytaniu.
-            <br>
-            <span class="fill-info hidden">(proszę zaznaczyć przynajmniej jedną odpowiedź)</span>
+            spośród zaznaczonych w poprzednim pytaniu.
+          </div>
+          <div class="fill-info">
+            (proszę zaznaczyć przynajmniej jedną odpowiedź)
           </div>
           <!--div class="question-break"></div-->
           <div class="answer_">
@@ -228,8 +230,9 @@
             Pyt.C.
             Proszę zaznaczyć najładniejszą nazwę?<br />
             Jest to pytanie z możliwością wybrania jednej odpowiedzi spośród zaznaczonych w poprzednim pytaniu.
-            <br>
-            <span class="fill-info">(proszę zaznaczyć jedną odpowiedź)</span>
+          </div>
+          <div class="fill-info">
+            (proszę zaznaczyć jedną odpowiedź)
           </div>
           <!--div class="question-break"></div-->
           <div class="answer_">
@@ -262,8 +265,9 @@
             Pyt.D.
             Czy podoba się nazwa NAZWA?<br />
             Pytanie z pionowym układem odpowiedzi.
-            <br>
-            <span class="fill-info">(proszę zaznaczyć jedną odpowiedź)</span>
+          </div>
+          <div class="fill-info">
+            (proszę zaznaczyć jedną odpowiedź)
           </div>
           <!--div class="question-break"></div-->
           <div class="answer_">
@@ -286,8 +290,9 @@
             Pyt.E.
             Czy podoba się nazwa NAZWA?<br />
             Pytanie z poziomym układem odpowiedzi.
-            <br>
-            <span class="fill-info">(proszę wpisać dokładny wiek)</span>
+          </div>
+          <div class="fill-info">
+            (proszę wpisać dokładny wiek)
           </div>
           <div class="answer_">
             <div class="answer-table answer-table-horiz">
@@ -320,7 +325,9 @@
             Pyt.F.
             Czy podoba się nazwa NAZWA?<br />
             Pytanie z poziomym suwakiem.
-            <span class="fill-info hidden">(proszę zaznaczyć JEDNĄ odpowiedź w każdym wierszu)</span>
+          </div>
+          <div class="fill-info">
+            (proszę zaznaczyć JEDNĄ odpowiedź w każdym wierszu)
           </div>
           <!--div class="question-break"></div-->
           <div class="answer_">
@@ -356,8 +363,9 @@
           <div class="question-text-indent">
             Pyt.G. Prosze napisać co się podoba w nazwie NAZWA.<br />
             To jest pytanie otwarte zadawane po filtrze z poprzedniego pytania, gdy odpowiedź nie była negatywna.
-            <br>
-            <span class="fill-info">(proszę wpisać odpowiedź)</span>
+          </div>
+          <div class="fill-info">
+            (proszę wpisać odpowiedź)
           </div>
           <!--div class="question-break"></div-->
           <div class="answer_">
@@ -374,8 +382,9 @@
             Pyt.H.
             Prosze napisać co się nie podoba w nazwie NAZWA.<br />
             To jest pytanie otwarte zadawane po filtrze z poprzedniego pytania, gdy odpowiedź nie była pozytywna.
-            <br>
-            <span class="fill-info">(proszę wpisać odpowiedź)</span>
+          </div>
+          <div class="fill-info">
+            (proszę wpisać odpowiedź)
           </div>
           <!--div class="question-break"></div-->
           <div class="answer_">
@@ -392,8 +401,9 @@
             Pyt.I.
             Proszę ocenić w jakim stopniu poszczególne cechy pasują do nazwy NAZWA. <br />
             W pytaniu tym kolejność cech jest inna dla kolejnych respondentów.
-            <br>
-            <span class="fill-info">(proszę zaznaczyć JEDNĄ odpowiedź w każdym wierszu)</span>
+          </div>
+          <div class="fill-info">
+            (proszę zaznaczyć JEDNĄ odpowiedź w każdym wierszu)
           </div>
           <!--div class="question-break"></div-->
           <div class="answer_">
@@ -540,8 +550,9 @@
             Proszę ocenić w jakim stopniu poszczególne cechy pasują do nazwy NAZWA. <br />
             Tym razem za pomocą suwaków.
             W pytaniu tym kolejność cech jest inna dla kolejnych respondentów.
-            <br>
-            <span class="fill-info">(proszę zaznaczyć JEDNĄ odpowiedź w każdym wierszu)</span>
+          </div>
+          <div class="fill-info">
+            (proszę zaznaczyć JEDNĄ odpowiedź w każdym wierszu)
           </div>
           <!--div class="question-break"></div-->
           <div class="answer_">
@@ -618,8 +629,9 @@
           <div class="question-text-indent">
             Pyt.K.
             Proszę obejrzeć wszystkie obrazki i wybrać najładniejszy?
-            <br>
-            <span class="fill-info">(proszę zaznaczyć jedną odpowiedź)</span>
+          </div>
+          <div class="fill-info">
+            (proszę zaznaczyć jedną odpowiedź)
           </div>
           <!--div class="question-break"></div-->
           <div id="images-slider-rK" class="images-slider">
@@ -648,15 +660,16 @@
           <div class="question-text-indent">
             Pyt.L.
             Proszę obejrzeć cały film i ocenić go?
-            <br>
-            <span class="fill-info">(proszę zaznaczyć jedną odpowiedź)</span>
           </div>
           <!--div class="question-break"></div-->
-          <div class="film-screen">
-            <!--video id="filmik" width="640" height="480" controls preload="none"-->
-            <video id="filmik" width="640" height="480" controls>
-              <source src="./img/filmik.mp4" type="video/mp4" media="(min-width: 450px)">
-            </video>
+          <div class="question-text question-cont">
+              <!--video id="filmik" width="640" height="480" controls preload="none"-->
+              <video id="filmik" class="film-screen" width="640" height="480" controls>
+                <source src="./img/filmik.mp4" type="video/mp4" media="(min-width: 450px)">
+              </video>
+          </div>
+          <div class="fill-info">
+            (proszę zaznaczyć jedną odpowiedź)
           </div>
           <div class="answer_">
             <div class="answer-table answer-table-vert">
@@ -675,8 +688,9 @@
           <div class="question-text-indent">
             Pyt.M.
             Proszę wybrać kilka opcji?
-            <br>
-            <span class="fill-info">(proszę zaznaczyć przynajmniej jedną odpowiedź)</span>
+          </div>
+          <div class="fill-info">
+            (proszę zaznaczyć przynajmniej jedną odpowiedź)
           </div>
           <!--div class="question-break"></div-->
           <div class="answer_">
@@ -693,11 +707,10 @@
         <!-- Rekrut quest rN ================================================== -->
         <div class="question_" id="quest-rN">
           <div class="question-text-indent">
-            <p>
-              N. Proszę wybrać jedną opcję?
-              <br>
-              <span class="fill-info">(proszę zaznaczyć jedną odpowiedź)</span>
-            </p>
+            N. Proszę wybrać jedną opcję?
+          </div>
+          <div class="fill-info">
+            (proszę zaznaczyć jedną odpowiedź)
           </div>
           <!--div class="question-break"></div-->
           <div class="answer_">
@@ -740,8 +753,9 @@
           <div class="question-text-indent">
             Pyt.Z.
             Czy podoba się ta prezentacja?
-            <br>
-            <span class="fill-info">(proszę zaznaczyć jedną odpowiedź)</span>
+          </div>
+          <div class="fill-info">
+            (proszę zaznaczyć jedną odpowiedź)
           </div>
           <!--div class="question-break"></div-->
           <div class="answer_">
@@ -796,9 +810,9 @@
 
 
   <div id="quest-nav-buttons" class="quest-nav-buttons buttons-place">
-    <div id="button-left-tab"><button class="nav-button" id="prev-button" onclick="gotoPrevQuestion()" value="prev">Wstecz</button></div>
-    <div id="button-center-tab"><button class="nav-button" id="fill-button" onclick="showAllQuestions()" value="fill">Załaduj pytania</button></div>
-    <div id="button-right-tab"><button class="nav-button" id="next-button" onclick="gotoNextQuestion()" value="next">Dalej</button></div>
+    <div id="button-left-tab"><button class="nav-button" id="prev-button" onclick="gotoPrevQuestion(event)" value="prev">Wstecz</button></div>
+    <div id="button-center-tab"><button class="nav-button" id="fill-button" onclick="showAllQuestions(event)" value="fill">Załaduj pytania</button></div>
+    <div id="button-right-tab"><button class="nav-button" id="next-button" onclick="gotoNextQuestion(event)" value="next">Dalej</button></div>
   </div>
 </div>
 
