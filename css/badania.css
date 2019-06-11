@@ -312,6 +312,7 @@ form {
 .section-text {
   font-size: 115%;
   font-weight: bold;
+  margin: auto;
   min-width: 80%;
   padding: 3rem;
   /*  text-align: left;*/
@@ -353,6 +354,8 @@ form {
   font-style: italic;
   margin-top: -1rem;
   padding-bottom: 1.5rem;
+  text-align: center;
+  width: 100%;
 }
 .video-disp {
   max-width: 100%;

@@ -16,3 +16,5 @@ intv_num=22&user_id=gość&status=waiting____________
 intv_num=18&user_id=gość&status=waiting____________
 intv_num=34&user_id=gość&status=waiting____________
 intv_num=41&user_id=gość&status=waiting____________
+intv_num=77&user_id=gość&status=2019-06-11 11:44:56
+intv_num=19&user_id=gość&status=waiting____________

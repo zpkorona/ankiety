@@ -85,6 +85,86 @@ var questsTab = [["quest-intv_num",  "intv_num",  prepareInt_num,         verify
                  ["quest-wait01",    "wait01",    prepareWaitPage,        verifyWaitPage],
                  ["quest-rZ",        "rZ",        prepare__,              verifyQuestSingle]];//ZMIANA ^
 
+var variablesTab = [{fldName:"rA_1", fldType:"CHECK"},
+                    {fldName:"rA_2", fldType:"CHECK"},
+                    {fldName:"rA_3", fldType:"CHECK"},
+                    {fldName:"rA_4", fldType:"CHECK"},
+                    {fldName:"rA_5", fldType:"CHECK"},
+                    {fldName:"rA_6", fldType:"CHECK"},
+                    {fldName:"rA_7", fldType:"CHECK"},
+                    {fldName:"rA_8", fldType:"CHECK"},
+                    {fldName:"rA_9", fldType:"CHECK"},
+                    {fldName:"rA_10", fldType:"CHECK"},
+                    {fldName:"rA_11", fldType:"CHECK"},
+                    {fldName:"rA_12", fldType:"CHECK"},
+                    {fldName:"rA_13", fldType:"CHECK"},
+                    {fldName:"rA_14", fldType:"CHECK"},
+                    {fldName:"rA_15", fldType:"CHECK"},
+                    {fldName:"rA_16", fldType:"CHECK"},
+                    {fldName:"rAt16", fldType:"VALUE"},
+                    {fldName:"rB_1", fldType:"CHECK"},
+                    {fldName:"rB_2", fldType:"CHECK"},
+                    {fldName:"rB_3", fldType:"CHECK"},
+                    {fldName:"rB_4", fldType:"CHECK"},
+                    {fldName:"rB_5", fldType:"CHECK"},
+                    {fldName:"rB_6", fldType:"CHECK"},
+                    {fldName:"rB_7", fldType:"CHECK"},
+                    {fldName:"rB_8", fldType:"CHECK"},
+                    {fldName:"rB_9", fldType:"CHECK"},
+                    {fldName:"rB_10", fldType:"CHECK"},
+                    {fldName:"rB_11", fldType:"CHECK"},
+                    {fldName:"rB_12", fldType:"CHECK"},
+                    {fldName:"rB_13", fldType:"CHECK"},
+                    {fldName:"rB_14", fldType:"CHECK"},
+                    {fldName:"rB_15", fldType:"CHECK"},
+                    {fldName:"rB_16", fldType:"CHECK"},
+                    {fldName:"rC", fldType:"RADIO"},
+                    {fldName:"rD", fldType:"RADIO"},
+                    {fldName:"rE", fldType:"RADIO"},
+                    {fldName:"rF", fldType:"RANGE"},
+                    {fldName:"rG", fldType:"VALUE"},
+                    {fldName:"rH", fldType:"VALUE"},
+                    {fldName:"rI_1", fldType:"RADIO"},
+                    {fldName:"rI_2", fldType:"RADIO"},
+                    {fldName:"rI_3", fldType:"RADIO"},
+                    {fldName:"rI_4", fldType:"RADIO"},
+                    {fldName:"rI_5", fldType:"RADIO"},
+                    {fldName:"rI_6", fldType:"RADIO"},
+                    {fldName:"rI_7", fldType:"RADIO"},
+                    {fldName:"rI_8", fldType:"RADIO"},
+                    {fldName:"rI_9", fldType:"RADIO"},
+                    {fldName:"rI_10", fldType:"RADIO"},
+                    {fldName:"rI_11", fldType:"RADIO"},
+                    {fldName:"rI_12", fldType:"RADIO"},
+                    {fldName:"rJ_1", fldType:"RANGE"},
+                    {fldName:"rJ_2", fldType:"RANGE"},
+                    {fldName:"rJ_3", fldType:"RANGE"},
+                    {fldName:"rJ_4", fldType:"RANGE"},
+                    {fldName:"rJ_5", fldType:"RANGE"},
+                    {fldName:"rJ_6", fldType:"RANGE"},
+                    {fldName:"rJ_7", fldType:"RANGE"},
+                    {fldName:"rJ_8", fldType:"RANGE"},
+                    {fldName:"rJ_9", fldType:"RANGE"},
+                    {fldName:"rJ_10", fldType:"RANGE"},
+                    {fldName:"rJ_11", fldType:"RANGE"},
+                    {fldName:"rJ_12", fldType:"RANGE"},
+                    {fldName:"rK", fldType:"RADIO"},
+                    {fldName:"rL", fldType:"RADIO"},
+                    {fldName:"rM_1", fldType:"SELECT-M"},
+                    {fldName:"rM_2", fldType:"SELECT-M"},
+                    {fldName:"rM_3", fldType:"SELECT-M"},
+                    {fldName:"rM_4", fldType:"SELECT-M"},
+                    {fldName:"rM_5", fldType:"SELECT-M"},
+                    {fldName:"rM_6", fldType:"SELECT-M"},
+                    {fldName:"rM_7", fldType:"SELECT-M"},
+                    {fldName:"rM_8", fldType:"SELECT-M"},
+                    {fldName:"rM_9", fldType:"SELECT-M"},
+                    {fldName:"rM_10", fldType:"SELECT-M"},
+                    {fldName:"rM_11", fldType:"SELECT-M"},
+                    {fldName:"rM_12", fldType:"SELECT-M"},
+                    {fldName:"rN", fldType:"SELECT"},
+                    {fldName:"rZ", fldType:"RADIO"}];
+
 var useScenariaTab = true;   // mają być zmiany kolejności pytań
 var rotateScenario = true;  // maja być rotacje wewnątrz scenariuszy
 var scenariaTab = [[10, 11, 12, 13],  // I J K L
@@ -875,7 +955,6 @@ function setIntvNumComplete (tstUserId, tstIntvNum, tstStageNo) {
 //RESTORE DATA - SURVEY DEPENDENT =====================================================
 
 function setFieldValue (fldName, fldValue, fromTempFile=false) {
-  let i;
   switch (fldName) {
     case "SurveyId":  document.questForm.survey_id.value  = fldValue; break;
     case "StageNo":   document.questForm.stage_no.value   = fldValue; break;
@@ -884,6 +963,49 @@ function setFieldValue (fldName, fldValue, fromTempFile=false) {
     case "StartTime": document.questForm.start_time.value = fldValue; break;
     case "EndTime":   document.questForm.end_time.value   = fldValue; break;
     case "Duration":  document.questForm.duration.value   = fldValue; break;
+    default:
+      let i;
+      let len = variablesTab.length;
+      for (i = 0; i < len && variablesTab[i].fldName != fldName; i++);
+      if (i < len) {
+        switch (variablesTab[i].fldType) {
+          case "VALUE":
+            document.questForm[fldName].value = fldValue;
+            window.console.log(fldName + "=>" + document.questForm[fldName].value);
+            break;
+          case "RADIO":
+            document.questForm[fldName].value = fldValue;
+            for (i = 0; i < document.questForm[fldName].length; i++) {
+              if (document.questForm[fldName][i].value == fldValue) {
+                document.questForm[fldName][i].checked = true;
+              }//if
+            }//for
+            window.console.log(fldName + "=>" + document.questForm[fldName].value);
+            break;
+          case "RANGE":
+            document.questForm[fldName].value = fldValue;
+            window.console.log(fldName + "=>" + document.questForm[fldName].value);
+            break;
+          case "CHECK":
+            if (fromTempFile) restoredIntv = true;     //<<---PRZY PIERWSZYM ZNACZĄCYM PYTANIU
+            document.questForm[fldName].checked = fldValue == "true";
+            window.console.log(fldName + "=>" + document.questForm[fldName].checked);
+            break;
+          case "SELECT-M":
+            fldName = fldName.substring(0, fldName.lastIndexOf("_"));
+          case "SELECT":
+            if (fldValue != "") {
+              for (i = 0; i < document.questForm[fldName].length; i++) {
+                if (document.questForm[fldName][i].value == fldValue) {
+                  document.questForm[fldName][i].selected = true;
+                  window.console.log(fldName + "." + document.questForm[fldName][i].value + "=" + document.questForm[fldName][i].selected);
+                }//if
+              }//for
+            }//if
+            break;
+          }//switch
+        }//if
+/*
 //-------------------------------------------------------------------------------------
 //ZMIANA - POCZĄTEK BLOKU ZMIAN 2/5 Example.scr
     //TEXT/VALUE
@@ -1009,6 +1131,7 @@ function setFieldValue (fldName, fldValue, fromTempFile=false) {
       break;
 //ZMIANA - KONIEC BLOKU ZMIAN 2/5 Example.scr
 //-------------------------------------------------------------------------------------
+*/
   }//switch
 }//setFieldValue
 
@@ -1030,7 +1153,9 @@ function restoreFromCookies (e) {
   document.getElementById("restore-fc-progress").style.display = "none";
   document.getElementById("ask-restore-intv").style.display = "none";
 //showInterview
-  restoredIntv = true;
+  //if (4 < restoredCnt) {
+    restoredIntv = true;
+  //}//if
   document.questForm.intv_num.readOnly = true;
   if (!intvNumShow)
     document.getElementById("log-in-div").style.display = "none";
@@ -1074,6 +1199,9 @@ function restoreFromTempFile (intvNum) {
         document.getElementById("restore-ft-progress").value = ++restoredCnt;
         setFieldValue(fldName, restoredObj[fldName], true);
       }//for
+      if (4 < restoredCnt) {
+        restoredIntv = true;
+      }//if
       //window.alert("wczytane");
       document.getElementById("restore-ft-progress").style.display = "none";
       document.getElementById("ask-restore-intv").style.display = "none";
@@ -1097,7 +1225,7 @@ function createQuestionOrderTable () {
   }//if
 }//function createQuestionOrderTable
 
-function arrangeQsOrdTab () {
+function arrangeQsOrdTab (intvNum) {
   window.console.log("arrangeQsOrdTab() for " + intvNum + ", " + useScenariaTab + ", " + rotateScenario);
   if (useScenariaTab) {
     let scenario = (intvNum - 1) % scenariaTab.length; //WYBÓR WIERSZA W TABELI scenariaTab -- intvNum,//powinno być jak jest dla każdego
@@ -1210,20 +1338,25 @@ function makeMSQarrLine (arrTab, orgTabLen, arrLine) {
 
 function arrangeMSQitems (fld, arrTab, orgTab, arrLine) {
   let orgTabLen = orgTab.length;
+  let i;
   window.console.log("arrangeMSQitems(" + fld + ")");
+  for (i = 0; i < orgTabLen; i++) {
+    orgTab[i][2] = document.getElementById(fld + "_item" + orgTab[i][0]).innerHTML;
+  }//for
   makeMSQarrLine(arrTab, orgTabLen, arrLine);
-  for (let i = 0; i < orgTabLen; i++) {
-    document.getElementById(fld + "item" + orgTab[i][0]).innerHTML = orgTab[arrLine[i + 1] - 1][2];
+  for (i = 0; i < orgTabLen; i++) {
+    document.getElementById(fld + "_item" + orgTab[i][0]).innerHTML = orgTab[arrLine[i + 1] - 1][2];
   }//for
 }//arrangeMSQitems
 
-function rearrangeMSQdata__ (fld_, orgTab, arrLine) {
+function rearrangeMSQdata__ (fld, orgTab, arrLine) {
   let orgTabLen = orgTab.length;
   let fldName;
   let i, j;
-  window.console.log("rearrangeMSQdata__(" + fld_ +")");
+  window.console.log("rearrangeMSQdata__(" + fld +")");
+  fld = fld + "_";
   for (i = 0; i < orgTabLen; i++) {    //PRZEPISANIE danych z formularza do tabeli orgTab
-    fldName = fld_ + orgTab[i][0];
+    fldName = fld + orgTab[i][0];
     if (document.questForm[fldName].value != undefined) {
       orgTab[arrLine[i + 1] - 1][1] = document.questForm[fldName].value;
     } else {
@@ -1235,18 +1368,18 @@ function rearrangeMSQdata__ (fld_, orgTab, arrLine) {
     }//else
   }//for
   for (i = 0; i < orgTabLen; i++) {    //PRZEPISANIE danych z orgTab do formularza
-    document.questForm[fld_ + orgTab[i][0]].value = orgTab[i][1];
-    //fldName = fld_ + orgTab[i][0];
+    document.questForm[fld + orgTab[i][0]].value = orgTab[i][1];
+    //fldName = fld + orgTab[i][0];
     //for (j = 0; j < document.questForm[fldName].length; j++) {
     //  document.questForm[fldName][j].checked = j == orgTab[i][1];
     //}//for
   }//for
 }//rearrangeMSQdata__
 
-function rearrangeMSQdata (fld_, arrTab, orgTab, arrLine) {
-  window.console.log("rearrangeMSQdata(" + fld_ +")");
-  makeMSQarrLine(arrTab, orgTab.length, arrLine);
-  rearrangeMSQdata__(fld_, orgTab, arrLine);
+function rearrangeMSQdata (fld, arrTab, orgTab, arrLine) {
+  window.console.log("rearrangeMSQdata(" + fld +")");
+  //makeMSQarrLine(arrTab, orgTab.length, arrLine);
+  rearrangeMSQdata__(fld, orgTab, arrLine);
   window.console.log(orgTab);
 }//rearrangeMSQdata
 
@@ -1264,8 +1397,8 @@ function arrangeQuestions () {
   arrangeMSQitems("rJ", rJ_arrTab, rJ_orgTab, rJ_arrLine);
 //ZMIANA - KONIEC BLOKU ZMIAN 3/5 Example.scr
 //-------------------------------------------------------------------------------------
-  arrangeQsOrdTab();
-  findRotation();
+  arrangeQsOrdTab(intvNum);
+  findRotation(intvNum);
 }//arrangeQuestions
 
 
@@ -1419,7 +1552,7 @@ function verifyInt_num (qId, fldName) {
     field.value = tstIntvNum;
     //tstIntvNum = parseInt(field.value);
     //window.console.log(tstIntvNum);
-    if (tstIntvNum && intvNumIsInRange(tstIntvNum, false, 1, 200, 1001, 2000, 3001)) {
+    if (tstIntvNum && intvNumIsInRange(tstIntvNum, false, 1, 200, 1001, 2000, 3001)) {//ZMIANA
       if (intvNumGiven) {
         if ((intvNum = useIntvNum(userId, tstIntvNum, stageNum)) == -1) {
           if ((intvNum = isIntvNumStarted(userId, tstIntvNum, stageNum)) != -1 &&
@@ -2312,8 +2445,8 @@ function submitFormData () {
 
 //-------------------------------------------------------------------------------------
 //ZMIANA - POCZĄTEK BLOKU ZMIAN 5/5 Example.scr
-  rearrangeMSQdata("rI_", rI_arrTab, rI_orgTab, rI_arrLine);
-  rearrangeMSQdata("rJ_", rJ_arrTab, rJ_orgTab, rJ_arrLine);
+  rearrangeMSQdata("rI", rI_arrTab, rI_orgTab, rI_arrLine);
+  rearrangeMSQdata("rJ", rJ_arrTab, rJ_orgTab, rJ_arrLine);
 //ZMIANA - KONIEC BLOKU ZMIAN 5/5 Example.scr
 //-------------------------------------------------------------------------------------
 

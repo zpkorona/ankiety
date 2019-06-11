@@ -90,11 +90,11 @@ var scenariaTab = [[3, 4, 5],
                    [5, 3, 4],
                    [5, 4, 3]];
 
-var useRotations = false;
+var useRotations = true;
 var rotatsFromFile = false;
 var rotatsGenerate = false;
-var productsNum = 1;
-var rotations = [[ 1, "Nazwa A","Nazwa B"],
+var productsNum = 2;
+var rotatsTab = [[ 1, "Nazwa A","Nazwa B"],
                  [ 2, "Nazwa B","Nazwa A"],
                  [ 3, "Nazwa A","Nazwa C"],
                  [ 4, "Nazwa C","Nazwa A"],
@@ -387,7 +387,7 @@ function getSurveysInfoFromXML () {
       XMLurl;
   window.console.log("getSurveysInfoFromXML");
   xhr = new window.XMLHttpRequest();
-  xhr.open("GET", "./xml/badanie.xml", false);//SYNCHRONICZNIE
+  xhr.open("GET", "./xml/badanie_TS.xml", false);//SYNCHRONICZNIE
   xhr.send();
   if (xhr.status != 200) {
     window.console.log("Nie ma pliku badania.xml, status=" + xhr.status);
@@ -588,6 +588,7 @@ function saveVariable (variable, value, openQest) {
 function tempFileExists (tstIntvNum) {
   let xhr, t = false;
   window.console.log("tempFileExists(" + tstIntvNum + ")");
+  window.console.log("int_no=" + tstIntvNum + ", survey_id=" + surveyId + ", stage_no=" + stageNum + ", user_id=" + userId);
   if (!phpIsWorking) {
     intvNum = noPhpIntvNum;
     window.console.log("tFE: " + warningPHPisNotWorking + intvNum);
@@ -597,6 +598,7 @@ function tempFileExists (tstIntvNum) {
     xhr.send();
     if (xhr.status == 200) {
       t = xhr.responseText == tstIntvNum;
+      window.console.log(xhr.responseText);
     } else {
       window.console.log("tFE: Błąd php, status=" + xhr.status);
     }//else
@@ -902,6 +904,7 @@ function setFieldValue (fldName, fldValue, fromTempFile=false) {
     case "tp2_q1":    //ZMIANA
     case "tp2_q2":    //ZMIANA
     case "q7":        //ZMIANA
+      if (fromTempFile) restoredIntv = true;     //<<---PRZY PIERWSZYM ZNACZĄCYM PYTANIU
       document.questForm[fldName].value = fldValue;
       for (i = 0; i < document.questForm[fldName].length; i++) {
         if (document.questForm[fldName][i].value == fldValue) {
@@ -1038,7 +1041,7 @@ function createQuestionOrderTable () {
   }//if
 }//function createQuestionOrderTable
 
-function arrangeQsOrdTab () {
+function arrangeQsOrdTab (intvNum) {
   window.console.log("arrangeQsOrdTab() for " + intvNum + ", " + useScenariaTab + ", " + rotateScenario);
   if (useScenariaTab) {
     let scenario = (intvNum - 1) % scenariaTab.length; //WYBÓR WIERSZA W TABELI scenariaTab -- intvNum,//powinno być jak jest dla każdego
@@ -1106,11 +1109,13 @@ function findRotation (intvNum) {
   let rlen = rotatsTab.length;
   let txt = "";
   window.console.log("findRotation(" + intvNum + ")");
+  window.console.log(i);
   if (useRotations) {
     for (i = 0; i < rlen && rotatsTab[i][0] != intvNum; i++);
     if (rlen && i == rlen && 0 < intvNum) {
       i = (intvNum - 1) % rlen;
     }//if
+    window.console.log(i);
     if (i < rlen) {
       for (let j = 1; j <= productsNum; j++) {
         document.questForm["tp" + j + "_ord"].value = j;
@@ -1151,20 +1156,25 @@ function makeMSQarrLine (arrTab, orgTabLen, arrLine) {
 
 function arrangeMSQitems (fld, arrTab, orgTab, arrLine) {
   let orgTabLen = orgTab.length;
+  let i;
   window.console.log("arrangeMSQitems(" + fld + ")");
+  for (i = 0; i < orgTabLen; i++) {
+    orgTab[i][2] = document.getElementById(fld + "_item" + orgTab[i][0]).innerHTML;
+  }//for
   makeMSQarrLine(arrTab, orgTabLen, arrLine);
-  for (let i = 0; i < orgTabLen; i++) {
-    document.getElementById(fld + "item" + orgTab[i][0]).innerHTML = orgTab[arrLine[i + 1] - 1][2];
+  for (i = 0; i < orgTabLen; i++) {
+    document.getElementById(fld + "_item" + orgTab[i][0]).innerHTML = orgTab[arrLine[i + 1] - 1][2];
   }//for
 }//arrangeMSQitems
 
-function rearrangeMSQdata__ (fld_, orgTab, arrLine) {
+function rearrangeMSQdata__ (fld, orgTab, arrLine) {
   let orgTabLen = orgTab.length;
   let fldName;
   let i, j;
-  window.console.log("rearrangeMSQdata__(" + fld_ +")");
+  window.console.log("rearrangeMSQdata__(" + fld +")");
+  fld = fld + "_";
   for (i = 0; i < orgTabLen; i++) {    //PRZEPISANIE danych z formularza do tabeli orgTab
-    fldName = fld_ + orgTab[i][0];
+    fldName = fld + orgTab[i][0];
     if (document.questForm[fldName].value != undefined) {
       orgTab[arrLine[i + 1] - 1][1] = document.questForm[fldName].value;
     } else {
@@ -1176,18 +1186,18 @@ function rearrangeMSQdata__ (fld_, orgTab, arrLine) {
     }//else
   }//for
   for (i = 0; i < orgTabLen; i++) {    //PRZEPISANIE danych z orgTab do formularza
-    document.questForm[fld_ + orgTab[i][0]].value = orgTab[i][1];
-    //fldName = fld_ + orgTab[i][0];
+    document.questForm[fld + orgTab[i][0]].value = orgTab[i][1];
+    //fldName = fld + orgTab[i][0];
     //for (j = 0; j < document.questForm[fldName].length; j++) {
     //  document.questForm[fldName][j].checked = j == orgTab[i][1];
     //}//for
   }//for
 }//rearrangeMSQdata__
 
-function rearrangeMSQdata (fld_, arrTab, orgTab, arrLine) {
-  window.console.log("rearrangeMSQdata(" + fld_ +")");
-  makeMSQarrLine(arrTab, orgTab.length, arrLine);
-  rearrangeMSQdata__(fld_, orgTab, arrLine);
+function rearrangeMSQdata (fld, arrTab, orgTab, arrLine) {
+  window.console.log("rearrangeMSQdata(" + fld +")");
+  //makeMSQarrLine(arrTab, orgTab.length, arrLine);
+  rearrangeMSQdata__(fld, orgTab, arrLine);
   window.console.log(orgTab);
 }//rearrangeMSQdata
 
@@ -1204,8 +1214,8 @@ function arrangeQuestions () {
   arrangeMSQitems("q8", q8_arrTab, q8_orgTab, q8_arrLine);
 //ZMIANA - KONIEC BLOKU ZMIAN 3/5 Example.tst
 //-------------------------------------------------------------------------------------
-  arrangeQsOrdTab();
-  findRotation();
+  arrangeQsOrdTab(intvNum);
+  findRotation(intvNum);
 }//arrangeQuestions
 
 
@@ -1359,7 +1369,7 @@ function verifyInt_num (qId, fldName) {
     field.value = tstIntvNum;
     //tstIntvNum = parseInt(field.value);
     //window.console.log(tstIntvNum);
-    if (tstIntvNum && intvNumIsInRange(tstIntvNum)) {
+    if (tstIntvNum && intvNumIsInRange(tstIntvNum)) {//ZMIANA
       if (intvNumGiven) {
         if ((intvNum = useIntvNum(userId, tstIntvNum, stageNum)) == -1) {
           if ((intvNum = isIntvNumStarted(userId, tstIntvNum, stageNum)) != -1 &&

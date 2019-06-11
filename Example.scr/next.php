@@ -80,7 +80,7 @@ if (array_key_exists('user_id', $_GET) &&
     }//else
     if ($file) {
       flock($file, LOCK_EX);
-      if (strlen($user_id) == 9 && preg_match("/(AlmWawa\d\d)|(AlmKrak\d\d)|(AlmKato\d\d)|(AlmWroc\d\d)|(AlmGdan\d\d)/", $user_id) === 1) {
+      if (strlen($user_id) == 9 && preg_match("/(AlmWawa\d\d)|(AlmKrak\d\d)|(AlmKato\d\d)|(AlmWroc\d\d)|(AlmGdan\d\d)|(AlmLubl\d\d)/", $user_id) === 1) {
         $user___ = preg_replace("/\d/", ".", $user_id);
       }//if
       else {
@@ -121,11 +121,21 @@ if (array_key_exists('user_id', $_GET) &&
       flock($file, LOCK_UN);
       fclose($file);
       if ($intv_num_status != 1) {
-        $link = "http://" . $_SERVER['SERVER_NAME'] . "/$next_srv/?uid=$user_id&ino=$intv_num";
+        //$_SERVER['HTTP_REFERER'] = http://localhost/projects/surveys/Example.scr/ 
+        $link = substr($_SERVER['HTTP_REFERER'], 0, -1);
+        $link = substr($link, 0, strrpos($link, '/')) . "/$next_srv/?uid=$user_id&ino=$intv_num";
+        //$link = "http://" . $_SERVER['SERVER_NAME'] . "/$next_srv/?uid=$user_id&ino=$intv_num";
         echo "<p>Aby kontynuować badanie, przechodząc do testu, należy kliknąć poniższy link:</p>";
         echo "<p><a href='$link'>$link</a> </p>";
         echo "<p>wpisująć ''$intv_num' jako numer ankiety.</p>";
         echo "<p>Miłej zabawy!</p>";
+
+        /*
+        foreach ($_SERVER as $key => $value) {
+          echo "$key = $value";
+        }
+        print_r($_SERVER);
+         */
       }//if
     }//if
     else {
